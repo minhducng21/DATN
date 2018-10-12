@@ -18,13 +18,13 @@ namespace CodeExam.Controllers
         // GET: Login
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index(AccountViewModel user, string url)
+        public ActionResult Index(AccountViewModel user, string ReturnUrl)
         {
             try
             {
                 if (Request.IsAuthenticated)
                 {
-                    return RedirectToLocal(url);
+                    return RedirectToLocal(ReturnUrl);
                 }
                 user.IsPersistent = false;
                 if (Request.Cookies["username"].Value != "" && Request.Cookies["password"].Value != "")
@@ -39,7 +39,7 @@ namespace CodeExam.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+
             }
             return View(user);
         }

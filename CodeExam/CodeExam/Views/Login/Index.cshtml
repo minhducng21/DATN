@@ -4,7 +4,7 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('../../Content/images/bg-01.jpg');">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            @using (Html.BeginForm("Login", "Login", new { url = ViewBag.url }, FormMethod.Post))
+            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <div class="login100-form validate-form">
@@ -14,14 +14,14 @@
 
                     <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
                         <span class="label-input100">Username</span>
-                        @Html.TextBoxFor(u => u.UserName, "", new { @class = "input100" })
+                        @Html.TextBoxFor(u => u.UserName, "", new { @placeholder = "Type your username", @class = "input100", @value = ""})
                         @*<input class="input100" type="text" name="username" placeholder="Type your username">*@
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                         <span class="label-input100">Password</span>
-                        @Html.PasswordFor(u => u.Password, new { @class = "input100" })
+                        @Html.PasswordFor(u => u.Password, new { @placeholder = "Type your password", @class = "input100", @value = ""})
                         @*<input class="input100" type="password" name="pass" placeholder="Type your password">*@
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
