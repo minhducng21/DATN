@@ -1,6 +1,5 @@
 ﻿@{
     string currentUser = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]);
-    dynamic Layout;
     switch (currentUser)
     {
         case "Login":

@@ -1,4 +1,4 @@
-namespace CodeExam
+namespace CodeExam.Models
 {
     using System;
     using System.Data.Entity;
@@ -11,15 +11,14 @@ namespace CodeExam
             : base("name=CodeWarDbContext")
         {
         }
-
-        public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<DataType> DataTypes { get; set; }
-        public virtual DbSet<LanguageProgram> LanguagePrograms { get; set; }
-        public virtual DbSet<LeaderBoard> LeaderBoards { get; set; }
-        public virtual DbSet<RoleUser> RoleUsers { get; set; }
-        public virtual DbSet<Task> Tasks { get; set; }
-        public virtual DbSet<TestCase> TestCases { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<DataType> DataTypes { get; set; }
+        public DbSet<LanguageProgram> LanguagePrograms { get; set; }
+        public DbSet<LeaderBoard> LeaderBoards { get; set; }
+        public DbSet<RoleUser> RoleUsers { get; set; }
+        public DbSet<TestCase> TestCases { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

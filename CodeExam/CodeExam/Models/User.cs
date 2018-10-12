@@ -14,9 +14,9 @@ namespace CodeExam
         public string UserName { get; set; }
 
         [StringLength(50)]
-        public string Passwords { get; set; }
+        public string Password { get; set; }
 
-        public int? RoleId { get; set; }
+        public int RoleId { get; set; }
 
         [StringLength(50)]
         public string Email { get; set; }
