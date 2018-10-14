@@ -264,3 +264,13 @@ __pycache__/
 /CodeExam/obj
 /CodeExam/CodeExam/Web.config
 *.ide
+*.suo
+*.user
+[Dd]ebug /
+[Rr]elease /
+x64 /
+build /
+[Bb]in/
+[Oo]bj /
+.idea /
+.vs /
