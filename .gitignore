@@ -266,11 +266,12 @@ __pycache__/
 *.ide
 *.suo
 *.user
-[Dd]ebug /
-[Rr]elease /
-x64 /
-build /
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
 [Bb]in/
-[Oo]bj /
-.idea /
-.vs /
+[Oo]bj/
+.idea/
+/.vs/
+.vs/
