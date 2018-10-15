@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201810120847211_Initial.Designer.cs">
       <DependentUpon>201810120847211_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810151343443_add-field-datatype.cs" />
+    <Compile Include="Migrations\201810151343443_add-field-datatype.Designer.cs">
+      <DependentUpon>201810151343443_add-field-datatype.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -400,6 +404,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810120847211_Initial.resx">
       <DependentUpon>201810120847211_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810151343443_add-field-datatype.resx">
+      <DependentUpon>201810151343443_add-field-datatype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

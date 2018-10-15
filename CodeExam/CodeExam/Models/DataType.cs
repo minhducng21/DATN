@@ -13,6 +13,8 @@ namespace CodeExam
 
         [StringLength(50)]
         public string DataTypeName { get; set; }
+        [StringLength(50)]
+        public string DisplayName { get; set; }
 
         public int? DataTypeStatus { get; set; }
     }
