@@ -9,7 +9,7 @@ namespace CodeExam
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-3.2.1.min.js"));
+                        "~/Scripts/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -19,13 +19,22 @@ namespace CodeExam
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+                      "~/Content/css/material-dashboard.css"));
+            bundles.Add(new StyleBundle("~/Bundles/js").Include(
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/respond.js",
+                      "~/Scripts/Login/popper.min.js",
+                      "~/Scripts/bootstrap-material-design.min.js",
+                      "~/Scripts/perfect-scrollbar.jquery.min.js",
+                      "~/Scripts/chartist.min.js",
+                      "~/Scripts/bootstrap-notify.js",
+                      "~/Scripts/material-dashboard.min.js"
+                ));
         }
     }
 }
