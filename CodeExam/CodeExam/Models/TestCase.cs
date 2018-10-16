@@ -13,6 +13,6 @@ namespace CodeExam
 
         public string Input { get; set; }
 
-        public string Outut { get; set; }
+        public string Output { get; set; }
     }
 }

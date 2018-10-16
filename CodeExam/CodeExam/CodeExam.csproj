@@ -189,6 +189,10 @@
     <Compile Include="Migrations\201810151343443_add-field-datatype.Designer.cs">
       <DependentUpon>201810151343443_add-field-datatype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810160342032_add-field-User-Task.cs" />
+    <Compile Include="Migrations\201810160342032_add-field-User-Task.Designer.cs">
+      <DependentUpon>201810160342032_add-field-User-Task.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -218,13 +222,6 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\util.css" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
-    <Content Include="Content\fonts\iconic\css\material-design-iconic-font.css" />
-    <Content Include="Content\fonts\iconic\css\material-design-iconic-font.min.css" />
-    <Content Include="Content\fonts\iconic\fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\images\bg-01.jpg" />
     <Content Include="Content\images\icon\favicon.ico" />
     <Content Include="favicon.ico" />
@@ -245,61 +242,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\animated.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\core.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\fixed-width.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\font-awesome.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\icons.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\larger.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\list.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\mixins.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\path.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\screen-reader.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\stacked.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\less\variables.less" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_animated.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_core.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_icons.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_larger.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_list.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_path.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
-    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_variables.scss" />
-    <Content Include="Content\fonts\iconic\fonts\Material-Design-Iconic-Font.eot" />
-    <Content Include="Content\fonts\iconic\fonts\Material-Design-Iconic-Font.ttf" />
-    <Content Include="Content\fonts\iconic\fonts\Material-Design-Iconic-Font.woff" />
-    <Content Include="Content\fonts\iconic\fonts\Material-Design-Iconic-Font.woff2" />
-    <Content Include="Content\fonts\poppins\Poppins-Black.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-BlackItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Bold.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-BoldItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-ExtraBold.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-ExtraLight.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Italic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Light.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-LightItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Medium.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-MediumItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Regular.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-SemiBold.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-Thin.ttf" />
-    <Content Include="Content\fonts\poppins\Poppins-ThinItalic.ttf" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -374,8 +316,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
@@ -407,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810151343443_add-field-datatype.resx">
       <DependentUpon>201810151343443_add-field-datatype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810160342032_add-field-User-Task.resx">
+      <DependentUpon>201810160342032_add-field-User-Task.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

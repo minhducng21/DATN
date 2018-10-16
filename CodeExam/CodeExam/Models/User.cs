@@ -13,6 +13,8 @@ namespace CodeExam
         [StringLength(50)]
         public string UserName { get; set; }
 
+        public string DisplayName { get; set; }
+
         [StringLength(50)]
         public string Password { get; set; }
 

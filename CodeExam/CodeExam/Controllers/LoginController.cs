@@ -53,8 +53,8 @@ namespace CodeExam.Controllers
             {
                 try
                 {
-                    string passwork = user.Password != null ? Encryption.Encrypt(user.Password) : "";
-                    var obj = db.Users.Where(u => user.UserName == u.UserName && passwork == u.Password).FirstOrDefault();
+                    string password = user.Password != null ? Encryption.Encrypt(user.Password) : "";
+                    var obj = db.Users.Where(u => user.UserName == u.UserName && password == u.Password).FirstOrDefault();
                     if (obj != null)
                     {
                         try

@@ -24,6 +24,8 @@ namespace CodeExam
 
         public int? OutputType { get; set; }
 
+        public int TestCaseId { get; set; }
+
         public int? TaskStatus { get; set; }
     }
 }
