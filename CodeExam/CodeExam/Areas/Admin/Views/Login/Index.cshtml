@@ -1,9 +1,8 @@
 ﻿@model CodeExam.ViewModels.AccountViewModel
-
 <div class="limiter">
     <div class="container-login100" style="background-image: url('../../Content/images/bg-01.jpg');">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            @using (Html.BeginForm("Login", "./Admin/Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <div class="login100-form validate-form">
@@ -39,7 +38,7 @@
             }
             @*<button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>*@
             <div class="flex-c-m">
-                @using (Html.BeginForm("LoginWithGoogle", "Login", FormMethod.Post))
+                @using (Html.BeginForm("LoginWithFacebook", "Login", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <button class="login100-social-item bg1">

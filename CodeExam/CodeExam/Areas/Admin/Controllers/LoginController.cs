@@ -20,7 +20,7 @@ namespace CodeExam.Areas.Admin.Controllers
         // GET: Login
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index(AccountViewModel user=null, string ReturnUrl="")
+        public ActionResult Index(AccountViewModel user, string ReturnUrl)
         {
             try
             {
