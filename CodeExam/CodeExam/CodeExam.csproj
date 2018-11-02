@@ -197,11 +197,6 @@
     <Compile Include="Areas\Admin\Controllers\SidebarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ProgramLanguageController.cs" />
-    <Compile Include="Controllers\SidebarController.cs" />
-    <Compile Include="Controllers\TaskController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201810120847211_Initial.cs" />
     <Compile Include="Migrations\201810120847211_Initial.Designer.cs">
       <DependentUpon>201810120847211_Initial.cs</DependentUpon>
@@ -382,18 +377,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginLayout.cshtml" />
-    <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Task\Index.cshtml" />
-    <Content Include="Views\ProgramLanguage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Sidebar\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
