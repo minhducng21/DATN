@@ -31,7 +31,7 @@
     $scope.getRole = () => {
         $http({
             method: 'GET',
-            url: '/User/GetRole'
+            url: '/Admin/User/GetRole'
         }).then(function success(res) {
             $scope.roles = res.data;
         });
@@ -40,7 +40,7 @@
     $scope.getUserById = id => {
         $http({
             method: 'GET',
-            url: '/User/GetUserById?id=' + id
+            url: '/Admin/User/GetUserById?id=' + id
         }).then(function success(res) {
             $scope.user = res.data;
             });
@@ -54,7 +54,7 @@
     $scope.editUser = user => {
         $http({
             method: 'POST',
-            url: '/User/EditUser',
+            url: '/Admin/User/EditUser',
             data: user
         }).then((res) => {
             if (res.data == 0) {
@@ -81,7 +81,7 @@
 
         $http({
             method: 'GET',
-            url: '/User/GetUser',
+            url: '/Admin/User/GetUser',
             params: data
         }).then(function success(res) {
             $scope.users = res.data.results;
@@ -107,7 +107,7 @@
         else {
             $http({
                 method: 'POST',
-                url: '/User/AddUser',
+                url: '/Admin/User/AddUser',
                 params: user
             }).then(function success(res) {
                 if (res.data == 0) {
@@ -127,19 +127,11 @@
         var id = $scope.deleteUserId;
         $http({
             method: 'POST',
-            url: '/User/DeleteUser',
+            url: '/Admin/User/DeleteUser',
             data: {id}
         }).then(function success(res) {
             if (res.data == 0) {
-                var isLoop = true
-                for (var i = 0; i < $scope.users.length; i++) {
-                    if (isLoop) {
-                        if ($scope.users[i].ID == $scope.deleteUserId) {
-                            $scope.users.splice(i, 1);
-                            isLoop = false;
-                        }
-                    }
-                }
+                getListUser();
                 $('#delete').modal('toggle');
             }
         })

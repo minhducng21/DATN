@@ -20,10 +20,10 @@ namespace CodeExam
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Login/Index"),
-                LogoutPath = new PathString("/Login/Logout"),
-                ReturnUrlParameter = "/Home/Index"
+                //AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                //LoginPath = new PathString("/Login/Index"),
+                //LogoutPath = new PathString("/Login/Logout"),
+                //ReturnUrlParameter = "/Home/Index"
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
         }
