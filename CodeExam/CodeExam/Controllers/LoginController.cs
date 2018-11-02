@@ -8,6 +8,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Google;
+using ASPSnippets.GoogleAPI;
+using System.Web.Script.Serialization;
 
 namespace CodeExam.Controllers
 {
@@ -39,7 +42,6 @@ namespace CodeExam.Controllers
             }
             catch (Exception ex)
             {
-
             }
             return View(user);
         }
@@ -59,7 +61,7 @@ namespace CodeExam.Controllers
                     {
                         try
                         {
-                            Session["Role"] = user.RoleID.ToString();
+                            Session["Role"] = user.RoleId.ToString();
                             Session["ID"] = obj.UserId.ToString();
                             SignInUser(obj.UserName, user.Password, obj.RoleId, user.IsPersistent);
                             return RedirectToLocal(url);
@@ -81,6 +83,47 @@ namespace CodeExam.Controllers
                 }
             }
             return View("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void LoginWithGoogle()
+        {
+            GoogleConnect.ClientId = "497757490775-h5dkgln71ra20p87aav3e6dqu76jo5es.apps.googleusercontent.com";
+            GoogleConnect.ClientSecret = "i1NPNkoQhusebPfSJV8JkfVF";
+            GoogleConnect.RedirectUri = Request.Url.AbsoluteUri.Split('?')[0];
+            GoogleConnect.Authorize("email");
+
+            //LoginWithGoogleConfirm();
+        }
+
+        [ActionName("LoginWithGoogle")]
+        public ActionResult LoginWithGoogleConfirm()
+        {
+            if (!string.IsNullOrEmpty(Request.QueryString["code"]))
+            {
+                string code = Request.QueryString["code"];
+                string json = GoogleConnect.Fetch("me", code);
+                GoogleAccViewModel profile = new JavaScriptSerializer().Deserialize<GoogleAccViewModel>(json);
+                if (db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault() != null)
+                {
+                    Session["ID"] = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault().UserId.ToString();
+                    Session["Role"] = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault().RoleId.ToString();
+                    return RedirectToAction("Index", "Home");
+                }
+                User user = new User();
+                user.DisplayName = profile.DisplayName;
+                user.Email = profile.Emails.Find(e => e.Type == "account").Value;
+                user.SocialId = profile.Id;
+                user.RoleId = (int)RoleCommon.User;
+                db.Users.Add(user);
+                db.SaveChanges();
+                var currentUser = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
+                Session["ID"] = currentUser.UserId.ToString();
+                Session["Role"] = currentUser.RoleId.ToString();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Login");
         }
 
         private ActionResult RedirectToLocal(string url)
@@ -142,7 +185,7 @@ namespace CodeExam.Controllers
         }
 
         [Authorize]
-        public ActionResult Logout()
+        public ActionResult LogOut()
         {
             try
             {

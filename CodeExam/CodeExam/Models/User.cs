@@ -23,6 +23,8 @@ namespace CodeExam
         [StringLength(50)]
         public string Email { get; set; }
 
+        public string SocialId { get; set; }
+
         public int? UserStatus { get; set; }
     }
 }

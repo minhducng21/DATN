@@ -19,7 +19,6 @@ namespace CodeExam
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
@@ -27,13 +26,18 @@ namespace CodeExam
                       "~/Content/css/material-dashboard.css"));
             bundles.Add(new StyleBundle("~/Bundles/js").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/angular.js",
+                      "~/Scripts/app/AppController.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/Login/popper.min.js",
                       "~/Scripts/bootstrap-material-design.min.js",
                       "~/Scripts/perfect-scrollbar.jquery.min.js",
                       "~/Scripts/chartist.min.js",
                       "~/Scripts/bootstrap-notify.js",
-                      "~/Scripts/material-dashboard.min.js"
+                      "~/Scripts/material-dashboard.min.js",
+                      "~/Scripts/ui-bootstrap.min.js",
+                      "~/Scripts/ui-bootstrap-tpls.min.js",
+                      "~/Scripts/ui-select2.js"
                 ));
         }
     }

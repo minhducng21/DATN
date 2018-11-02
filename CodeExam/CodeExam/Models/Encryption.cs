@@ -25,7 +25,6 @@ namespace CodeExam.Models
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

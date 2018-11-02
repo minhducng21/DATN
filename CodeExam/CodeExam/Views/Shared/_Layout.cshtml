@@ -6,15 +6,13 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Bundles/js")
 </head>
-<body class="wrapper">
+<body ng-app="app" class="wrapper">
     @Html.Partial("_Sidebar")
     @Html.Partial("_Header")
     @RenderBody()
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/Bundles/js")
     @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {
@@ -22,6 +20,5 @@
             md.initDashboardPageCharts();
         });
     </script>
-
 </body>
 </html>

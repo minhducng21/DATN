@@ -23,7 +23,6 @@ namespace CodeExam
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Login/Index"),
                 LogoutPath = new PathString("/Login/Logout"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(5.0),
                 ReturnUrlParameter = "/Home/Index"
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

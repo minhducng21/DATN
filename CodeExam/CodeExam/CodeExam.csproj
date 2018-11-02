@@ -47,11 +47,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASPSnippets.GoogleAPI">
+      <HintPath>C:\Users\Minh\Desktop\ASPSnippets.GoogleAPI.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.36.1\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.36.1\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.36.1\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -77,6 +89,9 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.10\lib\net45\NLog.dll</HintPath>
@@ -150,9 +165,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ApplicationInsights">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
@@ -181,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProgramLanguageController.cs" />
+    <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Migrations\201810120847211_Initial.cs" />
@@ -195,6 +208,10 @@
     <Compile Include="Migrations\201810160342032_add-field-User-Task.Designer.cs">
       <DependentUpon>201810160342032_add-field-User-Task.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811010133178_add-field-socialId.cs" />
+    <Compile Include="Migrations\201811010133178_add-field-socialId.Designer.cs">
+      <DependentUpon>201811010133178_add-field-socialId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -206,6 +223,7 @@
     <Compile Include="Models\Encryption.cs" />
     <Compile Include="Models\LanguageProgram.cs" />
     <Compile Include="Models\LeaderBoard.cs" />
+    <Compile Include="Models\RoleCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RoleUser.cs" />
     <Compile Include="Models\Task.cs" />
@@ -213,6 +231,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\GoogleAccViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -228,6 +247,7 @@
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\util.css" />
     <Content Include="Content\images\bg-01.jpg" />
+    <Content Include="Content\images\icon\group_add.png" />
     <Content Include="Content\images\icon\favicon.ico" />
     <Content Include="Content\images\sidebar-1.jpg" />
     <Content Include="favicon.ico" />
@@ -243,6 +263,10 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\AppController.js" />
+    <Content Include="Scripts\app\Sidebar\SidebarController.js" />
+    <Content Include="Scripts\app\Task\TaskController.js" />
+    <Content Include="Scripts\app\User\UserController.js" />
     <Content Include="Scripts\bootstrap-material-design.min.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="ApplicationInsights.config">
@@ -302,6 +326,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chartist.min.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -323,6 +348,10 @@
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\ui-bootstrap.js" />
+    <Content Include="Scripts\ui-bootstrap.min.js" />
+    <Content Include="Scripts\ui-select2.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -345,8 +374,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Styles\" />
     <Folder Include="Views\DataType\" />
+    <Folder Include="Views\Sidebar\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -361,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810160342032_add-field-User-Task.resx">
       <DependentUpon>201810160342032_add-field-User-Task.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811010133178_add-field-socialId.resx">
+      <DependentUpon>201811010133178_add-field-socialId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
