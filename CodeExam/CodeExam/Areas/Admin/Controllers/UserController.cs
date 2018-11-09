@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CodeExam.Areas.Admin.Controllers
 {
+    [AuthAttribute]
     public class UserController : Controller
     {
         CodeWarDbContext db = new CodeWarDbContext();

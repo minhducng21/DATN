@@ -21,24 +21,25 @@ namespace CodeExam
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/material").Include(
                       "~/Content/css/material-dashboard.css"));
-            bundles.Add(new StyleBundle("~/Bundles/js").Include(
+
+
+            bundles.Add(new ScriptBundle("~/Bundles/js").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/angular.js",
-                      "~/Scripts/app/AppController.js",
+                      "~/Scripts/bootstrap-notify.js",
+                      "~/Scripts/ui-bootstrap.min.js",
+                      "~/Scripts/ui-bootstrap-tpls.min.js",
+                      "~/Scripts/ui-select2.js"));
+            bundles.Add(new ScriptBundle("~/bundles/material").Include(
                       "~/Scripts/respond.js",
                       "~/Scripts/Login/popper.min.js",
                       "~/Scripts/bootstrap-material-design.min.js",
                       "~/Scripts/perfect-scrollbar.jquery.min.js",
                       "~/Scripts/chartist.min.js",
-                      "~/Scripts/bootstrap-notify.js",
-                      "~/Scripts/material-dashboard.min.js",
-                      "~/Scripts/ui-bootstrap.min.js",
-                      "~/Scripts/ui-bootstrap-tpls.min.js",
-                      "~/Scripts/ui-select2.js"
-                ));
+                      "~/Scripts/material-dashboard.min.js"));
         }
     }
 }

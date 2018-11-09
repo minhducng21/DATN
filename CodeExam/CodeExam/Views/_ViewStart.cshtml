@@ -1,8 +1,11 @@
 ﻿@{
-    string currentUser = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]);
-    switch (currentUser)
+    string currentController = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]);
+    switch (currentController)
     {
         case "Login":
+            Layout = "~/Views/Shared/_LoginLayout.cshtml";
+            break;
+        case "Error":
             Layout = "~/Views/Shared/_LoginLayout.cshtml";
             break;
         default:

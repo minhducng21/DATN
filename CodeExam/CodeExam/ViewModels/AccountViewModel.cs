@@ -27,6 +27,8 @@ namespace CodeExam.ViewModels
 
         public string Email { get; set; }
 
+        public string SocialId { get; set; }
+
         public RoleUser Role { get; set; }
 
         public int RoleId { get; set; }

@@ -192,11 +192,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AreasAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HeaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\SidebarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Controllers\CodeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Migrations\201810120847211_Initial.cs" />
     <Compile Include="Migrations\201810120847211_Initial.Designer.cs">
       <DependentUpon>201810120847211_Initial.cs</DependentUpon>
@@ -213,10 +218,16 @@
     <Compile Include="Migrations\201811010133178_add-field-socialId.Designer.cs">
       <DependentUpon>201811010133178_add-field-socialId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811061705279_AuthorizeCtrl.cs" />
+    <Compile Include="Migrations\201811061705279_AuthorizeCtrl.Designer.cs">
+      <DependentUpon>201811061705279_AuthorizeCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuthAttribute.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\ControllerAction.cs" />
     <Compile Include="Models\DataType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -225,6 +236,7 @@
     <Compile Include="Models\LanguageProgram.cs" />
     <Compile Include="Models\LeaderBoard.cs" />
     <Compile Include="Models\RoleCommon.cs" />
+    <Compile Include="Models\RoleController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RoleUser.cs" />
     <Compile Include="Models\Task.cs" />
@@ -233,6 +245,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\GoogleAccViewModel.cs" />
+    <Compile Include="ViewModels\RoleNameViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -241,33 +254,63 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\animsition.min.css" />
+    <Content Include="Content\css\aos.css" />
+    <Content Include="Content\css\bootstrap-datepicker.css" />
     <Content Include="Content\css\daterangepicker.css" />
+    <Content Include="Content\css\flaticon.css" />
     <Content Include="Content\css\hamburgers.min.css" />
+    <Content Include="Content\css\icomoon.css" />
+    <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\jquery.timepicker.css" />
+    <Content Include="Content\css\magnific-popup.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\material-dashboard.css" />
+    <Content Include="Content\css\open-iconic-bootstrap.min.css" />
+    <Content Include="Content\css\owl.carousel.min.css" />
+    <Content Include="Content\css\owl.theme.default.min.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\css\util.css" />
     <Content Include="Content\images\bg-01.jpg" />
+    <Content Include="Content\images\bg_1.jpg" />
+    <Content Include="Content\images\bg_2.jpg" />
+    <Content Include="Content\images\dashboard_full_1.jpg" />
+    <Content Include="Content\images\dashboard_full_1.png" />
+    <Content Include="Content\images\dashboard_full_2.jpg" />
+    <Content Include="Content\images\dashboard_full_3.png" />
     <Content Include="Content\images\icon\group_add.png" />
     <Content Include="Content\images\icon\favicon.ico" />
+    <Content Include="Content\images\person_1.jpg" />
+    <Content Include="Content\images\person_2.jpg" />
     <Content Include="Content\images\sidebar-1.jpg" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\flaticon\backup.txt" />
+    <Content Include="fonts\flaticon\font\flaticon.css" />
+    <Content Include="fonts\flaticon\font\flaticon.html" />
+    <Content Include="fonts\flaticon\font\Flaticon.svg" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\icomoon\icomoon.svg" />
     <Content Include="fonts\iconic\css\material-design-iconic-font.css" />
     <Content Include="fonts\iconic\css\material-design-iconic-font.min.css" />
     <Content Include="fonts\iconic\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="fonts\ionicons\css\ionicons.min.css" />
+    <Content Include="fonts\ionicons\fonts\ionicons.svg" />
+    <Content Include="fonts\open-iconic\open-iconic.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\aos.js" />
     <Content Include="Scripts\app\AppController.js" />
+    <Content Include="Scripts\app\Header\HeaderController.js" />
     <Content Include="Scripts\app\Sidebar\SidebarController.js" />
     <Content Include="Scripts\app\Task\TaskController.js" />
     <Content Include="Scripts\app\User\UserController.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-material-design.min.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="ApplicationInsights.config">
@@ -332,6 +375,26 @@
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Error\Permission.cshtml" />
+    <Content Include="fonts\flaticon\.DS_Store" />
+    <Content Include="fonts\flaticon\font\Flaticon.eot" />
+    <Content Include="fonts\flaticon\font\Flaticon.ttf" />
+    <Content Include="fonts\flaticon\font\Flaticon.woff" />
+    <Content Include="fonts\flaticon\font\_flaticon.scss" />
+    <Content Include="fonts\flaticon\license\license.pdf" />
+    <Content Include="fonts\icomoon\icomoon.eot" />
+    <Content Include="fonts\icomoon\icomoon.ttf" />
+    <Content Include="fonts\icomoon\icomoon.woff" />
+    <Content Include="fonts\ionicons\css\_ionicons.scss" />
+    <Content Include="fonts\ionicons\fonts\.DS_Store" />
+    <Content Include="fonts\ionicons\fonts\ionicons.eot" />
+    <Content Include="fonts\ionicons\fonts\ionicons.ttf" />
+    <Content Include="fonts\ionicons\fonts\ionicons.woff" />
+    <Content Include="fonts\ionicons\fonts\ionicons.woff2" />
+    <Content Include="fonts\open-iconic\open-iconic.eot" />
+    <Content Include="fonts\open-iconic\open-iconic.otf" />
+    <Content Include="fonts\open-iconic\open-iconic.ttf" />
+    <Content Include="fonts\open-iconic\open-iconic.woff" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -344,11 +407,17 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-migrate-3.0.1.min.js" />
+    <Content Include="Scripts\jquery.animateNumber.min.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.stellar.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.waypoints.min.js" />
     <Content Include="Scripts\Login\animsition.min.js" />
     <Content Include="Scripts\Login\countdowntime.js" />
     <Content Include="Scripts\Login\daterangepicker.js" />
@@ -356,16 +425,21 @@
     <Content Include="Scripts\Login\moment.min.js" />
     <Content Include="Scripts\Login\popper.min.js" />
     <Content Include="Scripts\Login\select2.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\material-dashboard.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\perfect-scrollbar.jquery.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\scrollax.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\ui-bootstrap.js" />
     <Content Include="Scripts\ui-bootstrap.min.js" />
     <Content Include="Scripts\ui-select2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -377,11 +451,16 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Code\Index.cshtml" />
+    <Content Include="Views\Error\Permission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Header\" />
+    <Folder Include="AuthData\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -399,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811010133178_add-field-socialId.resx">
       <DependentUpon>201811010133178_add-field-socialId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811061705279_AuthorizeCtrl.resx">
+      <DependentUpon>201811061705279_AuthorizeCtrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

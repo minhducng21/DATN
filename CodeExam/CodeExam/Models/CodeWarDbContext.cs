@@ -19,6 +19,8 @@ namespace CodeExam.Models
         public DbSet<LeaderBoard> LeaderBoards { get; set; }
         public DbSet<RoleUser> RoleUsers { get; set; }
         public DbSet<TestCase> TestCases { get; set; }
+        public DbSet<RoleController> RoleControllers { get; set; }
+        public DbSet<ControllerAction> ControllerActions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
