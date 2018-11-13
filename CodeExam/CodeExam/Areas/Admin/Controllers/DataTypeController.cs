@@ -29,7 +29,7 @@ namespace CodeExam.Areas.Admin.Controllers
         }
         public JsonResult CreateDataType(DataType data)
         {
-            db.DataType.Add(data);
+            db.DataTypes.Add(data);
             if (db.SaveChanges() == 1)
             {
                 return Json(0, JsonRequestBehavior.AllowGet);
