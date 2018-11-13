@@ -24,13 +24,28 @@ namespace CodeExam.Areas.Admin.Controllers
                 {
                     var obj = db.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
                     AccountViewModel acc = new AccountViewModel();
+                    acc.UserName = obj.UserName;
+                    acc.Email = obj.Email;
                     acc.DisplayName = obj.DisplayName;
                     acc.RoleId = obj.RoleId;
-                    acc.GetRole();
+                    acc.Role = acc.GetRole();
+                    //acc.GetRole();
                     return Json(acc, JsonRequestBehavior.AllowGet);
                 }
             }
             return null;
+        }
+
+        public JsonResult EditUser(AccountViewModel acc)
+        {
+            using (CodeWarDbContext db = new CodeWarDbContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserName == acc.UserName);
+                user.DisplayName = acc.DisplayName;
+                user.Email = acc.Email;
+                db.SaveChanges();
+                return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

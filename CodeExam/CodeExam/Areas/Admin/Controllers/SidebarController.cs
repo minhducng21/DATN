@@ -16,28 +16,28 @@ namespace CodeExam.Areas.Admin.Controllers
             return View();
         }
 
-        public JsonResult GetCurrentUser()
+        public JsonResult GetController()
         {
-            AccountViewModel acc = new AccountViewModel();
-            try
+            using (CodeWarDbContext db = new CodeWarDbContext())
             {
-                using (CodeWarDbContext db = new CodeWarDbContext())
+                if (!String.IsNullOrEmpty(User.Identity.Name))
                 {
-                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                    var roleCtrls = db.RoleControllers.ToList();
+                    var currentUser = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+                    var roleControllers = db.RoleControllers.Where(rc => rc.RoleId == currentUser.RoleId).ToList();
+                    List<ControllerViewModel> lsController = new List<ControllerViewModel>();
+                    foreach (var item in roleControllers)
                     {
-                        var obj = db.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
-                        acc.ID = obj.UserId;
-                        acc.DisplayName = obj.DisplayName;
-                        acc.RoleId = obj.RoleId;
-                        acc.GetRole();
-                        return Json(acc, JsonRequestBehavior.AllowGet);
+                        ControllerViewModel ctrlViewModel = new ControllerViewModel();
+                        ctrlViewModel.CtrlId = item.CtrlId;
+                        ctrlViewModel.Ctrl = ctrlViewModel.GetCtrl().Ctrl;
+                        ctrlViewModel.Area = ctrlViewModel.GetCtrl().Area;
+                        ctrlViewModel.Description = ctrlViewModel.GetCtrl().Description;
+                        lsController.Add(ctrlViewModel);
                     }
-                    return null;
+                    return Json(lsController, JsonRequestBehavior.AllowGet);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw;
+                return null;
             }
         }
     }

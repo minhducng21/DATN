@@ -31,14 +31,12 @@ namespace CodeExam.Models
                         {
                             lsRoleName.Add( new RoleNameViewModel() { Controller = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Ctrl, Area = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Area });
                         });
-                        //if (!lsRoleName.Equals(new RoleNameViewModel() { Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName, Area = filterContext.RouteData.DataTokens["area"].ToString() }))
-                        //{
-                            
-                        //    filterContext.Result = new RedirectResult("/Error/Permission");
-                        //}
-                        if (lsRoleName.Where(r => r.Controller == filterContext.ActionDescriptor.ControllerDescriptor.ControllerName && r.Area == "Admin").ToList().Count() == 0)
+                        if (!String.IsNullOrEmpty(filterContext.RouteData.DataTokens["area"].ToString()))
                         {
-                            filterContext.Result = new RedirectResult("/Error/Permission");
+                            if (lsRoleName.Where(r => r.Controller == filterContext.ActionDescriptor.ControllerDescriptor.ControllerName && r.Area == filterContext.RouteData.DataTokens["area"].ToString()).Count() == 0)
+                            {
+                                filterContext.Result = new RedirectResult("/Error/Permission");
+                            }
                         }
                     }
                     else
