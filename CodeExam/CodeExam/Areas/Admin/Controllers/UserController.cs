@@ -42,7 +42,7 @@ namespace CodeExam.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult GetUser(int page, int pageSize)
         {
-            var lstUser = db.Users.Where(u => u.RoleId == (int)RoleCommon.Staff && u.UserStatus == 1).ToList();
+            var lstUser = db.Users.Where(u => u.UserStatus == 1).ToList();
             List<AccountViewModel> lstAcc = new List<AccountViewModel>();
             foreach (User user in lstUser)
             {

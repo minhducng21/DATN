@@ -21,7 +21,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                             @*<a class="dropdown-item" href="#">John Doe</a>*@
-                            <a class="dropdown-item" href="#">Your Prolife</a>
+                            <a class="dropdown-item" href="" ng-click="openProfileModal()">Your Prolife</a>
                             <a class="dropdown-item" href="#" ng-click="logOut()">Sign Out</a>
                         </div>
                     </li>
@@ -29,4 +29,62 @@
             </div>
         </div>
     </nav>
+
+    <!--Profile Modal-->
+    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-primary">
+                                    <h4 class="card-title">Profile</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Username</label>
+                                                    <input type="text" class="form-control" ng-model="currentUser.UserName" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Email address</label>
+                                                    <input type="email" ng-model="currentUser.Email" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">DisplayName</label>
+                                                    <input type="text" ng-model="currentUser.DisplayName" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Role</label>
+                                                    <input type="text" ng-model="currentUser.RoleId" ng-value="currentUser.Role.RoleName" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary pull-right" ng-click="updateUser(currentUser)">Update Profile</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

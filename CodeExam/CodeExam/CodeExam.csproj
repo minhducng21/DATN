@@ -198,6 +198,7 @@
     <Compile Include="Areas\Admin\Controllers\HeaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SidebarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\GoogleAccViewModel.cs" />
     <Compile Include="ViewModels\RoleNameViewModel.cs" />
   </ItemGroup>
@@ -310,6 +312,7 @@
     <Content Include="Scripts\aos.js" />
     <Content Include="Scripts\app\AppController.js" />
     <Content Include="Scripts\app\Header\HeaderController.js" />
+    <Content Include="Scripts\app\Role\RoleController.js" />
     <Content Include="Scripts\app\Sidebar\SidebarController.js" />
     <Content Include="Scripts\app\Task\TaskController.js" />
     <Content Include="Scripts\app\User\UserController.js" />
@@ -398,6 +401,7 @@
     <Content Include="fonts\open-iconic\open-iconic.otf" />
     <Content Include="fonts\open-iconic\open-iconic.ttf" />
     <Content Include="fonts\open-iconic\open-iconic.woff" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

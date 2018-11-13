@@ -9,6 +9,23 @@
         });
     }
 
+    $scope.openProfileModal = () => {
+        $('.form-group').addClass('is-filled');
+        $('#profile').modal();
+    }
+
+    $scope.updateUser = (obj) => {
+        $http({
+            method: 'POST',
+            url: '/Header/EditUser',
+            params: obj
+        }).then(function success(res) {
+            if (res.data == 0) {
+                $('#profile').modal('toggle');
+            }
+        })
+    }
+
     $scope.logOut = () => {
         $http({
             method: 'GET',
