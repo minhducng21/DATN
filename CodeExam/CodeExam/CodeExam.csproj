@@ -199,6 +199,7 @@
     <Compile Include="Areas\Admin\Controllers\SidebarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Constant\Constant.cs" />
     <Compile Include="Controllers\CodeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
