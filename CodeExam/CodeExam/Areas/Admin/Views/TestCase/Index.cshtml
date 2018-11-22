@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/app/TestCase/TestCaseController.js"></script>
+<div class="main-panel" ng-controller="TestCaseController" ng-init="getTask()">
+    <!-- End Navbar -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-tabs card-header-primary">
+                            <div class="nav-tabs-navigation">
+                                <div class="nav-tabs-wrapper">
+                                    <span class="nav-tabs-title">Test Case</span>
+                                    <button type="button" rel="tooltip" title="Add Testcase" class="btn btn-primary btn-sm pull-right" ng-click="openModal()">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="profile">
+                                    <table class="table">
+                                        <thead class="text-primary">
+                                        <th>Input</th>
+                                        <th>Output</th>
+                                        <th>Task</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="test in tests">
+                                                <td>{{test.Input}}</td>
+                                                <td>{{test.Output}}</td>
+                                                <td>{{test.TaskId}}</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Testcase" class="btn btn-primary btn-link btn-sm">
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                        <i class="material-icons">close</i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Choose TestCase" class="btn btn-success btn-link btn-sm">
+                                                        <i class="material-icons">add</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title">Test case đã chọn</h4>
+                            <button type="button" rel="tooltip" title="" class="btn btn-primary btn-sm pull-right">
+                                @*<i class="material-icons">add</i>*@
+                                Add Task
+                            </button>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover">
+                                <thead class="text-warning">
+                                <th>ID</th>
+                                <th>Input</th>
+                                <th>Output</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Dakota Rice</td>
+                                        <td>$36,738</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_AddTestCase")
+    </div>
+</div>
+
+

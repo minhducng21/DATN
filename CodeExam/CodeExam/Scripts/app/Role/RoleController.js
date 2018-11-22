@@ -3,7 +3,7 @@
     function getRole() {
         $http({
             method: 'GET',
-            url: '/Role/GetRole'
+            url: '/Admin/Role/GetRole'
         }).then(function success(res) {
             $scope.roles = res.data;
         })
@@ -12,7 +12,7 @@
     function getController() {
         $http({
             method: 'GET',
-            url: '/Role/GetController'
+            url: '/Admin/Role/GetController'
         }).then(function myfunction(res) {
             $scope.ctrls = res.data;
         })
@@ -21,7 +21,7 @@
     $scope.getRoleById = function (id) {
         $http({
             method: 'GET',
-            url: '/Role/GetControllerById',
+            url: '/Admin/Role/GetControllerById',
             params: { id }
         }).then(function success(res) {
             $scope.ctrls = res.data.ctrls;
@@ -59,7 +59,7 @@
 
         $http({
             method: 'POST',
-            url: '/Role/AddRole',
+            url: '/Admin/Role/AddRole',
             data: roleControllerViewModel
         }).then(function success(res) {
             if (res.data == 0) {
@@ -88,7 +88,7 @@
         roleControllerViewModel.ControllerViewModels = ControllerViewModels;
         $http({
             method: 'POST',
-            url: '/Role/EditRole',
+            url: '/Admin/Role/EditRole',
             data: roleControllerViewModel
         }).then(function success(res) {
             if (res.data == 0) {
@@ -107,7 +107,7 @@
         var roleId = $scope.deleteRoleId;
         $http({
             method: 'POST',
-            url: '/Role/DeleteRole',
+            url: '/Admin/Role/DeleteRole',
             params: { roleId }
         }).then(function success(res) {
             if (res.data == 0) {

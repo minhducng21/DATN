@@ -17,6 +17,7 @@ namespace CodeExam.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
         public JsonResult GetRole()
         {
             using (CodeWarDbContext db = new CodeWarDbContext())

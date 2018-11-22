@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SidebarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestCaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Constant\Constant.cs" />
     <Compile Include="Controllers\CodeController.cs" />
@@ -225,6 +226,14 @@
     <Compile Include="Migrations\201811061705279_AuthorizeCtrl.cs" />
     <Compile Include="Migrations\201811061705279_AuthorizeCtrl.Designer.cs">
       <DependentUpon>201811061705279_AuthorizeCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811190209333_updateRelaTask-Testcase.cs" />
+    <Compile Include="Migrations\201811190209333_updateRelaTask-Testcase.Designer.cs">
+      <DependentUpon>201811190209333_updateRelaTask-Testcase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811190805506_EditTask.cs" />
+    <Compile Include="Migrations\201811190805506_EditTask.Designer.cs">
+      <DependentUpon>201811190805506_EditTask.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthAttribute.cs" />
@@ -315,6 +324,7 @@
     <Content Include="Scripts\app\Role\RoleController.js" />
     <Content Include="Scripts\app\Sidebar\SidebarController.js" />
     <Content Include="Scripts\app\Task\TaskController.js" />
+    <Content Include="Scripts\app\TestCase\TestCaseController.js" />
     <Content Include="Scripts\app\User\UserController.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-material-design.min.js" />
@@ -372,7 +382,7 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ProgramLanguage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TestCase\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
@@ -402,6 +412,8 @@
     <Content Include="fonts\open-iconic\open-iconic.ttf" />
     <Content Include="fonts\open-iconic\open-iconic.woff" />
     <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TestCase\_AddTestCase.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\_AddTestCase.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -489,6 +501,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811061705279_AuthorizeCtrl.resx">
       <DependentUpon>201811061705279_AuthorizeCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811190209333_updateRelaTask-Testcase.resx">
+      <DependentUpon>201811190209333_updateRelaTask-Testcase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811190805506_EditTask.resx">
+      <DependentUpon>201811190805506_EditTask.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

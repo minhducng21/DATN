@@ -18,7 +18,7 @@ namespace CodeExam.Areas.Areas
                  "Admin",
                  "Admin/{controller}/{action}/{id}",
                  new { action = "Index", id = UrlParameter.Optional },
-                 new { controller = "Home|Task|User|Role|Sidebar|Header"},
+                 new { controller = "Home|Role|User|Task|TestCase" },
                  namespaces: new[] { "CodeExam.Areas.Admin.Controllers" }
              );
         }

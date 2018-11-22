@@ -22,9 +22,7 @@ namespace CodeExam
 
         public string Input { get; set; }
 
-        public int? OutputType { get; set; }
-
-        public int TestCaseId { get; set; }
+        public string OutputType { get; set; }
 
         public int? TaskStatus { get; set; }
     }

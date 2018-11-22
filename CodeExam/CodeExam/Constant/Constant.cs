@@ -7,8 +7,8 @@ namespace CodeExam.Constant
 {
     public static class Status
     {
-        public static int Active = 0;
-        public static int Deactive = 1;
+        public static int Active = 1;
+        public static int Deactive = 0;
     }
     public static class TaskLevel
     {

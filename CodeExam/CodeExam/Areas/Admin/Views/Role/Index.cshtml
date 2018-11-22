@@ -26,7 +26,7 @@
                             <tbody>
                                 <tr ng-repeat="role in roles">
                                     <td>{{role.RoleName}}</td>
-                                    <td ng-if="role.RoleId!=1">
+                                    <td @*ng-if="role.RoleId!=1"*@>
                                         <a href="" ng-click="getRoleById(role.RoleId)"><i class="material-icons">edit</i></a>
                                         <a href=""><i class="material-icons" ng-click="confirmDeleteRole(role.RoleId)">delete</i></a>
                                     </td>

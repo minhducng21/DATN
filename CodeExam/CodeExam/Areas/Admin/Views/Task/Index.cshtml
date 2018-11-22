@@ -24,129 +24,193 @@
                                 <thead class="text-warning">
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Description</th>
                                 <th>Level</th>
                                 <th>Point</th>
-                                <th>Input</th>
-                                <th>OutputType</th>
-                                <th>TestCase</th>
-                                <th>Active</th>
+                                @*<th>Input</th>
+                    <th>OutputType</th>*@
+                                @*<th>Active</th>*@
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dakota Rice</td>
-                                        <td>$36,738</td>
-                                        <td>Niger</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="" checked>
-                                                    <span class="form-check-sign">
-                                                        <span class="check"></span>
-                                                    </span>
-                                                </label>
-                                            </div>
+                                    <tr ng-repeat="task in tasks">
+                                        <td>{{task.TaskId}}</td>
+                                        <td>{{task.TaskName}}</td>
+                                        <td>{{task.TaskLevel}}</td>
+                                        <td>{{task.Point}}</td>
+                                        <td class="td-actions text-right">
+                                            @*<button type="button" rel="tooltip" title="Add Testcase" class="btn btn-warning btn-link btn-sm" ng-click="">
+                                                <i class="material-icons">add</i>
+                                            </button>*@
+                                            <button type="button" rel="tooltip" title="Details" class="btn btn-success btn-link btn-sm" ng-click="detailTask(task.TaskId)">
+                                                <i class="material-icons">info</i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" ng-click="confirmDelete(task.TaskId)">
+                                                <i class="material-icons">close</i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    @*Paging*@
+                    <div class="col-sm-12 col-xs-12 none-padding page-footer">
+                        <div class="col-sm-12 col-xs-12 none-padding page-footer">
+                            <div class="col-sm-12 col-xs-12 none-padding text-right ">
+                                <ul uib-pagination boundary-links="true"
+                                    total-items="ItemPaging.total"
+                                    ng-change="childsPageChanged()"
+                                    max-size="ItemPaging.maxSize"
+                                    items-per-page="ItemPaging.numPerPage"
+                                    ng-model="ItemPaging.currentPage"
+                                    boundary-link-numbers="true"
+                                    class="tbl-pagination pagination" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <a href="/Admin/TestCase" class="text-success">
+                            Add test case
+                        </a>
+                    </div>
                 </div>
 
-
-
-                <!-- Modal add task-->
+                <!-- Modal/Edit add task-->
                 <div class="col-md-12">
                     <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="card-header-primary">
-                                        <h4 class="card-title">Add Task</h4>
+                                        <h4 class="card-title text-primary">{{modalTitle}}</h4>
                                     </div>
                                 </div>
                                 <div class="modal-body">
                                     <form>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Taskname</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" ng-model="task.TaskName">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Input</label>
-                                                    <input type="email" class="form-control">
+                                                    <textarea rows="1" class="form-control" ng-model="task.Input"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">OutputType</label>
+                                                    <input type="text" class="form-control" ng-model="task.OutputType">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Fist Name</label>
-                                                    <input type="text" class="form-control">
+                                                    <label class="bmd-label-floating">Level</label>
+                                                    <select class="form-control" ng-model="task.TaskLevel" ng-options="level for level in Level">
+                                                        <option selected value="">Choose level</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Last Name</label>
-                                                    <input type="text" class="form-control">
+                                                    <label class="bmd-label-floating">Point</label>
+                                                    <select class="form-control" ng-model="task.Point" ng-options="point for point in Point">
+                                                        <option selected value="">Choose point</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-8">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Adress</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">City</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Country</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Postal Code</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>About Me</label>
+                                                    <label>Description</label>
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                                        <textarea class="form-control" rows="5"></textarea>
+                                                        <textarea class="form-control" rows="4" ng-model="task.TaskDescription"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header card-header-tabs card-header-primary">
+                                                        <div class="nav-tabs-navigation">
+                                                            <div class="nav-tabs-wrapper">
+                                                                <span class="nav-tabs-title">Test Case</span>
+                                                                <button type="button" rel="tooltip" title="Add Testcase" class="btn btn-primary btn-sm pull-right" ng-click="openModalTestCase()">
+                                                                    <i class="material-icons">add</i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="profile">
+                                                                <table class="table">
+                                                                    <thead class="text-primary">
+                                                                    <th>ID</th>
+                                                                    <th>Input</th>
+                                                                    <th>Output</th>
+                                                                    @*<th>Task</th>*@
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="test in tests">
+                                                                            <td>{{test.TestCaseId}}</td>
+                                                                            <td>{{test.Input}}</td>
+                                                                            <td>{{test.Output}}</td>
+                                                                            @*<td>{{test.TaskId}}</td>*@
+                                                                            <td class="td-actions text-right">
+                                                                                <button type="button" rel="tooltip" title="Edit Testcase" class="btn btn-primary btn-link btn-sm" ng-click="detailTestCase(test)">
+                                                                                    <i class="material-icons">edit</i>
+                                                                                </button>
+                                                                                <button type="button" rel="tooltip" title="Remove" ng-click="deleteTestCase(test.TestCaseId)" class="btn btn-danger btn-link btn-sm">
+                                                                                    <i class="material-icons">close</i>
+                                                                                </button>
+                                                                                @*<button type="button" rel="tooltip" title="Choose TestCase" class="btn btn-success btn-link btn-sm">
+                                                                                    <i class="material-icons">add</i>
+                                                                                </button>*@
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                    <button type="button" ng-show="action=='Add'" class="btn btn-primary" ng-click="addTask(task, tests)">Add</button>
+                                    <button type="button" ng-show="action=='Edit'" class="btn btn-primary" ng-click="editTask(task, tests)">Edit</button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("_AddTestCase")
+                </div>
+                <!--Delete Modal -->
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger" id="exampleModalLabel">Delete</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có chắc chắn muốn xóa?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-click="deleteTask()">OK</button>
                             </div>
                         </div>
                     </div>

@@ -14,5 +14,7 @@ namespace CodeExam
         public string Input { get; set; }
 
         public string Output { get; set; }
+
+        public int TaskId { get; set; }
     }
 }

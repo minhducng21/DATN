@@ -1,0 +1,47 @@
+﻿<!-- Modal add user-->
+<div class="modal fade" id="addTestcase" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="card-header-primary">
+                    <h4 class="card-title text-primary">{{titleModal}}</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form name="form" novalidate>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group" id="isFocus">
+                                <label class="bmd-label-floating">Input</label>
+                                <textarea row="5" ng-model="test.Input" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Output</label>
+                                <input type="text" ng-model="test.Output" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Task</label>
+                                <select class="form-control" ng-model="test.TaskId" ui-select2 ng-options="task.TaskId as task.TaskName for task in tasks">
+                                    <option selected value="">Choose Task</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button ng-show="action=='Add'" class="btn btn-primary" ng-click="addTest(test)">{{action}}</button>
+                <button ng-show="action=='Edit'" class="btn btn-primary" ng-click="editTest(test)">{{action}}</button>
+            </div>
+        </div>
+    </div>
+</div>
