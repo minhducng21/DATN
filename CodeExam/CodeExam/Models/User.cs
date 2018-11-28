@@ -25,6 +25,8 @@ namespace CodeExam
 
         public string SocialId { get; set; }
 
+        public string ActiveCode { get; set; }
+
         public int? UserStatus { get; set; }
     }
 }

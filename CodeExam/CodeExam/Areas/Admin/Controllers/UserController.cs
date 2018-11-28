@@ -33,6 +33,7 @@ namespace CodeExam.Areas.Admin.Controllers
             user.DisplayName = acc.DisplayName;
             user.Email = acc.Email;
             user.RoleId = acc.RoleId;
+            //user.ActiveCode = Guid.NewGuid();
             user.UserStatus = 1;
             db.Users.Add(user);
             db.SaveChanges();

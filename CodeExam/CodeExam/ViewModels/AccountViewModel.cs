@@ -25,6 +25,8 @@ namespace CodeExam.ViewModels
 
         public int Active { get; set; }
 
+        public string ActiveCode { get; set; }
+
         public string Email { get; set; }
 
         public string SocialId { get; set; }

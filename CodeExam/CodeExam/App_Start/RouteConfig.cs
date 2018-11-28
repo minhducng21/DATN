@@ -18,6 +18,9 @@ namespace CodeExam
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "CodeExam.Controllers" });
+            routes.MapRoute(
+                name: "Login",
+                url: "{Login}/{action}/{activeCode}");
         }
     }
 }

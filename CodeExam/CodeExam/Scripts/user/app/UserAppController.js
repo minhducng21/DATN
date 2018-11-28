@@ -1,0 +1,1 @@
+﻿var userApp = angular.module('userApp', ['ui.bootstrap', 'ui.select2']);

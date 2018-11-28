@@ -6,7 +6,10 @@ using Microsoft.Owin.Security;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
@@ -72,7 +75,7 @@ namespace CodeExam.Areas.Controllers
                         }
                     }
                     else
-                        ViewData["Notification"] = "Đăng nhập sai tên tài khoản hoặc mật khẩu";
+                        ViewBag.Notification = "Đăng nhập sai tên tài khoản hoặc mật khẩu";
                 }
                 catch (Exception ex)
                 {
@@ -106,7 +109,7 @@ namespace CodeExam.Areas.Controllers
                 if (obj != null)
                 {
                     SignInUser(obj.UserName, obj.Password, obj.SocialId, obj.RoleId, false);
-                    return RedirectToAction("Index", "Code");
+                    return RedirectToAction("Index", "Direction");
                 }
                 User user = new User();
                 user.DisplayName = profile.DisplayName;
@@ -116,10 +119,8 @@ namespace CodeExam.Areas.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
                 var currentUser = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
-                //Session["ID"] = currentUser.UserId.ToString();
-                //Session["Role"] = currentUser.RoleId.ToString();
                 SignInUser(currentUser.UserName, currentUser.Password, currentUser.SocialId, currentUser.RoleId, false);
-                return RedirectToAction("Index", "Code");
+                return RedirectToAction("Index", "Direction");
             }
             return RedirectToAction("Index", "Login");
         }
@@ -139,7 +140,7 @@ namespace CodeExam.Areas.Controllers
             }
             if (roleId == (int)RoleCommon.User)
             {
-                return RedirectToAction("Index", "Code");
+                return RedirectToAction("Index", "Direction");
             }
             return RedirectToAction("Index", "Home", new { area = "Admin" });
         }
@@ -188,6 +189,98 @@ namespace CodeExam.Areas.Controllers
                 throw ex;
             }
             return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(AccountViewModel acc)
+        {
+            if (String.IsNullOrEmpty(acc.Email))
+            {
+                ViewBag.Message = "Nhập vào email";
+            }
+            else
+            {
+                var obj = db.Users.FirstOrDefault(u => u.Email == acc.Email);
+                if (obj != null)
+                {
+                    acc.ActiveCode = Guid.NewGuid().ToString();
+                    obj.ActiveCode = Encryption.Encrypt(acc.ActiveCode);
+                    db.SaveChanges();
+                    SendEmail(obj.Email, acc.ActiveCode.ToString(), Request.Url);
+                    ViewBag.Message = "Hệ thống đã gửi email xác nhận cho bạn";
+                }
+                else
+                {
+                    ViewBag.Message = "Email không tồn tại";
+                }
+            }
+            return View(acc);
+        }
+
+        public void SendEmail(string email, string activeCode, Uri uri)
+        {
+            var verifyUrl = "/Login/Resetpassword?activeCode=" + activeCode;
+            var link = uri.Authority + uri.AbsolutePath.Replace(uri.AbsolutePath, verifyUrl);
+            string Email = ConfigurationManager.AppSettings["Email"];
+            var fromEmail = new MailAddress(Email, "Testttt");
+            string fromEmailPw = ConfigurationManager.AppSettings["Password"];
+            var toMail = new MailAddress(email);
+            string subject = "";
+            string body = "";
+                subject = "Reset Password";
+                body = "Click vào link để kích hoạt reset mật khẩu cho tài khoản: <a href='" + link + "'>" + link + "</a>";
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPw)
+            };
+            using (var mess = new MailMessage(fromEmail, toMail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(mess);
+        }
+
+        [HttpGet]
+        public ActionResult ResetPassword(string activeCode)
+        {
+            activeCode = Encryption.Encrypt(activeCode);
+            var obj = db.Users.FirstOrDefault(u => u.ActiveCode == activeCode);
+            AccountViewModel acc = new AccountViewModel();
+            acc.ID = obj.UserId;
+            acc.ActiveCode = obj.ActiveCode;
+            acc.DisplayName = obj.DisplayName;
+            return View(acc);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(AccountViewModel acc)
+        {
+            if (acc.Password == acc.RePassword)
+            {
+                var obj = db.Users.FirstOrDefault(u => u.UserId == acc.ID);
+                obj.Password = Encryption.Encrypt(acc.Password);
+                db.SaveChanges();
+                return RedirectToAction("/Index");
+            }
+            else
+            {
+                ViewBag.Message = "Mật khẩu không khớp";
+                return View();
+            }
+            
         }
     }
 }

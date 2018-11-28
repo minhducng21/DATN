@@ -8,6 +8,7 @@ using CodeExam.Models;
 namespace CodeExam.Areas.Admin.Controllers
 
 {
+    [AuthAttribute]
     public class TaskController : Controller
     {
         CodeWarDbContext db = new CodeWarDbContext();

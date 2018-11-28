@@ -3,8 +3,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="card-header-primary">
-                    <h4 class="card-title text-primary">{{titleModal}}</h4>
+                <div class="card-header-warning">
+                    <h4 class="card-title text-warning">{{titleModal}}</h4>
                 </div>
             </div>
             <div class="modal-body">
@@ -37,8 +37,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-show="actionTestCase=='Add'" class="btn btn-primary" ng-click="addTestCase(test)">{{actionTestCase}}</button>
-                <button ng-show="actionTestCase=='Edit'" class="btn btn-primary" ng-click="editTestCase(test)">{{actionTestCase}}</button>
+                <button ng-show="actionTestCase=='Add'" class="btn btn-warning" ng-click="addTestCase(test)">{{actionTestCase}}</button>
+                <button ng-show="actionTestCase=='Edit'" class="btn btn-warning" ng-click="editTestCase(test)">{{actionTestCase}}</button>
             </div>
         </div>
     </div>

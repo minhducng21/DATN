@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,10 +22,8 @@
 
     <script src="~/Scripts/jquery.min.js"></script>
     @Scripts.Render("~/Bundles/js")
-    <script src="~/Scripts/user/app/UserAppController.js"></script>
 </head>
-<body ng-app="userApp">
-    @Html.Partial("_UserHeader")
+<body>
     @RenderBody()
     <script src="@Url.Content("~/Scripts/jquery-migrate-3.0.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Login/popper.min.js")"></script>

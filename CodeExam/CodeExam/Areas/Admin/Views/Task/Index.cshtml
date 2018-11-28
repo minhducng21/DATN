@@ -80,8 +80,8 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <div class="card-header-primary">
-                                        <h4 class="card-title text-primary">{{modalTitle}}</h4>
+                                    <div class="card-header-warning">
+                                        <h4 class="card-title text-warning">{{modalTitle}}</h4>
                                     </div>
                                 </div>
                                 <div class="modal-body">
@@ -137,11 +137,11 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card">
-                                                    <div class="card-header card-header-tabs card-header-primary">
+                                                    <div class="card-header card-header-tabs card-header-warning">
                                                         <div class="nav-tabs-navigation">
                                                             <div class="nav-tabs-wrapper">
                                                                 <span class="nav-tabs-title">Test Case</span>
-                                                                <button type="button" rel="tooltip" title="Add Testcase" class="btn btn-primary btn-sm pull-right" ng-click="openModalTestCase()">
+                                                                <button type="button" rel="tooltip" title="Add Testcase" class="btn btn-warning btn-sm pull-right" ng-click="openModalTestCase()">
                                                                     <i class="material-icons">add</i>
                                                                 </button>
                                                             </div>
@@ -151,7 +151,7 @@
                                                         <div class="tab-content">
                                                             <div class="tab-pane active" id="profile">
                                                                 <table class="table">
-                                                                    <thead class="text-primary">
+                                                                    <thead class="text-warning">
                                                                     <th>ID</th>
                                                                     <th>Input</th>
                                                                     <th>Output</th>
@@ -170,9 +170,6 @@
                                                                                 <button type="button" rel="tooltip" title="Remove" ng-click="deleteTestCase(test.TestCaseId)" class="btn btn-danger btn-link btn-sm">
                                                                                     <i class="material-icons">close</i>
                                                                                 </button>
-                                                                                @*<button type="button" rel="tooltip" title="Choose TestCase" class="btn btn-success btn-link btn-sm">
-                                                                                    <i class="material-icons">add</i>
-                                                                                </button>*@
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -187,8 +184,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" ng-show="action=='Add'" class="btn btn-primary" ng-click="addTask(task, tests)">Add</button>
-                                    <button type="button" ng-show="action=='Edit'" class="btn btn-primary" ng-click="editTask(task, tests)">Edit</button>
+                                    <button type="button" ng-show="action=='Add'" class="btn btn-warning" ng-click="addTask(task, tests)">Add</button>
+                                    <button type="button" ng-show="action=='Edit'" class="btn btn-warning" ng-click="editTask(task, tests)">Edit</button>
                                 </div>
                             </div>
                         </div>

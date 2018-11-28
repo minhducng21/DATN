@@ -28,7 +28,7 @@
     // Test case
     $scope.openModalTestCase = () => {
         $scope.test = {};
-        $('.form-group').removeClass('is-filled');
+        $('#addTestcase > .form-group').removeClass('is-filled');
         $scope.titleModal = 'Add Testcase'
         $scope.actionTestCase = 'Add';
         $('#addTestcase').modal();

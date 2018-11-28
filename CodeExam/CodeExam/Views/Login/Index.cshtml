@@ -22,8 +22,9 @@
                         @*<input class="input100" type="password" name="pass" placeholder="Type your password">*@
                         <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
+                    <div style="color: red;">@ViewBag.Notification</div>
                     <div class="text-right p-t-8 p-b-31">
-                        <a href="#">
+                        <a href="/Login/ForgotPassword">
                             Forgot password?
                         </a>
                     </div>
@@ -47,7 +48,7 @@
                     </button>
                 }
                 @using (Html.BeginForm("LoginWithGoogle", "Login", FormMethod.Post))
-                { 
+                {
                     @Html.AntiForgeryToken()
                     <button class="login100-social-item bg3">
                         <i class="fa fa-google"></i>
@@ -67,4 +68,7 @@
 </div>
 
 <div id="dropDownSelect1"></div>
+
+
+
 
