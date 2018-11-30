@@ -491,6 +491,8 @@
     <Content Include="Views\Shared\_Home.cshtml" />
     <Content Include="Views\Leader\Index.cshtml" />
     <Content Include="Views\Direction\Intro.cshtml" />
+    <Content Include="Views\Direction\Code.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -499,6 +501,7 @@
     <Folder Include="Areas\Admin\Views\Header\" />
     <Folder Include="AuthData\" />
     <Folder Include="Views\Header\" />
+    <Folder Include="Views\Intro\" />
     <Folder Include="Views\UserHeader\" />
   </ItemGroup>
   <ItemGroup>

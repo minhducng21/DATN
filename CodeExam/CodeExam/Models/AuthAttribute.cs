@@ -31,7 +31,8 @@ namespace CodeExam.Models
                         {
                             lsRoleName.Add( new RoleNameViewModel() { Controller = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Ctrl, Area = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Area });
                         });
-                        if (!String.IsNullOrEmpty(filterContext.RouteData.DataTokens["area"].ToString()))
+                        ;
+                        if (filterContext.RouteData.DataTokens.Where(d => d.Key == "area").Count() > 0)
                         {
                             if (lsRoleName.Where(r => r.Controller == filterContext.ActionDescriptor.ControllerDescriptor.ControllerName && r.Area == filterContext.RouteData.DataTokens["area"].ToString()).Count() == 0)
                             {

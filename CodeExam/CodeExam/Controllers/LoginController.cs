@@ -30,7 +30,9 @@ namespace CodeExam.Areas.Controllers
             {
                 if (Request.IsAuthenticated)
                 {
-                    return RedirectToLocal(ReturnUrl, null);
+                    var userName = User.Identity.Name;
+                    var obj = db.Users.FirstOrDefault(d => d.UserName.Equals(userName));
+                    return RedirectToLocal(ReturnUrl, obj.RoleId);
                 }
                 user.IsPersistent = false;
                 if (Request.Cookies["username"].Value != "" && Request.Cookies["password"].Value != "")
@@ -280,7 +282,47 @@ namespace CodeExam.Areas.Controllers
                 ViewBag.Message = "Mật khẩu không khớp";
                 return View();
             }
-            
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(AccountViewModel acc)
+        {
+            if (String.IsNullOrEmpty(acc.UserName) || String.IsNullOrEmpty(acc.DisplayName) || String.IsNullOrEmpty(acc.Password) || String.IsNullOrEmpty(acc.RePassword))
+            {
+                ViewBag.Message = "Yêu cầu điền đầy đủ thông tin";
+                return View();
+            }
+            if (db.Users.Where(d => d.UserName == acc.UserName).Count() > 0)
+            {
+                ViewBag.Message = "Tên tài khoản đã tồn tại";
+                return View();
+            }
+            if (acc.Password != acc.RePassword)
+            {
+                ViewBag.Message = "Mật khẩu không khớp";
+                return View();
+            }
+            if (db.Users.Where(d => d.Email == acc.Email).Count() > 0)
+            {
+                ViewBag.Message = "Email đã được sử dụng";
+                return View();
+            }
+            User obj = new User();
+            obj.UserName = acc.UserName;
+            obj.Password = Encryption.Encrypt(acc.Password);
+            obj.Email = acc.Email;
+            obj.DisplayName = acc.DisplayName;
+            obj.RoleId = (int)RoleCommon.User;
+            obj.UserStatus = 1;
+
+            db.Users.Add(obj);
+            db.SaveChanges();
+            return RedirectToAction("/");
         }
     }
 }
