@@ -2,156 +2,66 @@
 @{
     ViewBag.Title = "Code";
 }
+<script src="~/Content/lib/codemirror.js"></script>
+<link rel="stylesheet" href="~/Content/lib/codemirror.css">
+<link rel="stylesheet" href="~/Content/lib/abcdef.css">
+<script src="~/Content/mode/javascript/javascript.js"></script>
+
 <style>
     .nav-custom > li.hover {
         color: white;
     }
+
+    #codeeditor {
+        width: 1036px;
+    }
+
+    .content-exam {
+        width: 500px;
+        overflow: auto;
+        border: 1px black solid;
+        height: 670px;
+    }
+
+    .content-code-detail {
+        display: -webkit-box;
+        margin-top: 10px;
+    }
+    .container {
+        max-width: 100% !important;
+    }
+    .CodeMirror{
+        height:400px;
+    }
 </style>
 
-<div class="container-fluid" >
+<div class="container">
     <!--Header-->
-    <div class="row" style="background: #111222; color: white;">
+    <div class="row" style="background: #111222; color: white;margin-top: -39px;">
         <div>
-            <a href="/Direction" style="color: white;"><i class="glyphicon glyphicon-arrow-left"><span>BACK</span></i></a>
-            
+            <a href="/Direction" style="color: white;"><i class="glyphicon glyphicon-arrow-left"><span> BACK</span></i></a>
+
         </div>
-        <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>add</span></div>
+        <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>Add</span></div>
     </div>
 
-    <!--Descriptino-->
-    <div class="row" style="height: 550px;">
-        <div class="col-md-4" style="background-color: #33485f;">
-            <!--Toolbar-->
-            <div class="col-md-2">
-                <ul class="nav nav-pills nav-custom" style="display: grid; font-size: 30px; color: #d1e0e0;">
-                    <li><i class="glyphicon glyphicon-file"></i></li>
-                    <li><i class="glyphicon glyphicon-comment"></i></li>
-                </ul>
-            </div>
-            <!--Description-->
-            <div class="col-md-10" style="background: #e6e6ff; color: black; font-size: 14px; overflow: auto;">
-                <!--Header Description-->
-                <div class="row">
-                    <div class="col-md-4" style="text-align: center;">
-                        <i class="glyphicon glyphicon-menu-up"></i>
-                        Easy
-                    </div>
-                    <div class="col-md-4" style="text-align: center;">
-                        CodeWritting
-                    </div>
-                    <div class="col-md-4" style="text-align: center; font-size: 12px;">
-                        300
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <p>Write a function that returns the sum of two numbers.</p>
-                    </div>
-                    <!--Input/Output-->
-                    <div class="row">
-                        <span style="color:#44BFA3;font-size:1.4em;">Input/Output</span>
-                        <ul style="font-weight: bold">
-                            <li>[Input] integer param1, param2</li>
-                            <li>[Output] integer</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Code-->
-        <div class="col-md-8" style="">
-            <!--Bar code-->
-            <div class="row" style="background-color: #33485f; color: white;">
-                <div>
-                    <span>main.cs</span>
-                </div>
-                <div>
-                    <ul>
-                        <li>Reset</li>
-                        <li>C#</li>
-                        <li>Dark</li>
-                    </ul>
-                </div>
-            </div>
-            <!--Content-->
-            <div class="row">
+    <div class="row";>
+        <div class="content-code-detail">
+            <div class="content-exam" id="content-exam">
 
             </div>
-            <!--TestCase-->
-            <div class="container">
-                <div class="">
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Serviços para Empresas</button>
-                    <div id="demo" class="panel-collapse collapse">
-                        <ul class="list-group">
-                            <li class="list-group-item" data-toggle="collapse" data-parent="#demo" data-target="#test1">
-                                <a href="#">Test1<span style="font-size:16px;" class="pull-right hidden-xs showopacity"></span></a>
-                                <div id="test1" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="checkbox">
-                                            <label style="color: #1a75ff">Input:</label>
-                                            <ul style="font-weight: bold">
-                                                <li>param1: 1</li>
-                                                <li>param2: 2</li>
-                                            </ul>
-                                            <label style="color: #1a75ff">Output: <span style="font-weight: bold; color: #666666;">3</span></label>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item" data-toggle="collapse" data-parent="#demo" data-target="#test2">
-                                <a href="#">Test2<span style="font-size:16px;" class="pull-right hidden-xs showopacity"></span></a>
-                                <div id="test2" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="checkbox">
-                                            <label style="color: #1a75ff">Input:</label>
-                                            <ul style="font-weight: bold">
-                                                <li>param1: 1</li>
-                                                <li>param2: 2</li>
-                                            </ul>
-                                            <label style="color: #1a75ff">Output: <span style="font-weight: bold; color: #666666;">3</span></label>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item" data-toggle="collapse" data-parent="#demo" data-target="#test3">
-                                <a href="#">Test3<span style="font-size:16px;" class="pull-right hidden-xs showopacity"></span></a>
-                                <div id="test3" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="checkbox">
-                                            <label style="color: #1a75ff">Input:</label>
-                                            <ul style="font-weight: bold">
-                                                <li>param1: 1</li>
-                                                <li>param2: 2</li>
-                                            </ul>
-                                            <label style="color: #1a75ff">Output: <span style="font-weight: bold; color: #666666;">3</span></label>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item" data-toggle="collapse" data-parent="#demo" data-target="#test4">
-                                <a href="#">Test4<span style="font-size:16px;" class="pull-right hidden-xs showopacity"></span></a>
-                                <div id="test4" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="checkbox">
-                                            <label style="color: #1a75ff">Input:</label>
-                                            <ul style="font-weight: bold">
-                                                <li>param1: 1</li>
-                                                <li>param2: 2</li>
-                                            </ul>
-                                            <label style="color: #1a75ff">Output: <span style="font-weight: bold; color: #666666;">3</span></label>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <p></p>
-                </div>
+            <div>
+                <div id="codeeditor"></div>
             </div>
         </div>
     </div>
 </div>
+<script>
+
+    var editor = CodeMirror(document.getElementById("codeeditor"), {
+        mode: "javascript",
+        theme: "abcdef",
+        lineNumbers: true,
+        viewportMargin: 50
+    });
+</script>
