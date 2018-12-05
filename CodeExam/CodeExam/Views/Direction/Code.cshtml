@@ -14,7 +14,7 @@
     }
 
     #codeeditor {
-        width: 1036px;
+        width: 1020px;
     }
 
     .content-exam {
@@ -32,7 +32,7 @@
 
     .container {
         max-width: 100% !important;
-        background-color: #212b37 !important;
+        background-color: rgb(26,35,45) !important;
     }
 
     .CodeMirror {
@@ -44,15 +44,52 @@
         background-color: #212b37 !important;
         border-color: #fff;
     }
+
     #info-exam {
         font-weight: bold;
-        margin-top:20px;
+        margin-top: 20px;
     }
-    #info-exam span{
-        margin-left:30px;
+
+        #info-exam span {
+            margin-left: 30px;
+        }
+
+    #detail-exam {
+        margin-left: 30px;
     }
-    #detail-exam{
-        margin-left:30px;
+
+    .collapse-testcase {
+        background-color: rgb(33,43,55);
+        margin-left: 25px;
+        color: white;
+        padding-left: 10px;
+        padding-right: 870px;
+        padding-bottom: 5px;
+        vertical-align: middle;
+    }
+
+    .content-testcase {
+        margin-left: 25px;
+        width: 990px;
+    }
+
+    #bottom-code-detail {
+        overflow: auto;
+        height: 50px;
+    }
+    .tab-content {
+        overflow: auto;
+        width: 1030px;
+        height: 173px;
+    }
+    #collapseExample {
+        margin-left: 25px;
+    }
+    .input-testcase {
+        display: -webkit-box;
+    }
+    .list-param{
+        margin-left:10px;
     }
 </style>
 
@@ -69,7 +106,7 @@
         <div class="content-code-detail">
             <div class="content-exam" id="content-exam">
                 <div id="info-exam">
-                    <span >Easy</span>
+                    <span>Easy</span>
                     <span>Point: 300</span>
                 </div>
                 <div id="detail-exam">
@@ -105,8 +142,24 @@
 
                     <div class="tab-content" style="color:white;font-weight:bold;">
                         <div id="menu1" class="tab-pane active in">
-                            <h3>Menu 1</h3>
-                            <p>Some content in menu 1.</p>
+                            <a class="collapse-testcase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Link with href
+                            </a>
+                            <div class="collapse" id="collapseExample">
+                                <div class="input-testcase">
+                                    <p>Input:</p>
+                                    <div class="list-param">
+                                        <span>param1:22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</span>
+                                        <span>param2:22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</span>
+                                    </div>
+                                </div>
+                                <div class="ouput-testcase">
+                                    <p>Output:</p>
+                                </div>
+                                <div class="expected-ouput-testcase">
+                                    <p>Expected ouput: </p>
+                                </div>
+                            </div>
                         </div>
                         <div id="menu2" class="tab-pane">
                             <h3>Menu 2</h3>
