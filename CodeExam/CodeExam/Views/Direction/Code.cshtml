@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="~/Content/lib/abcdef.css">
 <script src="~/Content/mode/javascript/javascript.js"></script>
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
     .nav-custom > li.hover {
         color: white;
@@ -21,17 +22,37 @@
         overflow: auto;
         border: 1px black solid;
         height: 670px;
+        background-color: rgb(229,235,242);
     }
 
     .content-code-detail {
         display: -webkit-box;
         margin-top: 10px;
     }
+
     .container {
         max-width: 100% !important;
+        background-color: #212b37 !important;
     }
-    .CodeMirror{
-        height:400px;
+
+    .CodeMirror {
+        height: 400px;
+    }
+
+    #select-language, #select-language:focus, #select-language:visited, #select-language:active {
+        color: white !important;
+        background-color: #212b37 !important;
+        border-color: #fff;
+    }
+    #info-exam {
+        font-weight: bold;
+        margin-top:20px;
+    }
+    #info-exam span{
+        margin-left:30px;
+    }
+    #detail-exam{
+        margin-left:30px;
     }
 </style>
 
@@ -40,18 +61,59 @@
     <div class="row" style="background: #111222; color: white;margin-top: -39px;">
         <div>
             <a href="/Direction" style="color: white;"><i class="glyphicon glyphicon-arrow-left"><span> BACK</span></i></a>
-
         </div>
         <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>Add</span></div>
     </div>
 
-    <div class="row";>
+    <div class="row" ;>
         <div class="content-code-detail">
             <div class="content-exam" id="content-exam">
-
+                <div id="info-exam">
+                    <span >Easy</span>
+                    <span>Point: 300</span>
+                </div>
+                <div id="detail-exam">
+                    <div id="content-detail-exam">
+                        <h4>Summary</h4>
+                        <p>
+                            Write a function that returns the sum of two numbers.
+                        </p>
+                    </div>
+                    <h4>INPUT/OUTPUT</h4>
+                    <div id="input-output">
+                        <ul>
+                            <li>[input] param 1 : integer</li>
+                            <li>[input] param 2 : array of length</li>
+                            <li>[output] output : integer</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div>
+                <div>
+                    <select class="form-control" id="select-language">
+                        <option>js</option>
+                        <option>c#</option>
+                    </select>
+                </div>
                 <div id="codeeditor"></div>
+                <div class="bottom-code-detail">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#menu1">Test Case</a></li>
+                        <li><a data-toggle="tab" href="#menu2">Console</a></li>
+                    </ul>
+
+                    <div class="tab-content" style="color:white;font-weight:bold;">
+                        <div id="menu1" class="tab-pane active in">
+                            <h3>Menu 1</h3>
+                            <p>Some content in menu 1.</p>
+                        </div>
+                        <div id="menu2" class="tab-pane">
+                            <h3>Menu 2</h3>
+                            <p>Some content in menu 2.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
