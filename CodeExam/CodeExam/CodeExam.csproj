@@ -206,6 +206,7 @@
     <Compile Include="Areas\Admin\Controllers\TestCaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Constant\Constant.cs" />
+    <Compile Include="Controllers\CompilerController.cs" />
     <Compile Include="Controllers\DirectionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LeaderController.cs" />
@@ -790,6 +791,7 @@
     <Folder Include="Areas\Admin\Views\DataType\" />
     <Folder Include="Areas\Admin\Views\Header\" />
     <Folder Include="AuthData\" />
+    <Folder Include="Views\Compiler\" />
     <Folder Include="Views\Header\" />
     <Folder Include="Views\Intro\" />
     <Folder Include="Views\UserHeader\" />
