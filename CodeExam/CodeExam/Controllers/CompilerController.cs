@@ -102,7 +102,32 @@ namespace CodeExam.Controllers
             }
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GenFileJs(string source, int taskId)
+        {
+            var task = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
+            var listTestCases = db.TestCases.Where(w => w.TaskId == task.TaskId);
+            string contentFile = "";
+            contentFile += source.Replace("Console","////Console.log").Replace("console", "////console.log").Replace("alert","////alert").Replace("Alert","////Alert");
+            int idx = 0;
+            foreach (var item in listTestCases)
+            {
+                contentFile += "if(process.argv[2] ==\"" + idx.ToString() + "\"){console.log(JSON.stringify(" + task.TaskName + "(";
 
+                var listTestCase = item.Input.Split(';');
+                foreach (var items in listTestCase)
+                {
+                    contentFile += HttpUtility.UrlDecode(items) + ",";
+                }
+                contentFile = contentFile.TrimEnd(',');
+                contentFile += ")));}";
+                idx++;
+            }
+            using (StreamWriter writetext = new StreamWriter("js_" + task.TaskId + "_1.cs"))
+            {
+                writetext.WriteLine(contentFile);
+            }
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult CompileCodeCSharp(int taskId)
         {
             string sourceFile = "csharp_" + taskId + "_1.cs";
@@ -131,16 +156,13 @@ namespace CodeExam.Controllers
                 }
                 isSuccess = false;
             }
-            return Json(isSuccess, JsonRequestBehavior.AllowGet);
+            
+            return Json(new { status = isSuccess, message = errMsg }, JsonRequestBehavior.AllowGet);
         }
-        private ActionResult RunCSharp(int taskId, bool isBuildSuccess)
+        private ActionResult RunCSharp(int taskId)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
-            if (!isBuildSuccess)
-            {
-                testCaseCount /= 2;
-            }
             string outOfTime = "";
             string line = "";
             for (int i = 0; i < testCaseCount; i++)
@@ -171,7 +193,7 @@ namespace CodeExam.Controllers
             }
             if (outOfTime != "")
             {
-                return Json(1, JsonRequestBehavior.AllowGet);
+                return Json(new { status = false, message = line }, JsonRequestBehavior.AllowGet);
             }
             else
             {
