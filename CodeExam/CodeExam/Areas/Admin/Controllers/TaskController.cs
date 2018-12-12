@@ -95,5 +95,12 @@ namespace CodeExam.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetDataType()
+        {
+            var dataTypes = db.DataTypes.ToList();
+
+            return Json(dataTypes, JsonRequestBehavior.AllowGet);
+        }
     }
 }

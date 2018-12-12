@@ -4,6 +4,16 @@
 }
 <script src="@Url.Content("~/Scripts/app/Task/TaskController.js")"></script>
 
+<style>
+    .modal-dialog {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0px 30px;
+    }
+</style>
+
+
 <div class="main-panel" ng-controller="TaskController">
     <!-- End Navbar -->
     <div class="content">
@@ -27,7 +37,7 @@
                                 <th>Level</th>
                                 <th>Point</th>
                                 @*<th>Input</th>
-                    <th>OutputType</th>*@
+                                    <th>OutputType</th>*@
                                 @*<th>Active</th>*@
                                 </thead>
                                 <tbody>
@@ -38,8 +48,8 @@
                                         <td>{{task.Point}}</td>
                                         <td class="td-actions text-right">
                                             @*<button type="button" rel="tooltip" title="Add Testcase" class="btn btn-warning btn-link btn-sm" ng-click="">
-                                                <i class="material-icons">add</i>
-                                            </button>*@
+                                                    <i class="material-icons">add</i>
+                                                </button>*@
                                             <button type="button" rel="tooltip" title="Details" class="btn btn-success btn-link btn-sm" ng-click="detailTask(task.TaskId)">
                                                 <i class="material-icons">info</i>
                                             </button>
@@ -67,17 +77,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pull-right">
-                        <a href="/Admin/TestCase" class="text-success">
-                            Add test case
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Modal/Edit add task-->
                 <div class="col-md-12">
                     <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="card-header-warning">
@@ -86,50 +91,66 @@
                                 </div>
                                 <div class="modal-body">
                                     <form>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Taskname</label>
-                                                    <input type="text" class="form-control" ng-model="task.TaskName">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Input</label>
-                                                    <textarea rows="1" class="form-control" ng-model="task.Input"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">OutputType</label>
-                                                    <input type="text" class="form-control" ng-model="task.OutputType">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Level</label>
-                                                    <select class="form-control" ng-model="task.TaskLevel" ng-options="level for level in Level">
-                                                        <option selected value="">Choose level</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Point</label>
-                                                    <select class="form-control" ng-model="task.Point" ng-options="point for point in Point">
-                                                        <option selected value="">Choose point</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="form-group">
-                                                    <label>Description</label>
+                                        <div style="height: 400px; overflow-y: auto;">
+                                            <div class="row">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" rows="4" ng-model="task.TaskDescription"></textarea>
+                                                        <label class="bmd-label-floating">Taskname</label>
+                                                        <input type="text" class="form-control" ng-model="task.TaskName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Level</label>
+                                                        <select class="form-control" ng-model="task.TaskLevel" ng-options="level for level in Level">
+                                                            <option selected value="">Choose level</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Point</label>
+                                                        <select class="form-control" ng-model="task.Point" ng-options="point for point in Point">
+                                                            <option selected value="">Choose point</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">OutputType</label>
+                                                        <select class="form-control" ng-model="task.OutputType" ng-options="type.DisplayName for type in dataTypes">
+                                                            <option selected value="">Choose output type</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" rows="4" ng-model="task.TaskDescription"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12" id="duplicate0">
+                                                    <span>Input</span>
+                                                    <button class="btn-primary pull-right" id="add-input" ng-click="addInput()">
+                                                        <i class="glyphicon glyphicon-plus"></i>Add Input
+                                                    </button>
+                                                    <div class="row container">
+                                                        <div class="form-group col-md-5">
+                                                            <label class="bmd-label-floating">Name</label>
+                                                            <input type="text" class="form-control" ng-model="task.InputName"></input>
+                                                        </div>
+                                                        <div class="form-group col-md-5">
+                                                            <label class="bmd-label-floating">Type</label>
+                                                            <input type="text" class="form-control" ng-model="task.InputType"></input>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,3 +237,24 @@
         </div>
     </div>
 </div>
+
+
+@*<script>
+    $('#add-input').click = duplicate;
+    var i = 0;
+
+    function duplicate() {
+        var original = $(`duplicate${i}`);
+        var clone = original.cloneNode(true);
+
+        var currentIndex = i;
+
+        clone.id = `duplicate${++i}`;
+        clone.childNodes[1].onclick = duplicate;
+        original.parentNode.appendChild(clone);
+
+        var preDuplicate = $(`#duplicate${currentIndex}`);
+        var child = $(`add-input`);
+        preDuplicate.removeChild(child);
+    }
+</script>*@

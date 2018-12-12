@@ -1,4 +1,4 @@
-﻿app.controller('TaskController', ['$scope', '$http', function ($scope, $http) {
+﻿app.controller('TaskController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
 
     //Paging
     $scope.ItemPaging = {};
@@ -16,13 +16,14 @@
     $scope.modalFunc = function () {
         //Get Lastest testcaseId;
         getLastestTestCaseId();
-
         $scope.modalTitle = 'Add Task';
         $scope.action = 'Add';
         $scope.tests = [];
         $('.form-group').removeClass('is-filled');
         $scope.task = {};
         $('#addTask').modal();
+
+       
     }
 
     // Test case
@@ -178,5 +179,36 @@
                 getAllTask();
             }
         })
+    }
+
+    getDataType();
+    $scope.dataTypes = [];
+    function getDataType(){
+        $http({
+            method: 'GET',
+            url: '/Task/GetDataType'
+        }).then(function success(res) {
+            $scope.dataTypes = res.data;
+        })
+    }
+
+    $scope.indexInput = 0;
+    $scope.addInput = function () {
+        var original = document.getElementById(`duplicate${$scope.indexInput}`);
+        var clone = original.cloneNode(true);
+
+        var currentIndexInput = $scope.indexInput;
+
+        clone.id = `duplicate${++$scope.indexInput}`;
+        clone.childNodes[3].onclick = $scope.addInput;
+        original.parentNode.appendChild(clone);
+
+        var preDuplicate = document.getElementById(`duplicate${currentIndexInput}`);
+        var child = document.getElementById(`add-input`);
+        preDuplicate.removeChild(child);
+    }
+
+    $scope.reloadPage = function () {
+        $scope.indexInput = 0;
     }
 }]);

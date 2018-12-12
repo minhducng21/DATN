@@ -17,5 +17,7 @@ namespace CodeExam
         public string DisplayName { get; set; }
 
         public int? DataTypeStatus { get; set; }
+
+        public string ExampleDataType { get; set; }
     }
 }
