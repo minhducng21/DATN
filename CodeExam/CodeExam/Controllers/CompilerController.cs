@@ -200,5 +200,46 @@ namespace CodeExam.Controllers
                 return Json(1, JsonRequestBehavior.AllowGet);
             }
         }
+        private ActionResult RunJS(int taskId)
+        {
+            var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
+            var testCaseCount = listTestCase.Count;
+            string outOfTime = "";
+            string line = "";
+            for (int i = 0; i < testCaseCount; i++)
+            {
+                var proc = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + taskId + "_1.js",
+                        Arguments = i.ToString(),
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = false,
+                        RedirectStandardError = true
+                    }
+                };
+                proc.Start();
+                if (!proc.WaitForExit(3000))
+                {
+                    outOfTime = "Out of time";
+                    proc.Kill();
+                    break;
+                }
+                if (!proc.StandardOutput.EndOfStream)
+                {
+                    line += proc.StandardOutput.ReadToEnd();
+                }
+            }
+            if (outOfTime != "")
+            {
+                return Json(new { status = false, message = line }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(1, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
