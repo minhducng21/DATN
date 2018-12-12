@@ -96,18 +96,18 @@ namespace CodeExam.Controllers
                 idx++;
             }
             contentFile += "}catch(Exception ex){System.Console.WriteLine(ex.StackTrace.ToString());}}}}";
-            using (StreamWriter writetext = new StreamWriter("csharp_" + task.TaskId + "_1.cs"))
+            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\csharp_" + task.TaskId + "_1.cs"))
             {
                 writetext.WriteLine(contentFile);
             }
-            return Json(1, JsonRequestBehavior.AllowGet);
+            return Json(new { status = true, message = "" }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GenFileJs(string source, int taskId)
         {
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
             var listTestCases = db.TestCases.Where(w => w.TaskId == task.TaskId);
             string contentFile = "";
-            contentFile += source.Replace("Console","////Console.log").Replace("console", "////console.log").Replace("alert","////alert").Replace("Alert","////Alert");
+            contentFile += source.Replace("Console", "////Console.log").Replace("console", "////console.log").Replace("alert", "////alert").Replace("Alert", "////Alert");
             int idx = 0;
             foreach (var item in listTestCases)
             {
@@ -122,11 +122,11 @@ namespace CodeExam.Controllers
                 contentFile += ")));}";
                 idx++;
             }
-            using (StreamWriter writetext = new StreamWriter("js_" + task.TaskId + "_1.cs"))
+            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + task.TaskId + "_1.js"))
             {
                 writetext.WriteLine(contentFile);
             }
-            return Json(1, JsonRequestBehavior.AllowGet);
+            return Json(new { status = true, message = "" }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult CompileCodeCSharp(int taskId)
         {
@@ -156,7 +156,7 @@ namespace CodeExam.Controllers
                 }
                 isSuccess = false;
             }
-            
+
             return Json(new { status = isSuccess, message = errMsg }, JsonRequestBehavior.AllowGet);
         }
         private ActionResult RunCSharp(int taskId)

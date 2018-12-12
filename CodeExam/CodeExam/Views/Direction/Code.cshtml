@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <div style="float:right;">
-                        <input type="button" value="Run" />
+                        <input type="button" value="Run" id="run-button" onclick="clickRun()" />
                         <input type="button" value="Submit" />
                     </div>
                 </div>
@@ -183,4 +183,16 @@
         lineNumbers: true,
         viewportMargin: 50
     });
+    function clickRun() {
+        $.ajax({
+            url: "/Compiler/GenFileJs",
+            type: "post",
+            data: {
+                source: editor.getValue(), taskId: 1
+            },
+            success: function (result) {
+                $('#result').html(result);
+            }
+        });
+    }
 </script>
