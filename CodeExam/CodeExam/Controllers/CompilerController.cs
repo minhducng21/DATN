@@ -171,7 +171,7 @@ namespace CodeExam.Controllers
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "csharp_" + taskId + "_1.exe",
+                        FileName = AppDomain.CurrentDomain.BaseDirectory+ "\\SourceCode\\csharp_" + taskId + "_1.exe",
                         Arguments = i.ToString(),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
