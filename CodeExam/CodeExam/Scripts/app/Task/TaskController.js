@@ -1,4 +1,4 @@
-﻿app.controller('TaskController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+﻿app.controller('TaskController', ['$scope', '$http', '$compile', function ($scope, $http, $compile) {
 
     //Paging
     $scope.ItemPaging = {};
@@ -23,7 +23,7 @@
         $scope.task = {};
         $('#addTask').modal();
 
-       
+
     }
 
     // Test case
@@ -183,32 +183,68 @@
 
     getDataType();
     $scope.dataTypes = [];
-    function getDataType(){
+    function getDataType() {
         $http({
             method: 'GET',
             url: '/Task/GetDataType'
         }).then(function success(res) {
             $scope.dataTypes = res.data;
-        })
+        });
     }
 
     $scope.indexInput = 0;
     $scope.addInput = function () {
         var original = document.getElementById(`duplicate${$scope.indexInput}`);
+        original.childNodes[3].onclick = removeElement;
         var clone = original.cloneNode(true);
 
         var currentIndexInput = $scope.indexInput;
 
         clone.id = `duplicate${++$scope.indexInput}`;
-        clone.childNodes[3].onclick = $scope.addInput;
+        clone.childNodes[5].onclick = $scope.addInput;
+        clone.childNodes[3].disabled = false;
+
+        clone.childNodes[3].onclick = removeElement;
+      
         original.parentNode.appendChild(clone);
 
         var preDuplicate = document.getElementById(`duplicate${currentIndexInput}`);
-        var child = document.getElementById(`add-input`);
-        preDuplicate.removeChild(child);
+        $scope.child = document.getElementById(`add-input`);
+        preDuplicate.removeChild($scope.child);
+
+        if (currentIndexInput == 0) {
+            original.childNodes[3].disabled = false;
+        }
     }
 
-    $scope.reloadPage = function () {
-        $scope.indexInput = 0;
+    function removeElement(e) {
+        if ($scope.indexInput == 1) {
+            e.currentTarget.disabled = true;
+        }
+        if (e.currentTarget.parentNode.childNodes.length == 9) {
+            var preElement = document.getElementById(`duplicate${--$scope.indexInput}`);
+            preElement.append($scope.child);
+        }
+        e.currentTarget.parentNode.remove();
+    }
+
+
+    $scope.test = function () {
+        var html = `<div id="duplicate" class="row container">
+                                                        <div class="form-group col-md-5 bmd-form-group">
+                                                            <label class="bmd-label-floating">Name</label>
+                                                            <input type="text" class="form-control" ng-model="task.InputName"></input>
+                                                        </div>
+                                                        <div class="form-group col-md-5">
+                                                            <select class="form-control" ng-model="task.InputType" @*ng-options="type.DisplayName for type in dataTypes"*@>
+                                                                <option selected value="">Choose input type</option>
+                                                                <option ng-repeat="type in dataTypes">{{type.DisplayName}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-danger" ng-click="removeDuplicate()">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </button>
+                                                    </div>`;
+        $('#parent').append($compile(html)($scope));
     }
 }]);

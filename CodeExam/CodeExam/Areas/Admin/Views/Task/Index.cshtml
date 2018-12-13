@@ -3,6 +3,8 @@
     ViewBag.Title = "Index";
 }
 <script src="@Url.Content("~/Scripts/app/Task/TaskController.js")"></script>
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"/>
+<script src="~/Scripts/jquery.duplicate.min.js"></script>
 
 <style>
     .modal-dialog {
@@ -137,20 +139,26 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12" id="duplicate0">
+                                                <div class="col-md-12" id="parent">
                                                     <span>Input</span>
-                                                    <button class="btn-primary pull-right" id="add-input" ng-click="addInput()">
+                                                    
+                                                    <button class="btn btn-primary pull-right" data-duplicate-add="inputt">
                                                         <i class="glyphicon glyphicon-plus"></i>Add Input
                                                     </button>
-                                                    <div class="row container">
+                                                    <div id="duplicate" data-duplicate="inputt" class="row container">
                                                         <div class="form-group col-md-5">
                                                             <label class="bmd-label-floating">Name</label>
                                                             <input type="text" class="form-control" ng-model="task.InputName"></input>
                                                         </div>
                                                         <div class="form-group col-md-5">
-                                                            <label class="bmd-label-floating">Type</label>
-                                                            <input type="text" class="form-control" ng-model="task.InputType"></input>
+                                                            <select class="form-control" ng-model="task.InputType" @*ng-options="type.DisplayName for type in dataTypes"*@>
+                                                                <option selected value="">Choose input type</option>
+                                                                <option ng-repeat="type in dataTypes" value="{{type.DataTypeId}}">{{type.DisplayName}}</option>
+                                                            </select>
                                                         </div>
+                                                        <button class="btn btn-danger" data-duplicate-remove="inputt">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,22 +247,3 @@
 </div>
 
 
-@*<script>
-    $('#add-input').click = duplicate;
-    var i = 0;
-
-    function duplicate() {
-        var original = $(`duplicate${i}`);
-        var clone = original.cloneNode(true);
-
-        var currentIndex = i;
-
-        clone.id = `duplicate${++i}`;
-        clone.childNodes[1].onclick = duplicate;
-        original.parentNode.appendChild(clone);
-
-        var preDuplicate = $(`#duplicate${currentIndex}`);
-        var child = $(`add-input`);
-        preDuplicate.removeChild(child);
-    }
-</script>*@
