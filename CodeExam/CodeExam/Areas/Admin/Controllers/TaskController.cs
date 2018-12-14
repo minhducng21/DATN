@@ -50,9 +50,23 @@ namespace CodeExam.Areas.Admin.Controllers
 
         public JsonResult GetTaskById(int id)
         {
-            var tests = db.TestCases.Where(t => t.TaskId == id).ToList();
+            var tests = db.TestCases.FirstOrDefault(t => t.TaskId == id);
+            string[] arrTestCase = tests.Input.Split(';');
+            List<TestCase> lstTestCases = new List<TestCase>();
+            for (int i = 0; i < arrTestCase.Length; i++)
+            {
+                TestCase test = new TestCase
+                {
+                    TestCaseId = tests.TestCaseId,
+                    Input = arrTestCase[i],
+                    Output = tests.Output,
+                    TaskId = tests.TaskId
+                };
+                lstTestCases.Add(test);
+            }
+
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == id);
-            return Json(new { task, tests }, JsonRequestBehavior.AllowGet);
+            return Json(new { task, lstTestCases }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Delete(int id)
@@ -82,7 +96,15 @@ namespace CodeExam.Areas.Admin.Controllers
 
         public JsonResult CreateTestCase(List<TestCase> tests)
         {
-            tests.ForEach(t => db.TestCases.Add(t));
+            string testcase = "";
+            tests.ForEach(t => testcase += t.Input + ";");
+            TestCase test = new TestCase
+            {
+                Input = testcase,
+                Output = tests[0].Output,
+                TaskId = tests[0].TaskId
+            };
+            db.TestCases.Add(test);
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
@@ -101,6 +123,12 @@ namespace CodeExam.Areas.Admin.Controllers
             var dataTypes = db.DataTypes.ToList();
 
             return Json(dataTypes, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCountData()
+        {
+            var data = db.DataTypes.ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
         }
     }
 }

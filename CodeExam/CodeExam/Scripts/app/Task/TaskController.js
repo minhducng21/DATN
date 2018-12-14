@@ -21,6 +21,7 @@
         $scope.tests = [];
         $('.form-group').removeClass('is-filled');
         $scope.task = {};
+        $scope.dataInput = [{ InputID: 0, InputName: 'arg1', InputType: '' }];
         $('#addTask').modal();
 
 
@@ -30,21 +31,39 @@
     $scope.openModalTestCase = () => {
         $scope.test = {};
         $('#addTestcase > .form-group').removeClass('is-filled');
-        $scope.titleModal = 'Add Testcase'
+        $scope.titleModal = 'Add Testcase';
         $scope.actionTestCase = 'Add';
         $('#addTestcase').modal();
         $('.fillId').addClass('is-filled');
     }
     $scope.tests = [];
-    $scope.addTestCase = (test) => {
-        if (test != null) {
-            test.TestCaseId = $scope.lastestTestCaseId;
-            $scope.tests.push(test);
-            $scope.lastestTestCaseId = $scope.lastestTestCaseId + 1;
+    $scope.addTestCase = (testCases) => {
+        if (testCases != null) {
+            var testCase = {
+                Input: [],
+                Output: testCases.Output
+            };
+            //testCase.Input = [];
+            //testCase.Output = testCases.Output;
+            for (var i = 0; i < testCases.length; i++) {
+                testCase.Input.push(`arg${i + 1}: ${testCases[i].Input}`);
+            }
+            $scope.tests.push(testCase);
+            
             $('.modal').css('overflow-x', 'hidden');
             $('.modal').css('overflow-y', 'auto');
             $('#addTestcase').modal('toggle');
         }
+
+
+        //if (test != null) {
+        //    test.TestCaseId = $scope.lastestTestCaseId;
+        //    $scope.tests.push(test);
+        //    $scope.lastestTestCaseId = $scope.lastestTestCaseId + 1;
+        //    $('.modal').css('overflow-x', 'hidden');
+        //    $('.modal').css('overflow-y', 'auto');
+        //    $('#addTestcase').modal('toggle');
+        //}
     }
     function getLastestTestCaseId() {
         $http({
@@ -67,10 +86,9 @@
         $scope.test = test;
         $scope.lastestTestCaseId = test.TestCaseId;
         $('.form-group').addClass('is-filled');
-        $scope.titleModal = 'Detail'
+        $scope.titleModal = 'Detail';
         $scope.actionTestCase = 'Edit';
         $('#addTestcase').modal();
-        //$('.fillId').addClass('is-filled');
     }
     $scope.editTestCase = (test) => {
         for (var i = 0; i < $scope.tests.length; i++) {
@@ -98,7 +116,27 @@
         });
     }
 
+    $scope.dataInput = [{ InputID: 0, InputName: 'arg1', InputType: '' }];
+    // Create a ele input
+    $scope.add = function () {
+        var input = { InputID: $scope.dataInput.length, InputName: '', InputType: '' };
+        $scope.dataInput.push(input);
+
+        $scope.testCases = [];
+        for (var i = 0; i < $scope.dataInput.length; i++) {
+            var testCase = { TestCaseID: i + 1, Input: '' };
+            $scope.testCases.push(testCase);
+        }
+    };
+
+
     $scope.addTask = (task, tests) => {
+        var inputName = '';
+        for (var i = 0; i < $scope.dataInput.length; i++) {
+            inputName += $scope.dataInput[i].InputName + ":" + $scope.dataInput[i].InputType + ";";
+        }
+        $scope.task.Input = inputName;
+
         $http({
             method: 'POST',
             url: '/Admin/Task/CreateTask',
@@ -123,6 +161,15 @@
         });
     }
 
+    //Remove element Input
+    $scope.delete = function (id) {
+        for (var i = 0; i < $scope.dataInput.length; i++) {
+            if ($scope.dataInput[i].InputID == id) {
+                $scope.dataInput.splice(i, 1);
+            }
+        }
+    }
+
     $scope.detailTask = (id) => {
         $scope.modalTitle = 'Edit Task';
         $scope.action = 'Edit';
@@ -132,10 +179,24 @@
             params: { id }
         }).then(function success(res) {
             $scope.task = res.data.task;
-            $scope.tests = res.data.tests;
+            $scope.tests = res.data.lstTestCases;
+
+            var arrInput = $scope.task.Input.split(';');
+
+            $scope.dataInput = [];
+            for (var i = 0; i < arrInput.length; i++) {
+                if (arrInput[i] != "") {
+                    var input = {};
+                    input.InputName = arrInput[i].split(":")[0];
+                    input.InputType = arrInput[i].split(":")[1];
+
+                    $scope.dataInput.push(input);
+                }
+            }
+
             $('#addTask').modal();
             $('.form-group').addClass('is-filled');
-        })
+        });
     }
 
     $scope.editTask = (task, tests) => {
@@ -145,9 +206,6 @@
             data: task
         }).then(function success(res) {
             if (res.data != 0) {
-                //for (var i = 0; i < tests.length; i++) {
-                //    tests[i].TaskId = res.data;
-                //}
                 $http({
                     method: 'POST',
                     url: '/Admin/Task/EditTestCase',
@@ -205,7 +263,7 @@
         clone.childNodes[3].disabled = false;
 
         clone.childNodes[3].onclick = removeElement;
-      
+
         original.parentNode.appendChild(clone);
 
         var preDuplicate = document.getElementById(`duplicate${currentIndexInput}`);
@@ -228,23 +286,8 @@
         e.currentTarget.parentNode.remove();
     }
 
+    $scope.save = function () {
 
-    $scope.test = function () {
-        var html = `<div id="duplicate" class="row container">
-                                                        <div class="form-group col-md-5 bmd-form-group">
-                                                            <label class="bmd-label-floating">Name</label>
-                                                            <input type="text" class="form-control" ng-model="task.InputName"></input>
-                                                        </div>
-                                                        <div class="form-group col-md-5">
-                                                            <select class="form-control" ng-model="task.InputType" @*ng-options="type.DisplayName for type in dataTypes"*@>
-                                                                <option selected value="">Choose input type</option>
-                                                                <option ng-repeat="type in dataTypes">{{type.DisplayName}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-danger" ng-click="removeDuplicate()">
-                                                            <i class="glyphicon glyphicon-trash"></i>
-                                                        </button>
-                                                    </div>`;
-        $('#parent').append($compile(html)($scope));
     }
+
 }]);

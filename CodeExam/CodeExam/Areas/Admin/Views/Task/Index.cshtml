@@ -7,7 +7,7 @@
 <script src="~/Scripts/jquery.duplicate.min.js"></script>
 
 <style>
-    .modal-dialog {
+    #abc {
         width: 100%;
         height: 100%;
         margin: 0;
@@ -84,8 +84,8 @@
                 <!-- Modal/Edit add task-->
                 <div class="col-md-12">
                     <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
+                        <div id="abc" class="modal-dialog">
+                            <div class="modal-content" style="width: 1280px !important">
                                 <div class="modal-header">
                                     <div class="card-header-warning">
                                         <h4 class="card-title text-warning">{{modalTitle}}</h4>
@@ -122,8 +122,9 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">OutputType</label>
-                                                        <select class="form-control" ng-model="task.OutputType" ng-options="type.DisplayName for type in dataTypes">
+                                                        <select class="form-control" ng-model="task.OutputType">
                                                             <option selected value="">Choose output type</option>
+                                                            <option ng-repeat="type in dataTypes" value="{{type.DataTypeName}}">{{type.DisplayName}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -141,22 +142,21 @@
                                             <div class="row">
                                                 <div class="col-md-12" id="parent">
                                                     <span>Input</span>
-                                                    
-                                                    <button class="btn btn-primary pull-right" data-duplicate-add="inputt">
+                                                    <button class="btn btn-primary pull-right" ng-click="add();">
                                                         <i class="glyphicon glyphicon-plus"></i>Add Input
                                                     </button>
-                                                    <div id="duplicate" data-duplicate="inputt" class="row container">
-                                                        <div class="form-group col-md-5">
-                                                            <label class="bmd-label-floating">Name</label>
-                                                            <input type="text" class="form-control" ng-model="task.InputName"></input>
+                                                    <div id="duplicate" class="row container" ng-repeat="d in dataInput">
+                                                        <div class="form-group col-md-5 bmd-form-group">
+                                                            <label class="bmd-label-static">Name</label>
+                                                            <input type="text" class="form-control" ng-model="d.InputName"></input>
                                                         </div>
                                                         <div class="form-group col-md-5">
-                                                            <select class="form-control" ng-model="task.InputType" @*ng-options="type.DisplayName for type in dataTypes"*@>
+                                                            <select class="form-control" ng-model="d.InputType">
                                                                 <option selected value="">Choose input type</option>
-                                                                <option ng-repeat="type in dataTypes" value="{{type.DataTypeId}}">{{type.DisplayName}}</option>
+                                                                <option ng-repeat="type in dataTypes" value="{{type.DataTypeName}}">{{type.DisplayName}}</option>
                                                             </select>
                                                         </div>
-                                                        <button class="btn btn-danger" data-duplicate-remove="inputt">
+                                                        <button type="button" class="btn btn-danger" ng-click="delete(d.InputID)">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </button>
                                                     </div>
@@ -181,17 +181,19 @@
                                                             <div class="tab-pane active" id="profile">
                                                                 <table class="table">
                                                                     <thead class="text-warning">
-                                                                    <th>ID</th>
+                                                                    @*<th>ID</th>*@
                                                                     <th>Input</th>
                                                                     <th>Output</th>
-                                                                    @*<th>Task</th>*@
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr ng-repeat="test in tests">
-                                                                            <td>{{test.TestCaseId}}</td>
-                                                                            <td>{{test.Input}}</td>
+                                                                        <tr ng-repeat="test in tests track by $index">
+                                                                            @*<td>{{test.TestCaseId}}</td>*@
+                                                                            <td>
+                                                                                <ul>
+                                                                                    <li ng-repeat="input in test.Input">{{input}}</li>
+                                                                                </ul>
+                                                                            </td>
                                                                             <td>{{test.Output}}</td>
-                                                                            @*<td>{{test.TaskId}}</td>*@
                                                                             <td class="td-actions text-right">
                                                                                 <button type="button" rel="tooltip" title="Edit Testcase" class="btn btn-primary btn-link btn-sm" ng-click="detailTestCase(test)">
                                                                                     <i class="material-icons">edit</i>
