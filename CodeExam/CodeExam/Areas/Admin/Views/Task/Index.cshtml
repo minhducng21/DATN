@@ -38,9 +38,6 @@
                                 <th>Name</th>
                                 <th>Level</th>
                                 <th>Point</th>
-                                @*<th>Input</th>
-                                    <th>OutputType</th>*@
-                                @*<th>Active</th>*@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="task in tasks">
@@ -49,9 +46,6 @@
                                         <td>{{task.TaskLevel}}</td>
                                         <td>{{task.Point}}</td>
                                         <td class="td-actions text-right">
-                                            @*<button type="button" rel="tooltip" title="Add Testcase" class="btn btn-warning btn-link btn-sm" ng-click="">
-                                                    <i class="material-icons">add</i>
-                                                </button>*@
                                             <button type="button" rel="tooltip" title="Details" class="btn btn-success btn-link btn-sm" ng-click="detailTask(task.TaskId)">
                                                 <i class="material-icons">info</i>
                                             </button>
@@ -97,7 +91,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Taskname</label>
+                                                        <label class="bmd-label-static">Taskname</label>
                                                         <input type="text" class="form-control" ng-model="task.TaskName">
                                                     </div>
                                                 </div>
@@ -105,7 +99,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Level</label>
+                                                        <label class="bmd-label-static">Level</label>
                                                         <select class="form-control" ng-model="task.TaskLevel" ng-options="level for level in Level">
                                                             <option selected value="">Choose level</option>
                                                         </select>
@@ -113,7 +107,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Point</label>
+                                                        <label class="bmd-label-static">Point</label>
                                                         <select class="form-control" ng-model="task.Point" ng-options="point for point in Point">
                                                             <option selected value="">Choose point</option>
                                                         </select>
@@ -121,7 +115,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">OutputType</label>
+                                                        <label class="bmd-label-static">OutputType</label>
                                                         <select class="form-control" ng-model="task.OutputType">
                                                             <option selected value="">Choose output type</option>
                                                             <option ng-repeat="type in dataTypes" value="{{type.DataTypeName}}">{{type.DisplayName}}</option>
@@ -132,7 +126,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Description</label>
+                                                        <label class="bmd-label-static">Description</label>
                                                         <div class="form-group">
                                                             <textarea class="form-control" rows="4" ng-model="task.TaskDescription"></textarea>
                                                         </div>
@@ -181,7 +175,6 @@
                                                             <div class="tab-pane active" id="profile">
                                                                 <table class="table">
                                                                     <thead class="text-warning">
-                                                                    @*<th>ID</th>*@
                                                                     <th>Input</th>
                                                                     <th>Output</th>
                                                                     </thead>
@@ -190,7 +183,7 @@
                                                                             @*<td>{{test.TestCaseId}}</td>*@
                                                                             <td>
                                                                                 <ul>
-                                                                                    <li ng-repeat="input in test.Input">{{input}}</li>
+                                                                                    <li ng-repeat="input in test.Input track by $index">arg{{$index + 1}}: {{input}}</li>
                                                                                 </ul>
                                                                             </td>
                                                                             <td>{{test.Output}}</td>

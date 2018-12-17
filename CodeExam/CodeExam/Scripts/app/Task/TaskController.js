@@ -22,14 +22,20 @@
         $('.form-group').removeClass('is-filled');
         $scope.task = {};
         $scope.dataInput = [{ InputID: 0, InputName: 'arg1', InputType: '' }];
+
+        $scope.testCases = [];
+        var testCase = {
+            Input: [],
+            Output: ''
+        };
+        $scope.testCases.push(testCase);
+
         $('#addTask').modal();
-
-
     }
 
     // Test case
     $scope.openModalTestCase = () => {
-        $scope.test = {};
+        
         $('#addTestcase > .form-group').removeClass('is-filled');
         $scope.titleModal = 'Add Testcase';
         $scope.actionTestCase = 'Add';
@@ -43,27 +49,17 @@
                 Input: [],
                 Output: testCases.Output
             };
-            //testCase.Input = [];
-            //testCase.Output = testCases.Output;
             for (var i = 0; i < testCases.length; i++) {
-                testCase.Input.push(`arg${i + 1}: ${testCases[i].Input}`);
+                testCase.Input.push(testCases[i].Input);
             }
             $scope.tests.push(testCase);
-            
+
             $('.modal').css('overflow-x', 'hidden');
             $('.modal').css('overflow-y', 'auto');
             $('#addTestcase').modal('toggle');
         }
 
 
-        //if (test != null) {
-        //    test.TestCaseId = $scope.lastestTestCaseId;
-        //    $scope.tests.push(test);
-        //    $scope.lastestTestCaseId = $scope.lastestTestCaseId + 1;
-        //    $('.modal').css('overflow-x', 'hidden');
-        //    $('.modal').css('overflow-y', 'auto');
-        //    $('#addTestcase').modal('toggle');
-        //}
     }
     function getLastestTestCaseId() {
         $http({
@@ -71,8 +67,6 @@
             url: '/Admin/Task/GetLastestTestCaseId'
         }).then(function success(res) {
             $scope.lastestTestCaseId = res.data;
-            //$('#addTestcase').modal();
-            //$('.fillId').addClass('is-filled');
         });
     }
     $scope.deleteTestCase = (id) => {
@@ -83,17 +77,30 @@
         }
     }
     $scope.detailTestCase = (test) => {
-        $scope.test = test;
-        $scope.lastestTestCaseId = test.TestCaseId;
+        $scope.testCases = [];
+        for (var i = 0; i < test.Input.length; i++) {
+            testCase = { Input: test.Input[i] };
+            $scope.testCases.TaskId = test.TaskId;
+            $scope.testCases.TestCaseId = test.TestCaseId;
+            $scope.testCases.Output = test.Output;
+            $scope.testCases.push(testCase);
+        }
+        
         $('.form-group').addClass('is-filled');
         $scope.titleModal = 'Detail';
         $scope.actionTestCase = 'Edit';
         $('#addTestcase').modal();
     }
     $scope.editTestCase = (test) => {
+        var inputTestCase = [];
+        for (var i = 0; i < test.length; i++) {
+            inputTestCase.push(test[i].Input);
+        }
+        test.Input = inputTestCase;
+
         for (var i = 0; i < $scope.tests.length; i++) {
             if ($scope.tests[i].TestCaseId == test.TestCaseId) {
-                $scope.test[i] = Object.assign({}, test);
+                $scope.tests[i] = Object.assign({}, test);
             }
         }
         $('.modal').css('overflow-x', 'hidden');
@@ -135,7 +142,7 @@
         for (var i = 0; i < $scope.dataInput.length; i++) {
             inputName += $scope.dataInput[i].InputName + ":" + $scope.dataInput[i].InputType + ";";
         }
-        $scope.task.Input = inputName;
+        task.Input = inputName;
 
         $http({
             method: 'POST',
@@ -144,6 +151,11 @@
         }).then(function success(res) {
             if (res.data != 0) {
                 for (var i = 0; i < tests.length; i++) {
+                    inputTest = '';
+                    for (var j = 0; j < tests[i].Input.length; j++) {
+                        inputTest += tests[i].Input[j] + ";";
+                    }
+                    tests[i].Input = inputTest;
                     tests[i].TaskId = res.data;
                 }
                 $http({
@@ -166,6 +178,7 @@
         for (var i = 0; i < $scope.dataInput.length; i++) {
             if ($scope.dataInput[i].InputID == id) {
                 $scope.dataInput.splice(i, 1);
+                $scope.testCases.splice(i, 1);
             }
         }
     }
@@ -179,7 +192,19 @@
             params: { id }
         }).then(function success(res) {
             $scope.task = res.data.task;
-            $scope.tests = res.data.lstTestCases;
+            $scope.tests = res.data.tests;
+
+            testCaseName = [];
+            for (var i = 0; i < $scope.tests.length; i++) {
+                testCaseName = $scope.tests[i].Input.split(';');
+                var inputRes = [];
+                for (var j = 0; j < testCaseName.length; j++) {
+                    if (testCaseName[j] != '') {
+                        inputRes.push(testCaseName[j]);
+                    }
+                }
+                $scope.tests[i].Input = inputRes;
+            }
 
             var arrInput = $scope.task.Input.split(';');
 
@@ -200,12 +225,28 @@
     }
 
     $scope.editTask = (task, tests) => {
+        var inputName = '';
+        for (var i = 0; i < $scope.dataInput.length; i++) {
+            inputName += $scope.dataInput[i].InputName + ":" + $scope.dataInput[i].InputType + ";";
+        }
+        task.Input = inputName;
+
         $http({
             method: 'POST',
             url: '/Admin/Task/Update',
             data: task
         }).then(function success(res) {
             if (res.data != 0) {
+
+                for (var i = 0; i < tests.length; i++) {
+                    inputTest = '';
+                    for (var j = 0; j < tests[i].Input.length; j++) {
+                        inputTest += tests[i].Input[j] + ";";
+                    }
+                    tests[i].Input = inputTest;
+                    //tests[i].TaskId = res.data;
+                }
+
                 $http({
                     method: 'POST',
                     url: '/Admin/Task/EditTestCase',
@@ -216,6 +257,8 @@
                         getAllTask();
                     }
                 });
+
+
             }
         });
     }

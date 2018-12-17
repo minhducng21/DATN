@@ -50,23 +50,25 @@ namespace CodeExam.Areas.Admin.Controllers
 
         public JsonResult GetTaskById(int id)
         {
-            var tests = db.TestCases.FirstOrDefault(t => t.TaskId == id);
-            string[] arrTestCase = tests.Input.Split(';');
-            List<TestCase> lstTestCases = new List<TestCase>();
-            for (int i = 0; i < arrTestCase.Length; i++)
-            {
-                TestCase test = new TestCase
-                {
-                    TestCaseId = tests.TestCaseId,
-                    Input = arrTestCase[i],
-                    Output = tests.Output,
-                    TaskId = tests.TaskId
-                };
-                lstTestCases.Add(test);
-            }
-
+            var tests = db.TestCases.Where(t => t.TaskId == id).ToList();
+            //string[] arrTestCase = tests.Input.Split(';');
+            //List<TestCase> lstTestCases = new List<TestCase>();
+            //for (int i = 0; i < tests.Count; i++)
+            //{
+            //    if (arrTestCase[i] != "" )
+            //    {
+            //        TestCase test = new TestCase
+            //        {
+            //            TestCaseId = tests.TestCaseId,
+            //            Input = arrTestCase[i],
+            //            Output = tests.Output,
+            //            TaskId = tests.TaskId
+            //        };
+            //        lstTestCases.Add(test);
+            //    }
+            //}
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == id);
-            return Json(new { task, lstTestCases }, JsonRequestBehavior.AllowGet);
+            return Json(new { task, tests }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Delete(int id)
@@ -96,15 +98,16 @@ namespace CodeExam.Areas.Admin.Controllers
 
         public JsonResult CreateTestCase(List<TestCase> tests)
         {
-            string testcase = "";
-            tests.ForEach(t => testcase += t.Input + ";");
-            TestCase test = new TestCase
+            for (int i = 0; i < tests.Count; i++)
             {
-                Input = testcase,
-                Output = tests[0].Output,
-                TaskId = tests[0].TaskId
-            };
-            db.TestCases.Add(test);
+                TestCase test = new TestCase
+                {
+                    Input = tests[i].Input,
+                    Output = tests[i].Output,
+                    TaskId = tests[i].TaskId
+                };
+                db.TestCases.Add(test);
+            }
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
