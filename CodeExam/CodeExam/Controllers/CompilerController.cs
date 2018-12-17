@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CodeExam.Models;
+using CodeExam.ViewModels;
 
 namespace CodeExam.Controllers
 {
@@ -117,13 +118,13 @@ namespace CodeExam.Controllers
                 foreach (var items in listTestCase)
                 {
                     contentFile += HttpUtility.UrlDecode(items) + ",";
-                    
+
                 }
                 contentFile = contentFile.TrimEnd(',');
                 contentFile += ")));}";
                 idx++;
             }
-            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + task.TaskId + "_1.js"))
+            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + task.TaskId + "_" + User.Identity.Name + ".js"))
             {
                 writetext.WriteLine(contentFile);
             }
@@ -172,7 +173,7 @@ namespace CodeExam.Controllers
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = AppDomain.CurrentDomain.BaseDirectory+ "\\SourceCode\\csharp_" + taskId + "_1.exe",
+                        FileName = AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\csharp_" + taskId + "_"+ User.Identity.Name + ".exe",
                         Arguments = i.ToString(),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
@@ -188,6 +189,10 @@ namespace CodeExam.Controllers
                     break;
                 }
                 if (!proc.StandardOutput.EndOfStream)
+                {
+                    line += proc.StandardOutput.ReadToEnd();
+                }
+                if (!proc.StandardError.EndOfStream)
                 {
                     line += proc.StandardOutput.ReadToEnd();
                 }
@@ -205,16 +210,17 @@ namespace CodeExam.Controllers
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
-            string outOfTime = "";
             string line = "";
+            RunResult runResult = new RunResult();
             for (int i = 0; i < testCaseCount; i++)
             {
+                TestCaseResult item = new TestCaseResult();
                 var proc = new Process
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + taskId + "_1.js",
-                        Arguments = i.ToString(),
+                        FileName = "cmd.exe",
+                        Arguments = @"/C Node G:\Hoc\js_"+taskId+"_"+User.Identity.Name+".js " + i.ToString(),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         CreateNoWindow = false,
@@ -224,23 +230,23 @@ namespace CodeExam.Controllers
                 proc.Start();
                 if (!proc.WaitForExit(3000))
                 {
-                    outOfTime = "Out of time";
+                    runResult.errMsg = "Out of time";
+                    runResult.isSuccess = false;
                     proc.Kill();
                     break;
                 }
                 if (!proc.StandardOutput.EndOfStream)
                 {
-                    line += proc.StandardOutput.ReadToEnd();
+                    line = proc.StandardOutput.ReadLine();
+                }
+                if (!proc.StandardError.EndOfStream)
+                {
+                    runResult.errMsg += proc.StandardError.ReadToEnd();
+                    runResult.isSuccess = false;
+                    break;
                 }
             }
-            if (outOfTime != "")
-            {
-                return Json(new { status = false, message = line }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(1, JsonRequestBehavior.AllowGet);
-            }
+            return Json(runResult, JsonRequestBehavior.AllowGet);
         }
     }
 }

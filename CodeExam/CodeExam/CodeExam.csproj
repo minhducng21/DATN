@@ -269,6 +269,7 @@
     <Compile Include="Models\TestCase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\TestCaseResult.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\GoogleAccViewModel.cs" />
