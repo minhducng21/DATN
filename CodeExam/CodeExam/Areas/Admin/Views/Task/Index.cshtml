@@ -3,8 +3,9 @@
     ViewBag.Title = "Index";
 }
 <script src="@Url.Content("~/Scripts/app/Task/TaskController.js")"></script>
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"/>
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/jquery.duplicate.min.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
 
 <style>
     #abc {
@@ -14,7 +15,6 @@
         padding: 0px 30px;
     }
 </style>
-
 
 <div class="main-panel" ng-controller="TaskController">
     <!-- End Navbar -->
@@ -128,7 +128,7 @@
                                                     <div class="form-group">
                                                         <label class="bmd-label-static">Description</label>
                                                         <div class="form-group">
-                                                            <textarea class="form-control" rows="4" ng-model="task.TaskDescription"></textarea>
+                                                            <textarea class="form-control" ck-editor rows="10" ng-model="task.TaskDescription"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
