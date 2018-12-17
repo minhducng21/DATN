@@ -20,7 +20,7 @@ namespace CodeExam
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                ExpireTimeSpan = TimeSpan.FromMinutes(5),
+                //ExpireTimeSpan = TimeSpan.FromMinutes(5),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Login/Index"),
                 ReturnUrlParameter = "/Home/Index"
