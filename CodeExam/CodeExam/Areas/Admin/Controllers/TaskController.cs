@@ -51,6 +51,22 @@ namespace CodeExam.Areas.Admin.Controllers
         public JsonResult GetTaskById(int id)
         {
             var tests = db.TestCases.Where(t => t.TaskId == id).ToList();
+            //string[] arrTestCase = tests.Input.Split(';');
+            //List<TestCase> lstTestCases = new List<TestCase>();
+            //for (int i = 0; i < tests.Count; i++)
+            //{
+            //    if (arrTestCase[i] != "" )
+            //    {
+            //        TestCase test = new TestCase
+            //        {
+            //            TestCaseId = tests.TestCaseId,
+            //            Input = arrTestCase[i],
+            //            Output = tests.Output,
+            //            TaskId = tests.TaskId
+            //        };
+            //        lstTestCases.Add(test);
+            //    }
+            //}
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == id);
             return Json(new { task, tests }, JsonRequestBehavior.AllowGet);
         }
@@ -82,7 +98,16 @@ namespace CodeExam.Areas.Admin.Controllers
 
         public JsonResult CreateTestCase(List<TestCase> tests)
         {
-            tests.ForEach(t => db.TestCases.Add(t));
+            for (int i = 0; i < tests.Count; i++)
+            {
+                TestCase test = new TestCase
+                {
+                    Input = tests[i].Input,
+                    Output = tests[i].Output,
+                    TaskId = tests[i].TaskId
+                };
+                db.TestCases.Add(test);
+            }
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
@@ -94,6 +119,19 @@ namespace CodeExam.Areas.Admin.Controllers
             tests.ForEach(t => db.TestCases.Add(t));
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDataType()
+        {
+            var dataTypes = db.DataTypes.ToList();
+
+            return Json(dataTypes, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCountData()
+        {
+            var data = db.DataTypes.ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
         }
     }
 }

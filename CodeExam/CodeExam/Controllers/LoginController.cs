@@ -66,9 +66,7 @@ namespace CodeExam.Areas.Controllers
                     {
                         try
                         {
-                            Session["Role"] = user.RoleId.ToString();
-                            Session["ID"] = obj.UserId.ToString();
-                            SignInUser(obj.UserName, user.Password, obj.SocialId, obj.RoleId, user.IsPersistent);
+                            SignInUser(obj.Email, obj.UserName, user.Password, obj.SocialId, obj.RoleId, true);
                             return RedirectToLocal(ReturnUrl, obj.RoleId);
                         }
                         catch (Exception ex)
@@ -110,7 +108,7 @@ namespace CodeExam.Areas.Controllers
                 var obj = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
                 if (obj != null)
                 {
-                    SignInUser(obj.UserName, obj.Password, obj.SocialId, obj.RoleId, false);
+                    SignInUser(obj.Email, obj.UserName, obj.Password, obj.SocialId, obj.RoleId, true);
                     return RedirectToAction("Index", "Direction");
                 }
                 User user = new User();
@@ -121,7 +119,7 @@ namespace CodeExam.Areas.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
                 var currentUser = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
-                SignInUser(currentUser.UserName, currentUser.Password, currentUser.SocialId, currentUser.RoleId, false);
+                SignInUser(obj.Email, currentUser.UserName, currentUser.Password, currentUser.SocialId, currentUser.RoleId, true);
                 return RedirectToAction("Index", "Direction");
             }
             return RedirectToAction("Index", "Login");
@@ -147,7 +145,7 @@ namespace CodeExam.Areas.Controllers
             return RedirectToAction("Index", "Home", new { area = "Admin" });
         }
 
-        private void SignInUser(string username, string password, string socialId, int roleId, bool isPersistene)
+        private void SignInUser(string email, string username, string password, string socialId, int roleId, bool isPersistene)
         {
             var claims = new List<Claim>();
             try
@@ -156,11 +154,13 @@ namespace CodeExam.Areas.Controllers
                 {
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, socialId));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));
                 }
                 else
                 {
                     claims.Add(new Claim(ClaimTypes.Name, username));
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
                 }
 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);

@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201811230930099_AddActiveCode-User.Designer.cs">
       <DependentUpon>201811230930099_AddActiveCode-User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812121550560_EditDataType.cs" />
+    <Compile Include="Migrations\201812121550560_EditDataType.Designer.cs">
+      <DependentUpon>201812121550560_EditDataType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthAttribute.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
@@ -824,6 +828,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811230930099_AddActiveCode-User.resx">
       <DependentUpon>201811230930099_AddActiveCode-User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121550560_EditDataType.resx">
+      <DependentUpon>201812121550560_EditDataType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

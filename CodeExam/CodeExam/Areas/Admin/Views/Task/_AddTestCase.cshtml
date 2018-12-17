@@ -9,27 +9,23 @@
             </div>
             <div class="modal-body">
                 <form name="form" novalidate>
+
                     <div class="row">
                         <div class="col-md-10">
-                            <div class="form-group fillId">
-                                <label class="bmd-label-floating">ID</label>
-                                <input type="text" disabled ng-model="lastestTestCaseId" class="form-control ">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-static">Input</label>
+                                <div ng-repeat="t in testCases track by $index">
+                                    <input ng-model="t.Input" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-10">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Input</label>
-                                <textarea ng-model="test.Input" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Output</label>
-                                <input type="text" ng-model="test.Output" class="form-control">
+                                <label class="bmd-label-static">Output</label>
+                                <input type="text" ng-model="testCases.Output" class="form-control">
+                                <input type="text" hidden ng-model="lastestTestCaseId" class="form-control ">
                             </div>
                         </div>
                     </div>
@@ -37,8 +33,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-show="actionTestCase=='Add'" class="btn btn-warning" ng-click="addTestCase(test)">{{actionTestCase}}</button>
-                <button ng-show="actionTestCase=='Edit'" class="btn btn-warning" ng-click="editTestCase(test)">{{actionTestCase}}</button>
+                <button ng-show="actionTestCase=='Add'" class="btn btn-warning" ng-click="addTestCase(testCases)">{{actionTestCase}}</button>
+                <button ng-show="actionTestCase=='Edit'" class="btn btn-warning" ng-click="editTestCase(testCases)">{{actionTestCase}}</button>
             </div>
         </div>
     </div>
