@@ -117,6 +117,7 @@ namespace CodeExam.Controllers
                 foreach (var items in listTestCase)
                 {
                     contentFile += HttpUtility.UrlDecode(items) + ",";
+                    
                 }
                 contentFile = contentFile.TrimEnd(',');
                 contentFile += ")));}";
@@ -200,7 +201,7 @@ namespace CodeExam.Controllers
                 return Json(1, JsonRequestBehavior.AllowGet);
             }
         }
-        private ActionResult RunJS(int taskId)
+        public ActionResult RunJS(int taskId)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
