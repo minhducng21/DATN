@@ -17,7 +17,7 @@ namespace CodeExam.ViewModels
         public RunResult()
         {
             detail = new List<TestCaseResult>();
-
+            isSuccess = true;
         }
         public bool isSuccess { get; set; }
 

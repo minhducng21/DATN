@@ -97,7 +97,7 @@ namespace CodeExam.Controllers
                 idx++;
             }
             contentFile += "}catch(Exception ex){System.Console.WriteLine(ex.StackTrace.ToString());}}}}";
-            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\csharp_" + task.TaskId + "_1.cs"))
+            using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_1.cs"))
             {
                 writetext.WriteLine(contentFile);
             }
@@ -108,7 +108,7 @@ namespace CodeExam.Controllers
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
             var listTestCases = db.TestCases.Where(w => w.TaskId == task.TaskId);
             string contentFile = "";
-            contentFile += source.Replace("Console", "////Console.log").Replace("console", "////console.log").Replace("alert", "////alert").Replace("Alert", "////Alert");
+            contentFile += source.Replace("Console", @"//Console.log").Replace("console", @"//console.log").Replace("alert", @"//alert").Replace("Alert", @"//Alert");
             int idx = 0;
             foreach (var item in listTestCases)
             {
@@ -124,7 +124,7 @@ namespace CodeExam.Controllers
                 contentFile += ")));}";
                 idx++;
             }
-            using (StreamWriter writetext = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\js_" + task.TaskId + "_" + User.Identity.Name + ".js"))
+            using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\js_" + task.TaskId + "_" + User.Identity.Name + ".js"))
             {
                 writetext.WriteLine(contentFile);
             }
@@ -165,52 +165,6 @@ namespace CodeExam.Controllers
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
-            string outOfTime = "";
-            string line = "";
-            for (int i = 0; i < testCaseCount; i++)
-            {
-                var proc = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = AppDomain.CurrentDomain.BaseDirectory + "\\SourceCode\\csharp_" + taskId + "_"+ User.Identity.Name + ".exe",
-                        Arguments = i.ToString(),
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        CreateNoWindow = false,
-                        RedirectStandardError = true
-                    }
-                };
-                proc.Start();
-                if (!proc.WaitForExit(3000))
-                {
-                    outOfTime = "Out of time";
-                    proc.Kill();
-                    break;
-                }
-                if (!proc.StandardOutput.EndOfStream)
-                {
-                    line += proc.StandardOutput.ReadToEnd();
-                }
-                if (!proc.StandardError.EndOfStream)
-                {
-                    line += proc.StandardOutput.ReadToEnd();
-                }
-            }
-            if (outOfTime != "")
-            {
-                return Json(new { status = false, message = line }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(1, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public ActionResult RunJS(int taskId)
-        {
-            var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
-            var testCaseCount = listTestCase.Count;
-            string line = "";
             RunResult runResult = new RunResult();
             for (int i = 0; i < testCaseCount; i++)
             {
@@ -219,8 +173,8 @@ namespace CodeExam.Controllers
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "cmd.exe",
-                        Arguments = @"/C Node G:\Hoc\js_"+taskId+"_"+User.Identity.Name+".js " + i.ToString(),
+                        FileName = "\""+Server.MapPath("~") + "\\SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe\"",
+                        Arguments = i.ToString(),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         CreateNoWindow = false,
@@ -237,7 +191,52 @@ namespace CodeExam.Controllers
                 }
                 if (!proc.StandardOutput.EndOfStream)
                 {
-                    line = proc.StandardOutput.ReadLine();
+                    item.Result = proc.StandardOutput.ReadLine();
+                    item.CompareExpection = item.Result == listTestCase[i].Output;
+                    runResult.detail.Add(item);
+                }
+                if (!proc.StandardError.EndOfStream)
+                {
+                    runResult.errMsg += proc.StandardError.ReadToEnd();
+                    runResult.isSuccess = false;
+                    break;
+                }
+            }
+            return Json(runResult, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult RunJS(int taskId)
+        {
+            var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
+            var testCaseCount = listTestCase.Count;
+            RunResult runResult = new RunResult();
+            for (int i = 0; i < testCaseCount; i++)
+            {
+                TestCaseResult item = new TestCaseResult();
+                var proc = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "cmd.exe",
+                        Arguments = "/C Node \"" + Server.MapPath("~") + "SourceCode\\js_" + taskId + "_" + User.Identity.Name + ".js\" " + i.ToString(),
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = false,
+                        RedirectStandardError = true
+                    }
+                };
+                proc.Start();
+                if (!proc.WaitForExit(3000))
+                {
+                    runResult.errMsg = "Out of time";
+                    runResult.isSuccess = false;
+                    proc.Kill();
+                    break;
+                }
+                if (!proc.StandardOutput.EndOfStream)
+                {
+                    item.Result = proc.StandardOutput.ReadLine();
+                    item.CompareExpection = item.Result == listTestCase[i].Output;
+                    runResult.detail.Add(item);
                 }
                 if (!proc.StandardError.EndOfStream)
                 {

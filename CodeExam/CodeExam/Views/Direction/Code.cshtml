@@ -184,10 +184,10 @@
     });
     function clickRun() {
         $.ajax({
-            url: "/Compiler/GenFileJs",
+            url: "/Compiler/RunJS",
             type: "post",
             data: {
-                source: editor.getValue(),taskId: 8
+                taskId: 8
             },
             success: function (result) {
                 $('#result').html(result);
