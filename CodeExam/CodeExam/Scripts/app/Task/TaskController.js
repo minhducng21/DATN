@@ -35,6 +35,16 @@
 
     // Test case
     $scope.openModalTestCase = () => {
+        for (var i = 0; i < $scope.testCases.length; i++) {
+            for (var j = 0; j < $scope.dataTypes.length; j++) {
+                if ($scope.dataInput[i].InputType == $scope.dataTypes[j].DataTypeName) {
+                    $scope.testCases[i].Input = $scope.dataTypes[j].ExampleDataType;
+                }
+                if ($scope.task.OutputType == $scope.dataTypes[j].DataTypeName) {
+                    $scope.testCases.Output = $scope.dataTypes[j].ExampleDataType;
+                }
+            }
+        }
         
         $('#addTestcase > .form-group').removeClass('is-filled');
         $scope.titleModal = 'Add Testcase';
@@ -91,6 +101,7 @@
         $scope.actionTestCase = 'Edit';
         $('#addTestcase').modal();
     }
+
     $scope.editTestCase = (test) => {
         var inputTestCase = [];
         for (var i = 0; i < test.length; i++) {
@@ -153,7 +164,7 @@
                 for (var i = 0; i < tests.length; i++) {
                     inputTest = '';
                     for (var j = 0; j < tests[i].Input.length; j++) {
-                        inputTest += tests[i].Input[j] + ";";
+                        inputTest += encodeURIComponent(tests[i].Input[j]) + ";";
                     }
                     tests[i].Input = inputTest;
                     tests[i].TaskId = res.data;
@@ -200,7 +211,7 @@
                 var inputRes = [];
                 for (var j = 0; j < testCaseName.length; j++) {
                     if (testCaseName[j] != '') {
-                        inputRes.push(testCaseName[j]);
+                        inputRes.push(decodeURIComponent(testCaseName[j]));
                     }
                 }
                 $scope.tests[i].Input = inputRes;
@@ -218,7 +229,6 @@
                     $scope.dataInput.push(input);
                 }
             }
-
             $('#addTask').modal();
             $('.form-group').addClass('is-filled');
         });
@@ -244,7 +254,6 @@
                         inputTest += tests[i].Input[j] + ";";
                     }
                     tests[i].Input = inputTest;
-                    //tests[i].TaskId = res.data;
                 }
 
                 $http({

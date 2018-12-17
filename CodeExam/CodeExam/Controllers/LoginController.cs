@@ -30,6 +30,7 @@ namespace CodeExam.Areas.Controllers
             {
                 if (Request.IsAuthenticated)
                 {
+
                     var userName = User.Identity.Name;
                     var obj = db.Users.FirstOrDefault(d => d.UserName.Equals(userName));
                     return RedirectToLocal(ReturnUrl, obj.RoleId);

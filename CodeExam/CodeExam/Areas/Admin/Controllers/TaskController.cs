@@ -51,22 +51,6 @@ namespace CodeExam.Areas.Admin.Controllers
         public JsonResult GetTaskById(int id)
         {
             var tests = db.TestCases.Where(t => t.TaskId == id).ToList();
-            //string[] arrTestCase = tests.Input.Split(';');
-            //List<TestCase> lstTestCases = new List<TestCase>();
-            //for (int i = 0; i < tests.Count; i++)
-            //{
-            //    if (arrTestCase[i] != "" )
-            //    {
-            //        TestCase test = new TestCase
-            //        {
-            //            TestCaseId = tests.TestCaseId,
-            //            Input = arrTestCase[i],
-            //            Output = tests.Output,
-            //            TaskId = tests.TaskId
-            //        };
-            //        lstTestCases.Add(test);
-            //    }
-            //}
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == id);
             return Json(new { task, tests }, JsonRequestBehavior.AllowGet);
         }
