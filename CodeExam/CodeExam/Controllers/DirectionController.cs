@@ -10,7 +10,7 @@ namespace CodeExam.Controllers
     [AuthAttribute]
     public class DirectionController : Controller
     {
-
+        private CodeWarDbContext db = new CodeWarDbContext();
         public ActionResult Index()
         {
             return View();
@@ -24,6 +24,16 @@ namespace CodeExam.Controllers
         public ActionResult Code()
         {
             return View();
+        }
+
+        public JsonResult GetAllTask(int page, int pageSize)
+        {
+            var listTasks = db.Tasks.OrderByDescending(p => p.TaskId).
+                Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            var count = db.Tasks.Count();
+            return Json(new { listTasks, count}, JsonRequestBehavior.AllowGet);
         }
     }
 }

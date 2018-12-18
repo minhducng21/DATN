@@ -8,24 +8,23 @@
 <script src="~/Content/mode/javascript/javascript.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
+    body{
+        font-size: 14px;
+    }
+
     .nav-custom > li.hover {
         color: white;
     }
 
-    #codeeditor {
-        width: 1020px;
-    }
-
     .content-exam {
-        width: 500px;
         overflow: auto;
         border: 1px black solid;
-        height: 665px;
+        height: 500px;
         background-color: rgb(229,235,242);
     }
 
     .content-code-detail {
-        display: -webkit-box;
+        width: 100%;
         margin-top: 10px;
     }
 
@@ -35,11 +34,10 @@
     }
 
     .CodeMirror {
-        height: 400px;
     }
 
     #select-language, #select-language:focus, #select-language:visited, #select-language:active {
-        color: white !important;
+        color: #8291a3;
         background-color: #212b37 !important;
         border-color: #fff;
     }
@@ -62,7 +60,6 @@
         margin-left: 25px;
         color: white;
         padding-left: 10px;
-        padding-right: 870px;
         padding-bottom: 5px;
         vertical-align: middle;
     }
@@ -77,9 +74,6 @@
         height: 50px;
     }
     .tab-content {
-        overflow: auto;
-        width: 1030px;
-        height: 133px;
     }
     #collapseExample {
         margin-left: 25px;
@@ -90,32 +84,36 @@
     .list-param{
         margin-left:10px;
     }
+    .CodeMirror-gutters {
+        background: #0f0f0f;
+        border: none;
+    }
 </style>
 
 <div class="container">
     <!--Header-->
-    <div class="row" style="background: #111222; color: white;">
+    <div class="row" style="background: #33485f; color: white;">
         <div>
             <a href="/Direction" style="color: white;"><i class="glyphicon glyphicon-arrow-left"><span> BACK</span></i></a>
         </div>
         <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>Add</span></div>
     </div>
 
-    <div class="row" ;>
-        <div class="content-code-detail">
-            <div class="content-exam col-md-4" id="content-exam">
-                <div id="info-exam">
-                    <span>Easy</span>
-                    <span>Point: 300</span>
+    <div class="row">
+        <div class="content-code-detail" style="position: relative;">
+            <div class="content-exam col-md-3" id="content-exam">
+                <div id="info-exam" style="font-size: 16px;">
+                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> Easy</span> 
+                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg"/> 300</span>
                 </div>
                 <div id="detail-exam">
                     <div id="content-detail-exam">
-                        <h4>Summary</h4>
+                        <h4 class="text-info">Summary</h4>
                         <p>
                             Write a function that returns the sum of two numbers.
                         </p>
                     </div>
-                    <h4>INPUT/OUTPUT</h4>
+                    <h4 class="text-info">INPUT/OUTPUT</h4>
                     <div id="input-output">
                         <ul>
                             <li>[input] param 1 : integer</li>
@@ -125,31 +123,33 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
-                <div>
-                    <select class="form-control" id="select-language" >
-                        <option value="js">js</option>
-                        <option value="csharp">c#</option>
-                    </select>
+            <div class="col-md-9">
+                <div class="row" style="background: #0f0f0f; border-bottom: 1px solid;">
+                    <div class="pull-right">
+                        <select id="select-language" style="border: 1px solid #8291a3">
+                            <option value="js">Javascript</option>
+                            <option value="csharp">C#</option>
+                        </select>
+                    </div>
                 </div>
+                
                 <div id="codeeditor"></div>
-                <div class="bottom-code-detail">
+                <div class="bottom-code-detail" style="height: 212px;">
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#menu1">Test Case</a></li>
                         <li><a data-toggle="tab" href="#menu2">Console</a></li>
                     </ul>
-
                     <div class="tab-content" style="color:white;font-weight:bold;">
                         <div id="menu1" class="tab-pane active in">
                             <a class="collapse-testcase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                Link with href
+                                TestCase 1
                             </a>
                             <div class="collapse" id="collapseExample">
                                 <div class="input-testcase">
                                     <p>Input:</p>
                                     <div class="list-param">
-                                        <span>param1:22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</span>
-                                        <span>param2:22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</span>
+                                        <span>param1: 2222222222222222222222222222222222222222</span>
+                                        <span>param2: 2222222222222222222222222222222222222222</span>
                                     </div>
                                 </div>
                                 <div class="ouput-testcase">
@@ -160,14 +160,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="menu2" class="tab-pane">
+                        <div id="menu2" class="tab-pane" style="overflow: auto">
                             <h3>Menu 2</h3>
                             <p>Some content in menu 2.</p>
                         </div>
                     </div>
-                    <div style="float:right;">
-                        <input type="button" value="Run" id="run-button" onclick="clickRun()" />
-                        <input type="button" value="Submit" />
+                    <div class="row" style="bottom: 0; justify-content: flex-end;">
+                        <input class="btn btn-info" type="button" value="Run" id="run-button" onclick="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
+                        <input class="btn btn-success" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                     </div>
                 </div>
             </div>

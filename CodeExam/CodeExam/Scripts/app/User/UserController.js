@@ -7,11 +7,11 @@
     $scope.ItemPaging.currentPage = 1;
     $scope.childsPageChanged = () => {
         getListUser();
-    }
+    };
     $scope.action = {
         ADD: 1,
         EDIT: 2
-    }
+    };
 
 
     $scope.user = [];
@@ -26,7 +26,7 @@
         $scope.user = {};
         $('.form-group').removeClass('is-filled');
         $('#addUser').modal();
-    }
+    };
 
     $scope.getRole = () => {
         $http({
@@ -35,7 +35,7 @@
         }).then(function success(res) {
             $scope.roles = res.data;
         });
-    }
+    };
 
     $scope.getUserById = id => {
         $http({
@@ -43,13 +43,13 @@
             url: '/Admin/User/GetUserById?id=' + id
         }).then(function success(res) {
             $scope.user = res.data;
-            });
+        });
         $scope.titleModal = "User Detail";
         $scope.isAction = $scope.action.EDIT;
         $('#rePass').hide();
         $('.form-group').addClass('is-filled');
         $('#addUser').modal();
-    }
+    };
 
     $scope.editUser = user => {
         $http({
@@ -71,8 +71,8 @@
                 $('#notify').modal();
                 $('#addUser').modal('toggle');
             }
-        })
-    }
+        });
+    };
 
     function getListUser() {
         var data = {};
@@ -86,7 +86,7 @@
         }).then(function success(res) {
             $scope.users = res.data.results;
             $scope.ItemPaging.total = res.data.count;
-        })
+        });
     }
 
     $scope.addUser = (user) => {
@@ -115,25 +115,25 @@
                     $('#addUser').modal('toggle');
                     $('#notify').modal();
                 }
-            })
+            });
         }
-    }
-
+    };
+        
     $scope.confirmDelete = (id) => {
         $scope.deleteUserId = id;
         $('#delete').modal();
-    }
+    };
     $scope.deleteUser = () => {
         var id = $scope.deleteUserId;
         $http({
             method: 'POST',
             url: '/Admin/User/DeleteUser',
-            data: {id}
+            data: { id }
         }).then(function success(res) {
             if (res.data == 0) {
                 getListUser();
                 $('#delete').modal('toggle');
             }
-        })
-    }
+        });
+    };
 }]);
