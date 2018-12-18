@@ -23,7 +23,7 @@ namespace CodeExam.Controllers
         }
         static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json" };
 
-        public ActionResult GenFileCSharp(string source, int taskId)
+        public JsonResult GenFileCSharp(string source, int taskId)
         {
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
             var listTestCases = db.TestCases.Where(w => w.TaskId == task.TaskId);
@@ -103,7 +103,7 @@ namespace CodeExam.Controllers
             }
             return Json(new { status = true, message = "" }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GenFileJs(string source, int taskId)
+        public JsonResult GenFileJs(string source, int taskId)
         {
             var task = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
             var listTestCases = db.TestCases.Where(w => w.TaskId == task.TaskId);
@@ -130,7 +130,7 @@ namespace CodeExam.Controllers
             }
             return Json(new { status = true, message = "" }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult CompileCodeCSharp(int taskId)
+        public JsonResult CompileCodeCSharp(int taskId)
         {
             string sourceFile = "csharp_" + taskId + "_1.cs";
             string exeFile = "csharp_" + taskId + "_1.exe";
@@ -161,7 +161,7 @@ namespace CodeExam.Controllers
 
             return Json(new { status = isSuccess, message = errMsg }, JsonRequestBehavior.AllowGet);
         }
-        private ActionResult RunCSharp(int taskId)
+        private JsonResult RunCSharp(int taskId)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
@@ -204,7 +204,7 @@ namespace CodeExam.Controllers
             }
             return Json(runResult, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult RunJS(int taskId)
+        public JsonResult RunJS(int taskId)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
