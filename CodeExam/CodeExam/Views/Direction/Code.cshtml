@@ -128,8 +128,8 @@
             <div class="col-md-8">
                 <div>
                     <select class="form-control" id="select-language" >
-                        <option>js</option>
-                        <option>c#</option>
+                        <option value="js">js</option>
+                        <option value="csharp">c#</option>
                     </select>
                 </div>
                 <div id="codeeditor"></div>
@@ -184,10 +184,10 @@
     });
     function clickRun() {
         $.ajax({
-            url: "/Compiler/RunJS",
+            url: "/Compiler/GenFileAndRun",
             type: "post",
             data: {
-                taskId: 8
+                source: editor.getValue(), taskId: 8, language: $('#select-language').val()
             },
             success: function (result) {
                 $('#result').html(result);
