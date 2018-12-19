@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="~/Content/lib/abcdef.css">
 <script src="~/Content/mode/javascript/javascript.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/Scripts/user/app/CodeController.js"></script>
 <style>
     body{
         font-size: 14px;
@@ -90,7 +91,7 @@
     }
 </style>
 
-<div class="container">
+<div class="container" ng-controller="CodeController">
     <!--Header-->
     <div class="row" style="background: #33485f; color: white;">
         <div>
@@ -103,29 +104,26 @@
         <div class="content-code-detail" style="position: relative;">
             <div class="content-exam col-md-3" id="content-exam">
                 <div id="info-exam" style="font-size: 16px;">
-                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> Easy</span> 
-                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg"/> 300</span>
+                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span> 
+                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg"/> {{task.Point}}</span>
                 </div>
                 <div id="detail-exam">
                     <div id="content-detail-exam">
                         <h4 class="text-info">Summary</h4>
-                        <p>
-                            Write a function that returns the sum of two numbers.
-                        </p>
+                        <p>{{task.TaskDescription}}</p>
                     </div>
                     <h4 class="text-info">INPUT/OUTPUT</h4>
                     <div id="input-output">
                         <ul>
-                            <li>[input] param 1 : integer</li>
-                            <li>[input] param 2 : array of length</li>
-                            <li>[output] output : integer</li>
+                            <li ng-repeat="input in task.Input track by $index">[Input] {{input.InputName}} : {{input.InputType}}</li>
+                            <li>[Output] {{task.OutputType}}</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="row" style="background: #0f0f0f; border-bottom: 1px solid;">
-                    <div class="pull-right">
+                    <div class="col-md-offset-10">
                         <select id="select-language" style="border: 1px solid #8291a3">
                             <option value="js">Javascript</option>
                             <option value="csharp">C#</option>
@@ -134,29 +132,28 @@
                 </div>
                 
                 <div id="codeeditor"></div>
-                <div class="bottom-code-detail" style="height: 212px;">
+                <div class="bottom-code-detail">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#menu1">Test Case</a></li>
-                        <li><a data-toggle="tab" href="#menu2">Console</a></li>
+                        <li style="background: #212b37;" class="active"><a >Test Case</a></li>
+                        <li style="background: #212b37;"><a data-toggle="tab" href="#menu2">Console</a></li>
                     </ul>
-                    <div class="tab-content" style="color:white;font-weight:bold;">
-                        <div id="menu1" class="tab-pane active in">
-                            <a class="collapse-testcase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                TestCase 1
-                            </a>
-                            <div class="collapse" id="collapseExample">
+                    <div class="tab-content" style="color:white;font-weight:bold; height: 180px; overflow: auto;">
+                        <div ng-repeat="testcase in testCases track by $index"  id="collapse{{$index + 1}}" style="background: #212b37; padding: 5px; margin-bottom: 3px;" class="tab-pane active collapse" data-toggle="collapse" href="#collapseExample" role="button" ng-click="collapseTestCase($index)">
+                            <span style="font-weight: normal;">TestCase {{$index + 1}}</span>
+                            <div class="collapse" id="testcase{{$index + 1}}">
                                 <div class="input-testcase">
-                                    <p>Input:</p>
+                                    <span style="color: #3498db; font-weight: normal;">Input:</span>
                                     <div class="list-param">
-                                        <span>param1: 2222222222222222222222222222222222222222</span>
-                                        <span>param2: 2222222222222222222222222222222222222222</span>
+                                        <ul>
+                                            <li ng-repeat="inputTest in testcase.Input track by $index">Param {{$index + 1}}: {{inputTest}}</li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="ouput-testcase">
-                                    <span>Output:</span>
+                                    <span style="color: #3498db; font-weight: normal;">Output:</span>
                                 </div>
                                 <div class="expected-ouput-testcase">
-                                    <p>Expected ouput: </p>
+                                    <span style="color: #3498db; font-weight: normal;">Expected ouput: {{testcase.Output}}</span>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +162,7 @@
                             <p>Some content in menu 2.</p>
                         </div>
                     </div>
-                    <div class="row" style="bottom: 0; justify-content: flex-end;">
+                    <div class="row" style="position: absolute; bottom: 0; right: 25px;">
                         <input class="btn btn-info" type="button" value="Run" id="run-button" onclick="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                         <input class="btn btn-success" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                     </div>

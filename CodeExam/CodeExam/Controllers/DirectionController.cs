@@ -21,7 +21,7 @@ namespace CodeExam.Controllers
             return View();
         }
 
-        public ActionResult Code()
+        public ActionResult Code(int id)
         {
             return View();
         }
@@ -34,6 +34,21 @@ namespace CodeExam.Controllers
                 .ToList();
             var count = db.Tasks.Count();
             return Json(new { listTasks, count}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTaskById(int id)
+        {
+            var task = db.Tasks.FirstOrDefault(d => d.TaskId == id);
+
+            var listTestCases = GetTestCaseByTaskId(id);
+
+            return Json(new { task, listTestCases}, JsonRequestBehavior.AllowGet);
+        }
+
+        public List<TestCase> GetTestCaseByTaskId(int id)
+        {
+            var listTestCases = db.TestCases.Where(t => t.TaskId.Equals(id)).ToList();
+            return listTestCases;
         }
     }
 }

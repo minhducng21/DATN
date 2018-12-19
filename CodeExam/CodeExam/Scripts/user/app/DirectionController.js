@@ -22,12 +22,6 @@
         }).then(function success(res) {
             $scope.TaskList = res.data.listTasks;
             $scope.ItemPaging.total = res.data.count;
-
-            //var parser = new DOMParser;
-            //for (var i = 0; i < $scope.TaskList.length; i++) {
-            //    var dom = parser.parseFromString('<!doctype html><body>' + $scope.TaskList[i].TaskDescription, 'text/html');
-            //    $scope.TaskList[i].TaskDescription = dom.body.textContent;
-            //}
         });
     }
 }]);

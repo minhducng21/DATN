@@ -13,8 +13,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 d-flex align-self-stretch ftco-animate" ng-repeat="task in TaskList track by $index">
-                    <div class="media block-6 services d-block text-center">
+                <div class="col-md-4 d-flex align-self-stretch" ng-repeat="task in TaskList track by $index">
+                    <a href="/Direction/Code?id={{task.TaskId}}" class="media block-6 services d-block text-center">
                         <div class="media-body p-2 mt-3">
                             <img width="50" height="50" src="~/Content/images/icon/challenge.svg" />
                             <h3 class="heading">{{task.TaskName}}</h3>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -48,8 +48,7 @@
                             items-per-page="ItemPaging.numPerPage"
                             ng-model="ItemPaging.currentPage"
                             boundary-link-numbers="true"
-                            class="tbl-pagination pagination" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                        </ul>
+                            class="tbl-pagination pagination" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
                     </div>
                 </div>
             </div>

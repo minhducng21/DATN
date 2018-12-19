@@ -29,6 +29,7 @@ namespace CodeExam
             bundles.Add(new ScriptBundle("~/Bundles/js").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/angular.js",
+                      "~/Scripts/angular-route.min.js",
                       "~/Scripts/bootstrap-notify.js",
                       "~/Scripts/ui-bootstrap.min.js",
                       "~/Scripts/ui-bootstrap-tpls.min.js",
