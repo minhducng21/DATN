@@ -184,53 +184,54 @@ namespace CodeExam.Controllers
                         switch (listDataType[i])
                         {
                             case "arrayofint":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new int[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new int[] {").Replace("]", "}"));
                                 break;
                             case "arrayoflong":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new long[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new long[] {").Replace("]", "}"));
                                 break;
                             case "arrayofbool":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new bool[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new bool[] {").Replace("]", "}"));
                                 break;
                             case "arrayoffloat":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new float[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new float[] {").Replace("]", "}"));
                                 break;
                             case "arrayofstring":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new string[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new string[] {").Replace("]", "}"));
                                 break;
                             case "arrayofchar":
-                                contentFile += listTestCase[i].Trim().Replace("[", "new char[] {").Replace("]", "}");
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new char[] {").Replace("]", "}"));
                                 break;
                             case "matrixofint":
-                                contentFile += "new int[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new int[] {").Replace("]", "}");
+                                contentFile += "new int[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new int[] {").Replace("]", "}"));
                                 break;
                             case "matrixoflong":
-                                contentFile += "new long[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new long[] {").Replace("]", "}");
+                                contentFile += "new long[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new long[] {").Replace("]", "}"));
                                 break;
                             case "matrixofbool":
-                                contentFile += "new bool[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new bool[] {").Replace("]", "}");
+                                contentFile += "new bool[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new bool[] {").Replace("]", "}"));
                                 break;
                             case "matrixoffloat":
-                                contentFile += "new float[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new float[] {").Replace("]", "}");
+                                contentFile += "new float[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new float[] {").Replace("]", "}"));
                                 break;
                             case "matrixofstring":
-                                contentFile += "new string[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new string[] {").Replace("]", "}");
+                                contentFile += "new string[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new string[] {").Replace("]", "}"));
                                 break;
                             case "matrixofchar":
-                                contentFile += "new char[][] " + listTestCase[i].Trim().Substring(1).Replace("[", "new char[] {").Replace("]", "}");
+                                contentFile += "new char[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new char[] {").Replace("]", "}"));
                                 break;
                             default:
-                                contentFile += listTestCase[i].Trim();
+                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim());
                                 break;
                         }
-                        contentFile += HttpUtility.UrlDecode(contentFile) + ",";
+                        //contentFile = HttpUtility.UrlDecode(contentFile) + ",";
+                        contentFile += ",";
                     }
                     contentFile = contentFile.TrimEnd(',');
                     contentFile += ")));}";
                     idx++;
                 }
                 contentFile += "}catch(Exception ex){System.Console.WriteLine(ex.StackTrace.ToString());}}}}";
-                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_1.cs"))
+                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_"+User.Identity.Name+".cs"))
                 {
                     writetext.WriteLine(contentFile);
                 }
@@ -279,8 +280,8 @@ namespace CodeExam.Controllers
         }
         public ActionResult CompileCodeCSharp(int taskId)
         {
-            string sourceFile = "csharp_" + taskId + "_" + User.Identity.Name + ".cs";
-            string exeFile = "csharp_" + taskId + "_" + User.Identity.Name + ".exe";
+            string sourceFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".cs";
+            string exeFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe";
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             // Configure a CompilerParameters that links System.dll
             // and produces the specified executable file.
@@ -328,7 +329,7 @@ namespace CodeExam.Controllers
                     {
                         StartInfo = new ProcessStartInfo
                         {
-                            FileName = "\"" + Server.MapPath("~") + "\\SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe\"",
+                            FileName = "\"" + Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe\"",
                             Arguments = i.ToString(),
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
