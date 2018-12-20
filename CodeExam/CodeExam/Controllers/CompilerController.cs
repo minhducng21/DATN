@@ -22,7 +22,122 @@ namespace CodeExam.Controllers
             return provider;
         }
         static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json" };
-
+        public ActionResult GenerateTemplateCode(int taskId, string language)
+        {
+            string source = "";
+            var itemTask = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
+            if (language == "js")
+            {
+                source += "function " + itemTask.TaskName + "(";
+                foreach (var item in itemTask.Input.Split(';'))
+                {
+                    source += item.Split(':').FirstOrDefault() + ",";
+                }
+                source = source.TrimEnd(',');
+                source += ")\n";
+                source += "{\n\n}";
+            }
+            else
+            {
+                source += "public static ";
+                switch (itemTask.OutputType)
+                {
+                    case "integer":
+                        source += "int";
+                        break;
+                    case "arrayofint":
+                        source += "int[]";
+                        break;
+                    case "arrayoflong":
+                        source += "long[]";
+                        break;
+                    case "arrayofbool":
+                        source += "bool[]";
+                        break;
+                    case "arrayoffloat":
+                        source += "float[]";
+                        break;
+                    case "arrayofstring":
+                        source += "string[]";
+                        break;
+                    case "arrayofchar":
+                        source += "char[]";
+                        break;
+                    case "matrixofint":
+                        source += "int[][]";
+                        break;
+                    case "matrixoflong":
+                        source += "long[][]";
+                        break;
+                    case "matrixofbool":
+                        source += "bool[][]";
+                        break;
+                    case "matrixoffloat":
+                        source += "float[][]";
+                        break;
+                    case "matrixofstring":
+                        source += "stirng[][]";
+                        break;
+                    case "matrixofchar":
+                        source += "char[][]";
+                        break;
+                    default:
+                        break;
+                }
+                source += "(";
+                foreach (var item in itemTask.Input.Split(';'))
+                {
+                    switch (item.Split(':')[1])
+                    {
+                        case "integer":
+                            source += "int";
+                            break;
+                        case "arrayofint":
+                            source += "int[]";
+                            break;
+                        case "arrayoflong":
+                            source += "long[]";
+                            break;
+                        case "arrayofbool":
+                            source += "bool[]";
+                            break;
+                        case "arrayoffloat":
+                            source += "float[]";
+                            break;
+                        case "arrayofstring":
+                            source += "string[]";
+                            break;
+                        case "arrayofchar":
+                            source += "char[]";
+                            break;
+                        case "matrixofint":
+                            source += "int[][]";
+                            break;
+                        case "matrixoflong":
+                            source += "long[][]";
+                            break;
+                        case "matrixofbool":
+                            source += "bool[][]";
+                            break;
+                        case "matrixoffloat":
+                            source += "float[][]";
+                            break;
+                        case "matrixofstring":
+                            source += "stirng[][]";
+                            break;
+                        case "matrixofchar":
+                            source += "char[][]";
+                            break;
+                        default:
+                            break;
+                    }
+                    source += item.Split(':')[0] + ",";
+                }
+                source = source.TrimEnd(',');
+                source += ")\n{\n\n}";
+            }
+            return Json(source, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult GenFileAndRun(string source, int taskId, string language)
         {
             if (language == "csharp")
@@ -49,7 +164,7 @@ namespace CodeExam.Controllers
                 var listParam = task.Input.Split(';');
                 foreach (var item in listParam)
                 {
-                    listDataType.Add((item.Split(':'))[0]);
+                    listDataType.Add((item.Split(':'))[1]);
                 }
                 string contentFile = "";
                 foreach (var item in listRef)
@@ -108,7 +223,7 @@ namespace CodeExam.Controllers
                                 contentFile += listTestCase[i].Trim();
                                 break;
                         }
-                        contentFile += ",";
+                        contentFile += HttpUtility.UrlDecode(contentFile) + ",";
                     }
                     contentFile = contentFile.TrimEnd(',');
                     contentFile += ")));}";
