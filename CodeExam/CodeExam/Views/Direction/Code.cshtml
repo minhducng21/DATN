@@ -5,11 +5,12 @@
 <script src="~/Content/lib/codemirror.js"></script>
 <link rel="stylesheet" href="~/Content/lib/codemirror.css">
 <link rel="stylesheet" href="~/Content/lib/abcdef.css">
+<link rel="stylesheet" href="~/Content/css/loading.css"/>
 <script src="~/Content/mode/javascript/javascript.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="~/Scripts/user/app/CodeController.js"></script>
 <style>
-    body{
+    body {
         font-size: 14px;
     }
 
@@ -74,17 +75,22 @@
         overflow: auto;
         height: 50px;
     }
+
     .tab-content {
     }
+
     #collapseExample {
         margin-left: 25px;
     }
+
     .input-testcase {
         display: -webkit-box;
     }
-    .list-param{
-        margin-left:10px;
+
+    .list-param {
+        margin-left: 10px;
     }
+
     .CodeMirror-gutters {
         background: #0f0f0f;
         border: none;
@@ -97,24 +103,24 @@
         <div>
             <a href="/Direction" style="color: white;"><i class="glyphicon glyphicon-arrow-left"><span> BACK</span></i></a>
         </div>
-        <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>Add</span></div>
+        <div class="col-md-4 col-md-offset-3" style="text-align: center"><span>{{task.TaskName}}</span></div>
     </div>
 
     <div class="row">
         <div class="content-code-detail" style="position: relative;">
             <div class="content-exam col-md-3" id="content-exam">
                 <div id="info-exam" style="font-size: 16px;">
-                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span> 
-                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg"/> {{task.Point}}</span>
+                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span>
+                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg" /> {{task.Point}}</span>
                 </div>
                 <div id="detail-exam">
                     <div id="content-detail-exam">
                         <h4 class="text-info">Summary</h4>
-                        <p>{{task.TaskDescription}}</p>
+                        <p class="description" style="color: black;"></p>
                     </div>
                     <h4 class="text-info">INPUT/OUTPUT</h4>
                     <div id="input-output">
-                        <ul>
+                        <ul style="color: black; font-weight: bold;">
                             <li ng-repeat="input in task.Input track by $index">[Input] {{input.InputName}} : {{input.InputType}}</li>
                             <li>[Output] {{task.OutputType}}</li>
                         </ul>
@@ -122,7 +128,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="row" style="background: #0f0f0f; border-bottom: 1px solid;">
+                <div class="row" style="background: #212b37; border-bottom: 1px solid;">
                     <div class="col-md-offset-10">
                         <select id="select-language" style="border: 1px solid #8291a3">
                             <option value="js">Javascript</option>
@@ -130,16 +136,19 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div id="codeeditor"></div>
                 <div class="bottom-code-detail">
                     <ul class="nav nav-tabs">
-                        <li style="background: #212b37;" class="active"><a >Test Case</a></li>
+                        <li style="background: #212b37;" class="active"><a data-toggle="tab" href=".ts">Test Case</a></li>
                         <li style="background: #212b37;"><a data-toggle="tab" href="#menu2">Console</a></li>
                     </ul>
                     <div class="tab-content" style="color:white;font-weight:bold; height: 180px; overflow: auto;">
-                        <div ng-repeat="testcase in testCases track by $index"  id="collapse{{$index + 1}}" style="background: #212b37; padding: 5px; margin-bottom: 3px;" class="tab-pane active collapse" data-toggle="collapse" href="#collapseExample" role="button" ng-click="collapseTestCase($index)">
+                        <div class="lds-ring col-md-offset-5"><div></div><div></div><div></div><div></div></div>
+                        <div ng-repeat="testcase in testCases track by $index" id="collapse{{$index + 1}}" style="background: #212b37; padding: 5px; margin-bottom: 3px;" class="tab-pane active collapse ts" data-toggle="collapse" href="#collapseExample" role="button" ng-click="collapseTestCase($index)">
                             <span style="font-weight: normal;">TestCase {{$index + 1}}</span>
+                            <i hidden id="isSuccess" class="text-success glyphicon glyphicon-ok pull-right"></i>
+                            <i hidden class="text-danger glyphicon glyphicon-remove pull-right"></i>
                             <div class="collapse" id="testcase{{$index + 1}}">
                                 <div class="input-testcase">
                                     <span style="color: #3498db; font-weight: normal;">Input:</span>
@@ -149,11 +158,11 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="ouput-testcase">
-                                    <span style="color: #3498db; font-weight: normal;">Output:</span>
-                                </div>
+                                @*<div class="ouput-testcase">
+                                        <span style="color: #3498db; font-weight: normal;">Output:</span>
+                                    </div>*@
                                 <div class="expected-ouput-testcase">
-                                    <span style="color: #3498db; font-weight: normal;">Expected ouput: {{testcase.Output}}</span>
+                                    <p style="color: #3498db; font-weight: normal;">Expected ouput: <span style="color: white; font-weight: bold;">{{testcase.Output}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +172,7 @@
                         </div>
                     </div>
                     <div class="row" style="position: absolute; bottom: 0; right: 25px;">
-                        <input class="btn btn-info" type="button" value="Run" id="run-button" onclick="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
+                        <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                         <input class="btn btn-success" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                     </div>
                 </div>
@@ -179,16 +188,5 @@
         lineNumbers: true,
         viewportMargin: 50
     });
-    function clickRun() {
-        $.ajax({
-            url: "/Compiler/GenFileAndRun",
-            type: "post",
-            data: {
-                source: editor.getValue(), taskId: 8, language: $('#select-language').val()
-            },
-            success: function (result) {
-                $('#result').html(result);
-            }
-        });
-    }
+
 </script>

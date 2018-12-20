@@ -290,6 +290,7 @@
     <Content Include="Content\css\icomoon.css" />
     <Content Include="Content\css\ionicons.min.css" />
     <Content Include="Content\css\jquery.timepicker.css" />
+    <Content Include="Content\css\loading.css" />
     <Content Include="Content\css\magnific-popup.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\material-dashboard.css" />
@@ -311,6 +312,7 @@
     <Content Include="Content\images\icon\coin.svg" />
     <Content Include="Content\images\icon\group_add.png" />
     <Content Include="Content\images\icon\favicon.ico" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\person_1.jpg" />
     <Content Include="Content\images\person_2.jpg" />
     <Content Include="Content\images\sidebar-1.jpg" />
