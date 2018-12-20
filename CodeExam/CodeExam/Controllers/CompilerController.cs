@@ -131,7 +131,7 @@ namespace CodeExam.Controllers
                         default:
                             break;
                     }
-                    source += item.Split(':')[0] + ",";
+                    source += " " + item.Split(':')[0] + ",";
                 }
                 source = source.TrimEnd(',');
                 source += ")\n{\n\n}";
