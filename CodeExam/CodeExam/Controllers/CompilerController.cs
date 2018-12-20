@@ -34,7 +34,7 @@ namespace CodeExam.Controllers
                     source += item.Split(':').FirstOrDefault() + ",";
                 }
                 source = source.TrimEnd(',');
-                source += ")\n";
+                source += ")";
                 source += "{\n\n}";
             }
             else
@@ -85,7 +85,7 @@ namespace CodeExam.Controllers
                         break;
                 }
                 source += "(";
-                foreach (var item in itemTask.Input.Split(';'))
+                foreach (var item in itemTask.Input.TrimEnd(';').Split(';'))
                 {
                     switch (item.Split(':')[1])
                     {

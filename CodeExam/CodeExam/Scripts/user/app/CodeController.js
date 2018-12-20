@@ -1,11 +1,21 @@
 ﻿userApp.controller('CodeController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
+    $scope.languages = [{ Name: 'Javascript', Value: 'js' }, { Name: 'C#', Value: 'csharp'}];
+
+    var editor = CodeMirror(document.getElementById("codeeditor"), {
+        mode: "javascript",
+        theme: "abcdef",
+        lineNumbers: true,
+        viewportMargin: 50
+    });
+
     var id = $location.absUrl().split('=')[1];
     if (id == undefined) {
         id = $location.absUrl().split('/')[5];
     }
 
     $('.lds-ring').hide();
+    $('#console').hide();
 
     var Input = [];
     getTaskById(id);
@@ -40,6 +50,19 @@
             }
 
             $('.description').html($scope.task.TaskDescription);
+            templateCode($scope.task.TaskId, 'js');
+        })
+    }
+
+
+    function templateCode(taskId, language) {
+        $http({
+            method: 'GET',
+            url: '/Compiler/GenerateTemplateCode',
+            params: { taskId, language }
+        }).then(function success(res) {
+            //$('#codeeditor').html(res.data);
+            editor.setValue(res.data);
         })
     }
 
@@ -75,9 +98,22 @@
                 $('.lds-ring').hide();
                 $('.ts').show();
             }
+            else {
+                $('#console').show();
+                $('#menu2 p').html(res.data.errMsg);
+                $('.ts').show();
+                $('.ts').removeClass('active');
+
+                $('#testcase').removeClass('active');
+                $('#console').addClass('active');
+                $('#menu2').addClass('active');
+                $('.lds-ring').hide();
+            }
         })
     }
 
-
+    $scope.changeLanguage = function (language) {
+        templateCode($scope.task.TaskId, language);
+    }
 
 }])

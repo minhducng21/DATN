@@ -130,9 +130,8 @@
             <div class="col-md-9">
                 <div class="row" style="background: #212b37; border-bottom: 1px solid;">
                     <div class="col-md-offset-10">
-                        <select id="select-language" style="border: 1px solid #8291a3">
-                            <option value="js">Javascript</option>
-                            <option value="csharp">C#</option>
+                        <select id="select-language" style="border: 1px solid #8291a3" ng-model="language" ng-change="changeLanguage(language)">
+                            <option ng-repeat="language in languages" value="{{language.Value}}">{{language.Name}}</option>
                         </select>
                     </div>
                 </div>
@@ -140,8 +139,8 @@
                 <div id="codeeditor"></div>
                 <div class="bottom-code-detail">
                     <ul class="nav nav-tabs">
-                        <li style="background: #212b37;" class="active"><a data-toggle="tab" href=".ts">Test Case</a></li>
-                        <li style="background: #212b37;"><a data-toggle="tab" href="#menu2">Console</a></li>
+                        <li style="background: #212b37;" id="testcase" class="active"><a data-toggle="tab" href=".ts">Test Case</a></li>
+                        <li style="background: #212b37;" id="console"><a data-toggle="tab" href="#menu2">Console</a></li>
                     </ul>
                     <div class="tab-content" style="color:white;font-weight:bold; height: 180px; overflow: auto;">
                         <div class="lds-ring col-md-offset-5"><div></div><div></div><div></div><div></div></div>
@@ -167,7 +166,6 @@
                             </div>
                         </div>
                         <div id="menu2" class="tab-pane" style="overflow: auto">
-                            <h3>Menu 2</h3>
                             <p>Some content in menu 2.</p>
                         </div>
                     </div>
@@ -180,13 +178,3 @@
         </div>
     </div>
 </div>
-<script>
-
-    var editor = CodeMirror(document.getElementById("codeeditor"), {
-        mode: "javascript",
-        theme: "abcdef",
-        lineNumbers: true,
-        viewportMargin: 50
-    });
-
-</script>
