@@ -121,7 +121,7 @@ namespace CodeExam.Areas.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
                 var currentUser = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
-                SignInUser(obj.Email, currentUser.UserName, currentUser.Password, currentUser.SocialId, currentUser.RoleId, true);
+                SignInUser(currentUser.Email, currentUser.UserName, currentUser.Password, currentUser.SocialId, currentUser.RoleId, true);
                 return RedirectToAction("Index", "Direction");
             }
             return RedirectToAction("Index", "Login");
