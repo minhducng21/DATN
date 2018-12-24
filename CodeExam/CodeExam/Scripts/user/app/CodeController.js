@@ -1,6 +1,6 @@
 ﻿userApp.controller('CodeController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
-    $scope.languages = [{ Name: 'Javascript', Value: 'js' }, { Name: 'C#', Value: 'csharp'}];
+    $scope.languages = [{ Name: 'Javascript', Value: 'js' }, { Name: 'C#', Value: 'csharp' }];
 
     var editor = CodeMirror(document.getElementById("codeeditor"), {
         mode: "javascript",
@@ -63,7 +63,7 @@
         }).then(function success(res) {
             //$('#codeeditor').html(res.data);
             editor.setValue(res.data);
-        })
+        });
     }
 
     $scope.collapseTestCase = function (index) {
@@ -97,10 +97,13 @@
                 }
                 $('.lds-ring').hide();
                 $('.ts').show();
+
+                $('#submit').attr('hidden', 'true');
             }
             else {
                 $('#console').show();
                 $('#menu2 p').html(res.data.errMsg);
+                $('#menu2 p').show();
                 $('.ts').show();
                 $('.ts').removeClass('active');
 
@@ -108,6 +111,8 @@
                 $('#console').addClass('active');
                 $('#menu2').addClass('active');
                 $('.lds-ring').hide();
+
+                $('#submit').attr('hidden', 'true');
             }
         })
     }
@@ -116,4 +121,14 @@
         templateCode($scope.task.TaskId, language);
     }
 
+    $scope.submit = function () {
+        //$scope.currentPoint = $scope.task.Point;
+
+        $('#menu2 p').hide();
+        $('#testcase').removeClass('active');
+        $('#console').show();
+        $('#console').addClass('active');
+        $('#menu2').addClass('active');
+        $('#submit').removeAttr('hidden');
+    }
 }])

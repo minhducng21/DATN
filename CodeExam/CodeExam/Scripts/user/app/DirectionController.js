@@ -1,4 +1,4 @@
-﻿userApp.controller('DirectionController', ['$scope', '$http', function ($scope, $http) {
+﻿userApp.controller('DirectionController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
     //Paging
     $scope.ItemPaging = {};
     $scope.ItemPaging.maxSize = 3;
@@ -7,7 +7,7 @@
     $scope.ItemPaging.currentPage = 1;
     $scope.childsPageChanged = () => {
         getListTask();
-    }
+    };
 
     getListTask();
     function getListTask() {
@@ -24,4 +24,8 @@
             $scope.ItemPaging.total = res.data.count;
         });
     }
+
+    $scope.trustedHtml = function (html) {
+        return $sce.trustedHtml(html);
+    };
 }]);
