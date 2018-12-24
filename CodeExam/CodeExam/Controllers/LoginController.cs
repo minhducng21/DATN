@@ -1,4 +1,5 @@
-﻿using ASPSnippets.GoogleAPI;
+﻿using ASPSnippets.FaceBookAPI;
+using ASPSnippets.GoogleAPI;
 using CodeExam.Models;
 using CodeExam.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -126,6 +127,41 @@ namespace CodeExam.Areas.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void LoginWithFacebook()
+        {
+            FaceBookConnect.API_Key = "258983141436578";
+            FaceBookConnect.API_Secret = "055eba02c1ce34881978cc41f925e207";
+            FaceBookConnect.Authorize("email", Request.Url.AbsoluteUri.Split('?')[0]);
+        }
+
+        [ActionName("LoginWithFacebook")]
+        public ActionResult LoginWithFacebookConfirm()
+        {
+            if (!string.IsNullOrEmpty(Request.QueryString["code"]))
+            {
+                string code = Request.QueryString["code"];
+                string data = FaceBookConnect.Fetch(code, "me");
+                FacebookAccViewModel fbAcc = new JavaScriptSerializer().Deserialize<FacebookAccViewModel>(data);
+                var obj = db.Users.Where(u => u.SocialId.Equals(fbAcc.Id)).FirstOrDefault();
+                if (obj != null)
+                {
+                    SignInUser(obj.Email, obj.UserName, obj.Password, obj.SocialId, obj.RoleId, true);
+                    return RedirectToAction("Index", "Direction");
+                }
+                User user = new User();
+                user.DisplayName = fbAcc.Name;
+                user.Email = fbAcc.Email;
+                user.SocialId = fbAcc.Id;
+                user.RoleId = (int)RoleCommon.User;
+                db.Users.Add(user);
+                db.SaveChanges();
+                SignInUser(user.Email, user.UserName, user.Password, user.SocialId, user.RoleId, true);
+                return RedirectToAction("Index", "Direction");
+            }
+            return RedirectToAction("Index", "Login");
+        }
         private ActionResult RedirectToLocal(string url, int? roleId)
         {
             try
@@ -155,13 +191,13 @@ namespace CodeExam.Areas.Controllers
                 {
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, socialId));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));
+                    //claims.Add(new Claim(ClaimTypes.NameIdentifier, email));
                 }
                 else
                 {
                     claims.Add(new Claim(ClaimTypes.Name, username));
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
+                    //claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
                 }
 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
