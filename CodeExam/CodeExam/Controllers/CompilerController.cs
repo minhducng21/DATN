@@ -25,12 +25,12 @@ namespace CodeExam.Controllers
         public ActionResult GenerateTemplateCode(int taskId, string language)
         {
             string source = "";
-            //var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == int.Parse(User.Identity.Name));
-            //if (leaderBoardItem != null)
-            //{
-            //    source = leaderBoardItem.SourceCode;
-            //}
-            //else
+            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == Constant.Constant.GetUserIdByIdentity(User.Identity.Name));
+            if (leaderBoardItem != null)
+            {
+                source = leaderBoardItem.SourceCode;
+            }
+            else
             {
                 var itemTask = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
                 if (language == "js")
@@ -235,7 +235,7 @@ namespace CodeExam.Controllers
                     idx++;
                 }
                 contentFile += "}catch(Exception ex){System.Console.WriteLine(ex.StackTrace.ToString());}}}}";
-                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_"+User.Identity.Name+".cs"))
+                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_"+Constant.Constant.GetUserIdByIdentity(User.Identity.Name)+".cs"))
                 {
                     writetext.WriteLine(contentFile);
                 }
@@ -270,7 +270,7 @@ namespace CodeExam.Controllers
                     contentFile += ")));}";
                     idx++;
                 }
-                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\js_" + task.TaskId + "_" + User.Identity.Name + ".js"))
+                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\js_" + task.TaskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js"))
                 {
                     writetext.WriteLine(contentFile);
                 }
@@ -284,8 +284,8 @@ namespace CodeExam.Controllers
         }
         public ActionResult CompileCodeCSharp(int taskId)
         {
-            string sourceFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".cs";
-            string exeFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe";
+            string sourceFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".cs";
+            string exeFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe";
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             // Configure a CompilerParameters that links System.dll
             // and produces the specified executable file.
@@ -333,7 +333,7 @@ namespace CodeExam.Controllers
                     {
                         StartInfo = new ProcessStartInfo
                         {
-                            FileName = "\"" + Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + User.Identity.Name + ".exe\"",
+                            FileName = "\"" + Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe\"",
                             Arguments = i.ToString(),
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
@@ -349,7 +349,7 @@ namespace CodeExam.Controllers
                         StartInfo = new ProcessStartInfo
                         {
                             FileName = "cmd.exe",
-                            Arguments = "/C Node \"" + Server.MapPath("~") + "SourceCode\\js_" + taskId + "_" + User.Identity.Name + ".js\" " + i.ToString(),
+                            Arguments = "/C Node \"" + Server.MapPath("~") + "SourceCode\\js_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js\" " + i.ToString(),
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             CreateNoWindow = false,
