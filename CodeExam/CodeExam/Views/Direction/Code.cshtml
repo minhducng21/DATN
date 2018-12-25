@@ -5,7 +5,7 @@
 <script src="~/Content/lib/codemirror.js"></script>
 <link rel="stylesheet" href="~/Content/lib/codemirror.css">
 <link rel="stylesheet" href="~/Content/lib/abcdef.css">
-<link rel="stylesheet" href="~/Content/css/loading.css"/>
+<link rel="stylesheet" href="~/Content/css/loading.css" />
 <script src="~/Content/mode/javascript/javascript.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="~/Scripts/user/app/CodeController.js"></script>
@@ -166,12 +166,37 @@
                             </div>
                         </div>
                         <div id="menu2" class="tab-pane" style="overflow: auto">
-                            <p>Some content in menu 2.</p>
+                            <p></p>
+                            <ul id="submit" hidden style="font-family: Work Sans, Arial, sans-serif; font-weight: normal; list-style-type: none;">
+                                <li style="color: #44bfa3;"><i class="glyphicon glyphicon-ok-sign" style="color: #44bfa3; font-size: 26px; vertical-align: middle;"></i> 12/12 tests passed</li>
+                                <li>Sample tests: <span style="color: #44bfa3;">6/6</span></li>
+                                <li>Hidden tests: <span style="color: #44bfa3;">6/6</span></li>
+                                <li>Score: <span style="color: #44bfa3;">300/300</span></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="row" style="position: absolute; bottom: 0; right: 25px;">
                         <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
-                        <input class="btn btn-success" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
+                        <input class="btn" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px; background: #44bfa3; color: #fff" ng-click="submit()" />
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal" id="modalSubmit" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Some text in the modal.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

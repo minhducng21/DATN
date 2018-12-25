@@ -37,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>default</LangVersion>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,9 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASPSnippets.FaceBookAPI">
+      <HintPath>..\..\..\..\ASPSnippets.FaceBookAPI.dll</HintPath>
+    </Reference>
     <Reference Include="ASPSnippets.GoogleAPI, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Google_Login\Bin\ASPSnippets.GoogleAPI.dll</HintPath>
@@ -269,6 +273,7 @@
     <Compile Include="Models\TestCase.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\FacebookAccViewModel.cs" />
     <Compile Include="ViewModels\TestCaseResult.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
@@ -866,7 +871,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12595</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:12595/</IISUrl>
+          <IISUrl>https://localhost:44371/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
