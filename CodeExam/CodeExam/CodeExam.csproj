@@ -321,6 +321,7 @@
     <Content Include="Content\images\person_1.jpg" />
     <Content Include="Content\images\person_2.jpg" />
     <Content Include="Content\images\sidebar-1.jpg" />
+    <Content Include="Content\images\users.png" />
     <Content Include="Content\lib\abcdef.css" />
     <Content Include="Content\lib\codemirror.css" />
     <Content Include="Content\lib\codemirror.js" />
@@ -776,7 +777,6 @@
     <Content Include="Scripts\user\app\IntroController.js" />
     <Content Include="Scripts\user\app\UserAppController.js" />
     <Content Include="Scripts\user\app\UserHeaderController.js" />
-    <Content Include="Static\Code.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -804,7 +804,6 @@
     <None Include="Views\Direction\Code.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Direction\Challenges.cshtml" />
-    <Content Include="Static\Challenges.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
