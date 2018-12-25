@@ -25,12 +25,12 @@ namespace CodeExam.Controllers
         public ActionResult GenerateTemplateCode(int taskId, string language)
         {
             string source = "";
-            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == int.Parse(User.Identity.Name));
-            if (leaderBoardItem != null)
-            {
-                source = leaderBoardItem.SourceCode;
-            }
-            else
+            //var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == int.Parse(User.Identity.Name));
+            //if (leaderBoardItem != null)
+            //{
+            //    source = leaderBoardItem.SourceCode;
+            //}
+            //else
             {
                 var itemTask = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
                 if (language == "js")
@@ -152,13 +152,9 @@ namespace CodeExam.Controllers
             {
                 return GenFileCsharp(source, taskId);
             }
-            else if (language == "js")
+            else 
             {
                 return GenFileJs(source, taskId);
-            }
-            else
-            {
-                return Json(new RunResult() { isSuccess = false, errMsg = "truyen sai tham so" }, JsonRequestBehavior.AllowGet);
             }
         }
 
