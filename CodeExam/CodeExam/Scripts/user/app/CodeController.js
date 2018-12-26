@@ -1,6 +1,7 @@
 ﻿userApp.controller('CodeController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
     $scope.languages = [{ Name: 'Javascript', Value: 'js' }, { Name: 'C#', Value: 'csharp' }];
+    $scope.language = $scope.languages[0];
 
     var editor = CodeMirror(document.getElementById("codeeditor"), {
         mode: "javascript",

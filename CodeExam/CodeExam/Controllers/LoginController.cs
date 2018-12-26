@@ -191,13 +191,13 @@ namespace CodeExam.Areas.Controllers
                 {
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, socialId));
-                    //claims.Add(new Claim(ClaimTypes.NameIdentifier, email));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, socialId));
                 }
                 else
                 {
                     claims.Add(new Claim(ClaimTypes.Name, username));
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-                    //claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
                 }
 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);

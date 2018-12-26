@@ -130,8 +130,8 @@
             <div class="col-md-9">
                 <div class="row" style="background: #212b37; border-bottom: 1px solid;">
                     <div class="col-md-offset-10">
-                        <select id="select-language" style="border: 1px solid #8291a3" ng-model="language" ng-change="changeLanguage(language)">
-                            <option ng-repeat="language in languages" value="{{language.Value}}">{{language.Name}}</option>
+                        <select id="select-language" style="border: 1px solid #8291a3" ng-model="language" ng-change="changeLanguage(language.Value)" ng-options="language.Name for language in languages">
+                            @*<option ng-repeat="language in languages" value="{{language.Value}}">{{language.Name}}</option>*@
                         </select>
                     </div>
                 </div>
