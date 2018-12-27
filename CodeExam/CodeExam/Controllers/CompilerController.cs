@@ -28,18 +28,7 @@ namespace CodeExam.Controllers
             else
             {
                 var itemTask = db.Tasks.FirstOrDefault(f => f.TaskId == taskId);
-                if (language == "js")
-                {
-                    source += "function " + itemTask.TaskName + "(";
-                    foreach (var item in itemTask.Input.TrimEnd(';').Split(';'))
-                    {
-                        source += item.Split(':').FirstOrDefault() + ",";
-                    }
-                    source = source.TrimEnd(',');
-                    source += ")";
-                    source += "{\n\n}";
-                }
-                else
+                if (language == "csharp")
                 {
                     source += "static ";
                     switch (itemTask.OutputType)
@@ -137,6 +126,17 @@ namespace CodeExam.Controllers
                     }
                     source = source.TrimEnd(',');
                     source += ")\n{\n\n}";
+                }
+                else
+                {
+                    source += "function " + itemTask.TaskName + "(";
+                    foreach (var item in itemTask.Input.TrimEnd(';').Split(';'))
+                    {
+                        source += item.Split(':').FirstOrDefault() + ",";
+                    }
+                    source = source.TrimEnd(',');
+                    source += ")";
+                    source += "{\n\n}";
                 }
             }
             return Json(source, JsonRequestBehavior.AllowGet);
