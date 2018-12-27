@@ -77,7 +77,6 @@
 
     $scope.clickRun = function () {
         $('.lds-ring').show();
-        $('.ts').hide();
         $http({
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
@@ -97,15 +96,18 @@
                     }
                 }
                 $('.lds-ring').hide();
-                $('.ts').show();
 
+                $('#menu2').hide();
+                $('.ts').addClass('active');
+                $('#testcase').addClass('active');
+                $('#console').removeClass('active');
+                $('#console').hide();
                 $('#submit').attr('hidden', 'true');
             }
             else {
                 $('#console').show();
                 $('#menu2 p').html(res.data.errMsg);
                 $('#menu2 p').show();
-                $('.ts').show();
                 $('.ts').removeClass('active');
 
                 $('#testcase').removeClass('active');
