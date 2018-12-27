@@ -15,17 +15,12 @@ namespace CodeExam.Controllers
     public class CompilerController : Controller
     {
         private CodeWarDbContext db = new CodeWarDbContext();
-        private CodeDomProvider GetCurrentProvider()
-        {
-            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-
-            return provider;
-        }
         static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json" };
         public ActionResult GenerateTemplateCode(int taskId, string language)
         {
             string source = "";
-            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == Constant.Constant.GetUserIdByIdentity(User.Identity.Name));
+            int x = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
+            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == x);
             if (leaderBoardItem != null)
             {
                 source = leaderBoardItem.SourceCode;
@@ -46,7 +41,7 @@ namespace CodeExam.Controllers
                 }
                 else
                 {
-                    source += "public static ";
+                    source += "static ";
                     switch (itemTask.OutputType)
                     {
                         case "integer":
@@ -91,7 +86,7 @@ namespace CodeExam.Controllers
                         default:
                             break;
                     }
-                    source += "(";
+                    source += " " + itemTask.TaskName + "(";
                     foreach (var item in itemTask.Input.TrimEnd(';').Split(';'))
                     {
                         switch (item.Split(':')[1])
@@ -152,7 +147,7 @@ namespace CodeExam.Controllers
             {
                 return GenFileCsharp(source, taskId);
             }
-            else 
+            else
             {
                 return GenFileJs(source, taskId);
             }
@@ -171,11 +166,13 @@ namespace CodeExam.Controllers
                     listDataType.Add((item.Split(':'))[1]);
                 }
                 string contentFile = "";
+                contentFile += "namespace CodeWar{";
+
                 foreach (var item in listRef)
                 {
                     contentFile += "using " + item + ";";
                 }
-                contentFile += "namespace CodeWar{ public class CodeWarXDA{" + source;
+                contentFile += "public class CodeWarXDA{" + source;
                 contentFile += "public static void Main(string[] args){try{";
                 int idx = 0;
                 foreach (var item in listTestCases)
@@ -227,7 +224,6 @@ namespace CodeExam.Controllers
                                 contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim());
                                 break;
                         }
-                        //contentFile = HttpUtility.UrlDecode(contentFile) + ",";
                         contentFile += ",";
                     }
                     contentFile = contentFile.TrimEnd(',');
@@ -235,7 +231,7 @@ namespace CodeExam.Controllers
                     idx++;
                 }
                 contentFile += "}catch(Exception ex){System.Console.WriteLine(ex.StackTrace.ToString());}}}}";
-                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\csharp_" + task.TaskId + "_"+Constant.Constant.GetUserIdByIdentity(User.Identity.Name)+".cs"))
+                using (StreamWriter writetext = new StreamWriter("csharp_" + task.TaskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".cs"))
                 {
                     writetext.WriteLine(contentFile);
                 }
@@ -284,14 +280,15 @@ namespace CodeExam.Controllers
         }
         public ActionResult CompileCodeCSharp(int taskId)
         {
-            string sourceFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".cs";
-            string exeFile = Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe";
-            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+            string sourceFile = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".cs";
+            string exeFile = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe";
+            CodeDomProvider provider = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
             // Configure a CompilerParameters that links System.dll
             // and produces the specified executable file.
-            String[] referenceAssemblies = { "System.dll", "Newtonsoft.Json.dll" };
+            String[] referenceAssemblies = { "System.dll" };
             CompilerParameters cp = new CompilerParameters(referenceAssemblies,
                                                            exeFile, false);
+            cp.ReferencedAssemblies.Add("Newtonsoft.Json.dll");
             // Generate an executable rather than a DLL file.
             cp.GenerateExecutable = true;
             // Invoke compilation.
@@ -333,7 +330,7 @@ namespace CodeExam.Controllers
                     {
                         StartInfo = new ProcessStartInfo
                         {
-                            FileName = "\"" + Server.MapPath("~") + "SourceCode\\csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe\"",
+                            FileName = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe",
                             Arguments = i.ToString(),
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
@@ -358,7 +355,7 @@ namespace CodeExam.Controllers
                     };
                 }
                 proc.Start();
-                if (!proc.WaitForExit(3000))
+                if (!proc.WaitForExit(5000))
                 {
                     runResult.errMsg = "Out of time";
                     runResult.isSuccess = false;
