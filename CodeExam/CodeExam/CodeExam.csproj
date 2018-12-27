@@ -253,14 +253,6 @@
     <Compile Include="Migrations\201812121550560_EditDataType.Designer.cs">
       <DependentUpon>201812121550560_EditDataType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812260429267_EditLeaderBoard.cs" />
-    <Compile Include="Migrations\201812260429267_EditLeaderBoard.Designer.cs">
-      <DependentUpon>201812260429267_EditLeaderBoard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812260450418_EditUserIdLeaderBoard.cs" />
-    <Compile Include="Migrations\201812260450418_EditUserIdLeaderBoard.Designer.cs">
-      <DependentUpon>201812260450418_EditUserIdLeaderBoard.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthAttribute.cs" />
     <Compile Include="Models\CodeWarDbContext.cs" />
@@ -853,12 +845,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812121550560_EditDataType.resx">
       <DependentUpon>201812121550560_EditDataType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812260429267_EditLeaderBoard.resx">
-      <DependentUpon>201812260429267_EditLeaderBoard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812260450418_EditUserIdLeaderBoard.resx">
-      <DependentUpon>201812260450418_EditUserIdLeaderBoard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

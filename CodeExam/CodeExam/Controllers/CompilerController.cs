@@ -266,7 +266,7 @@ namespace CodeExam.Controllers
                     contentFile += ")));}";
                     idx++;
                 }
-                using (StreamWriter writetext = new StreamWriter(Server.MapPath("~") + "\\SourceCode\\js_" + task.TaskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js"))
+                using (StreamWriter writetext = new StreamWriter("js_" + task.TaskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js"))
                 {
                     writetext.WriteLine(contentFile);
                 }
@@ -346,7 +346,7 @@ namespace CodeExam.Controllers
                         StartInfo = new ProcessStartInfo
                         {
                             FileName = "cmd.exe",
-                            Arguments = "/C Node \"" + Server.MapPath("~") + "SourceCode\\js_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js\" " + i.ToString(),
+                            Arguments = "/C Node js_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js " + i.ToString(),
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             CreateNoWindow = false,
