@@ -141,19 +141,18 @@ namespace CodeExam.Controllers
             }
             return Json(source, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GenFileAndRun(string source, int taskId, string language)
+        public ActionResult GenFileAndRun(string source, int taskId, string language, bool isSubmit = false)
         {
             if (language == "csharp")
             {
-                return GenFileCsharp(source, taskId);
+                return GenFileCsharp(source, taskId, isSubmit);
             }
             else
             {
-                return GenFileJs(source, taskId);
+                return GenFileJs(source, taskId, isSubmit);
             }
         }
-
-        public ActionResult GenFileCsharp(string source, int taskId)
+        public ActionResult GenFileCsharp(string source, int taskId, bool isSubmit)
         {
             try
             {
@@ -235,7 +234,7 @@ namespace CodeExam.Controllers
                 {
                     writetext.WriteLine(contentFile);
                 }
-                return CompileCodeCSharp(taskId);
+                return CompileCodeCSharp(taskId, source, isSubmit);
             }
             catch (Exception)
             {
@@ -243,7 +242,7 @@ namespace CodeExam.Controllers
                 throw;
             }
         }
-        public ActionResult GenFileJs(string source, int taskId)
+        public ActionResult GenFileJs(string source, int taskId, bool isSubmit)
         {
             try
             {
@@ -270,7 +269,7 @@ namespace CodeExam.Controllers
                 {
                     writetext.WriteLine(contentFile);
                 }
-                return Run(taskId, "js");
+                return Run(taskId, "js", source, isSubmit);
             }
             catch (Exception)
             {
@@ -278,7 +277,7 @@ namespace CodeExam.Controllers
                 throw;
             }
         }
-        public ActionResult CompileCodeCSharp(int taskId)
+        public ActionResult CompileCodeCSharp(int taskId, string source, bool isSubmit)
         {
             string sourceFile = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".cs";
             string exeFile = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe";
@@ -308,21 +307,21 @@ namespace CodeExam.Controllers
             }
             if (runResult.isSuccess)
             {
-                return Run(taskId, "csharp");
+                return Run(taskId, "csharp", source, isSubmit);
             }
             else
             {
                 return Json(runResult, JsonRequestBehavior.AllowGet);
             }
         }
-        private ActionResult Run(int taskId, string language)
+        private ActionResult Run(int taskId, string language, string source, bool isSubmit)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
-            var testCaseCount = listTestCase.Count;
+            int totalTestCase = isSubmit ? listTestCase.Count : listTestCase.Count / 2;
             RunResult runResult = new RunResult();
-            runResult.totalTestCase = listTestCase.Count / 2;
+            runResult.totalTestCase = totalTestCase;
             int success = 0;
-            for (int i = 0; i < testCaseCount / 2; i++)
+            for (int i = 0; i < totalTestCase; i++)
             {
                 TestCaseResult item = new TestCaseResult();
                 var proc = new Process();
@@ -366,7 +365,10 @@ namespace CodeExam.Controllers
                 }
                 if (!proc.StandardOutput.EndOfStream)
                 {
-                    item.Result = proc.StandardOutput.ReadLine();
+                    if ((!isSubmit && i < totalTestCase) || (isSubmit && i < totalTestCase / 2))
+                    {
+                        item.Result = proc.StandardOutput.ReadLine();
+                    }
                     item.CompareExpection = item.Result == listTestCase[i].Output;
                     if (item.CompareExpection)
                     {
@@ -383,103 +385,30 @@ namespace CodeExam.Controllers
             }
             if (runResult.isSuccess)
             {
-                runResult.successTestCase = success;
-            }
-            return Json(runResult, JsonRequestBehavior.AllowGet);
-        }
-        private ActionResult Submit(int taskId, string language)
-        {
-            var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
-            var testCaseCount = listTestCase.Count;
-            RunResult runResult = new RunResult();
-            runResult.totalTestCase = listTestCase.Count;
-            runResult.totalPoint = (int)db.Tasks.FirstOrDefault(f => f.TaskId == taskId).Point;
-            int success = 0;
-            for (int i = 0; i < testCaseCount; i++)
-            {
-                TestCaseResult item = new TestCaseResult();
-                var proc = new Process();
-                if (language == "csharp")
+                if (isSubmit)
                 {
-                    proc = new Process
+                    int point = 0;
+                    switch (runResult.totalTestCase - success)
                     {
-                        StartInfo = new ProcessStartInfo
-                        {
-                            FileName = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe",
-                            Arguments = i.ToString(),
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                            CreateNoWindow = false,
-                            RedirectStandardError = true
-                        }
-                    };
-                }
-                else if (language == "js")
-                {
-                    proc = new Process
-                    {
-                        StartInfo = new ProcessStartInfo
-                        {
-                            FileName = "cmd.exe",
-                            Arguments = "/C Node js_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js " + i.ToString(),
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                            CreateNoWindow = false,
-                            RedirectStandardError = true
-                        }
-                    };
-                }
-                proc.Start();
-                if (!proc.WaitForExit(4000))
-                {
-                    runResult.errMsg = "Out of time";
-                    runResult.isSuccess = false;
-                    proc.Kill();
-                    break;
-                }
-                if (!proc.StandardOutput.EndOfStream)
-                {
-                    if (i < testCaseCount / 2)
-                    {
-                        item.Result = proc.StandardOutput.ReadLine();
+                        case 0:
+                            point = runResult.totalPoint;
+                            break;
+                        case 1:
+                            point = runResult.totalPoint * 3 / 4;
+                            break;
+                        case 2:
+                            point = runResult.totalPoint / 2;
+                            break;
+                        case 3:
+                            point = runResult.totalPoint / 4;
+                            break;
+                        default:
+                            point = 0;
+                            break;
                     }
-                    item.CompareExpection = proc.StandardOutput.ReadLine() == listTestCase[i].Output;
-                    if (item.CompareExpection)
-                    {
-                        success++;
-                    }
-                    runResult.detail.Add(item);
-                }
-                if (!proc.StandardError.EndOfStream)
-                {
-                    runResult.errMsg = proc.StandardError.ReadToEnd();
-                    runResult.isSuccess = false;
-                    break;
-                }
-            }
-            if (runResult.isSuccess)
-            {
-                int point = 0;
-                switch (runResult.totalTestCase - success)
-                {
-                    case 0:
-                        point = runResult.totalPoint;
-                        break;
-                    case 1:
-                        point = runResult.totalPoint * 3 / 4;
-                        break;
-                    case 2:
-                        point = runResult.totalPoint / 2;
-                        break;
-                    case 3:
-                        point = runResult.totalPoint / 4;
-                        break;
-                    default:
-                        point = 0;
-                        break;
+                    runResult.successPoint = point;
                 }
                 runResult.successTestCase = success;
-                runResult.successPoint = point;
             }
             return Json(runResult, JsonRequestBehavior.AllowGet);
         }
