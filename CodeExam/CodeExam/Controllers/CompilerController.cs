@@ -320,6 +320,81 @@ namespace CodeExam.Controllers
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             var testCaseCount = listTestCase.Count;
             RunResult runResult = new RunResult();
+            runResult.totalTestCase = listTestCase.Count / 2;
+            int success = 0;
+            for (int i = 0; i < testCaseCount / 2; i++)
+            {
+                TestCaseResult item = new TestCaseResult();
+                var proc = new Process();
+                if (language == "csharp")
+                {
+                    proc = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "csharp_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".exe",
+                            Arguments = i.ToString(),
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            CreateNoWindow = false,
+                            RedirectStandardError = true
+                        }
+                    };
+                }
+                else if (language == "js")
+                {
+                    proc = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = "cmd.exe",
+                            Arguments = "/C Node js_" + taskId + "_" + Constant.Constant.GetUserIdByIdentity(User.Identity.Name) + ".js " + i.ToString(),
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            CreateNoWindow = false,
+                            RedirectStandardError = true
+                        }
+                    };
+                }
+                proc.Start();
+                if (!proc.WaitForExit(4000))
+                {
+                    runResult.errMsg = "Out of time";
+                    runResult.isSuccess = false;
+                    proc.Kill();
+                    break;
+                }
+                if (!proc.StandardOutput.EndOfStream)
+                {
+                    item.Result = proc.StandardOutput.ReadLine();
+                    item.CompareExpection = item.Result == listTestCase[i].Output;
+                    if (item.CompareExpection)
+                    {
+                        success++;
+                    }
+                    runResult.detail.Add(item);
+                }
+                if (!proc.StandardError.EndOfStream)
+                {
+                    runResult.errMsg = proc.StandardError.ReadToEnd();
+                    runResult.isSuccess = false;
+                    break;
+                }
+            }
+            if (runResult.isSuccess)
+            {
+                runResult.successTestCase = success;
+            }
+            return Json(runResult, JsonRequestBehavior.AllowGet);
+        }
+        private ActionResult Submit(int taskId, string language)
+        {
+            var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
+            var testCaseCount = listTestCase.Count;
+            RunResult runResult = new RunResult();
+            runResult.totalTestCase = listTestCase.Count;
+            runResult.totalPoint = (int)db.Tasks.FirstOrDefault(f => f.TaskId == taskId).Point;
+            int success = 0;
             for (int i = 0; i < testCaseCount; i++)
             {
                 TestCaseResult item = new TestCaseResult();
@@ -355,7 +430,7 @@ namespace CodeExam.Controllers
                     };
                 }
                 proc.Start();
-                if (!proc.WaitForExit(5000))
+                if (!proc.WaitForExit(4000))
                 {
                     runResult.errMsg = "Out of time";
                     runResult.isSuccess = false;
@@ -364,8 +439,15 @@ namespace CodeExam.Controllers
                 }
                 if (!proc.StandardOutput.EndOfStream)
                 {
-                    item.Result = proc.StandardOutput.ReadLine();
-                    item.CompareExpection = item.Result == listTestCase[i].Output;
+                    if (i < testCaseCount / 2)
+                    {
+                        item.Result = proc.StandardOutput.ReadLine();
+                    }
+                    item.CompareExpection = proc.StandardOutput.ReadLine() == listTestCase[i].Output;
+                    if (item.CompareExpection)
+                    {
+                        success++;
+                    }
                     runResult.detail.Add(item);
                 }
                 if (!proc.StandardError.EndOfStream)
@@ -374,6 +456,30 @@ namespace CodeExam.Controllers
                     runResult.isSuccess = false;
                     break;
                 }
+            }
+            if (runResult.isSuccess)
+            {
+                int point = 0;
+                switch (runResult.totalTestCase - success)
+                {
+                    case 0:
+                        point = runResult.totalPoint;
+                        break;
+                    case 1:
+                        point = runResult.totalPoint * 3 / 4;
+                        break;
+                    case 2:
+                        point = runResult.totalPoint / 2;
+                        break;
+                    case 3:
+                        point = runResult.totalPoint / 4;
+                        break;
+                    default:
+                        point = 0;
+                        break;
+                }
+                runResult.successTestCase = success;
+                runResult.successPoint = point;
             }
             return Json(runResult, JsonRequestBehavior.AllowGet);
         }

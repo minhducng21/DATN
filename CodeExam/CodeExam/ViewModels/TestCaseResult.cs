@@ -23,6 +23,14 @@ namespace CodeExam.ViewModels
 
         public string errMsg { get; set; }
 
+        public int successTestCase { get; set; }
+
+        public int totalTestCase { get; set; }
+
+        public int successPoint { get; set; }
+
+        public int totalPoint { get; set; }
+
         public List<TestCaseResult> detail { get; set; }
     }
 }

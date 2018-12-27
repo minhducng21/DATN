@@ -81,7 +81,7 @@
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
             data: {
-                source: editor.getValue(), taskId: $scope.task.TaskId, language: $('#select-language').val()
+                source: editor.getValue(), taskId: $scope.task.TaskId, language: $scope.language.Value
             }
         }).then(function success(res) {
             if (res.data.isSuccess) {
