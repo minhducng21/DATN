@@ -1,6 +1,7 @@
 ﻿userApp.controller('CodeController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
     $scope.languages = [{ Name: 'Javascript', Value: 'js' }, { Name: 'C#', Value: 'csharp' }];
+    $scope.language = $scope.languages[0];
 
     var editor = CodeMirror(document.getElementById("codeeditor"), {
         mode: "javascript",
@@ -51,7 +52,7 @@
 
             $('.description').html($scope.task.TaskDescription);
             templateCode($scope.task.TaskId, 'js');
-        })
+        });
     }
 
 
@@ -76,7 +77,6 @@
 
     $scope.clickRun = function () {
         $('.lds-ring').show();
-        $('.ts').hide();
         $http({
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
@@ -94,17 +94,23 @@
                         $(`#collapse${i + 1} i`).last().removeAttr('hidden');
                         $(`#collapse${i + 1} i`).first().attr('hidden', 'true');
                     }
+
+                    $scope.testCases[i].OutputResult = res.data.detail[i].Result;
                 }
                 $('.lds-ring').hide();
-                $('.ts').show();
 
+                $('#menu2 p').hide();
+                $('#menu2 ul').hide();
+                $('.ts').addClass('active');
+                $('#testcase').addClass('active');
+                $('#console').removeClass('active');
+                $('#console').hide();
                 $('#submit').attr('hidden', 'true');
             }
             else {
                 $('#console').show();
                 $('#menu2 p').html(res.data.errMsg);
                 $('#menu2 p').show();
-                $('.ts').show();
                 $('.ts').removeClass('active');
 
                 $('#testcase').removeClass('active');

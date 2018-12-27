@@ -19,8 +19,8 @@ namespace CodeExam.Controllers
         public ActionResult GenerateTemplateCode(int taskId, string language)
         {
             string source = "";
-            int x = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
-            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == x);
+            var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
+            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == userId);
             if (leaderBoardItem != null)
             {
                 source = leaderBoardItem.SourceCode;
