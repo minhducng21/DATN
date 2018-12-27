@@ -369,7 +369,7 @@ namespace CodeExam.Controllers
                     {
                         item.Result = proc.StandardOutput.ReadLine();
                     }
-                    item.CompareExpection = item.Result == listTestCase[i].Output;
+                    item.CompareExpection = proc.StandardOutput.ReadLine() == listTestCase[i].Output;
                     if (item.CompareExpection)
                     {
                         success++;
