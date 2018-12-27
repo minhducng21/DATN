@@ -325,9 +325,6 @@
     <Content Include="Content\images\icon\coin.svg" />
     <Content Include="Content\images\icon\group_add.png" />
     <Content Include="Content\images\icon\favicon.ico" />
-    <Content Include="Content\images\loading.gif" />
-    <Content Include="Content\images\person_1.jpg" />
-    <Content Include="Content\images\person_2.jpg" />
     <Content Include="Content\images\sidebar-1.jpg" />
     <Content Include="Content\images\users.png" />
     <Content Include="Content\lib\abcdef.css" />

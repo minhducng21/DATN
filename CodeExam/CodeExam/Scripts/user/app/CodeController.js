@@ -52,7 +52,7 @@
 
             $('.description').html($scope.task.TaskDescription);
             templateCode($scope.task.TaskId, 'js');
-        })
+        });
     }
 
 
@@ -94,10 +94,13 @@
                         $(`#collapse${i + 1} i`).last().removeAttr('hidden');
                         $(`#collapse${i + 1} i`).first().attr('hidden', 'true');
                     }
+
+                    $scope.testCases[i].OutputResult = res.data.detail[i].Result;
                 }
                 $('.lds-ring').hide();
 
-                $('#menu2').hide();
+                $('#menu2 p').hide();
+                $('#menu2 ul').hide();
                 $('.ts').addClass('active');
                 $('#testcase').addClass('active');
                 $('#console').removeClass('active');

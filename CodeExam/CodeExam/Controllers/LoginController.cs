@@ -113,7 +113,14 @@ namespace CodeExam.Areas.Controllers
                     SignInUser(obj.Email, obj.UserName, obj.Password, obj.SocialId, obj.RoleId, true);
                     return RedirectToAction("Index", "Direction");
                 }
+                Random rnd = new Random();
+                string userName = profile.DisplayName.Split(' ')[0].ToLower() + "_" + rnd.Next(1, 10);
+                while (db.Users.FirstOrDefault(u => u.UserName.Equals(userName)) != null)
+                {
+                    userName = userName + rnd.Next(10);
+                }
                 User user = new User();
+                user.UserName = userName;
                 user.DisplayName = profile.DisplayName;
                 user.Email = profile.Emails.Find(e => e.Type == "account").Value;
                 user.SocialId = profile.Id;
@@ -150,7 +157,15 @@ namespace CodeExam.Areas.Controllers
                     SignInUser(obj.Email, obj.UserName, obj.Password, obj.SocialId, obj.RoleId, true);
                     return RedirectToAction("Index", "Direction");
                 }
+                Random rnd = new Random();
+                string userName = fbAcc.Name.Split(' ')[0].ToLower() + "_" + rnd.Next(1, 10);
+                while (db.Users.FirstOrDefault(u => u.UserName.Equals(userName)) != null)
+                {
+                    userName = userName + rnd.Next(10);
+                }
+
                 User user = new User();
+                user.UserName = userName;
                 user.DisplayName = fbAcc.Name;
                 user.Email = fbAcc.Email;
                 user.SocialId = fbAcc.Id;
@@ -187,18 +202,16 @@ namespace CodeExam.Areas.Controllers
             var claims = new List<Claim>();
             try
             {
-                if (String.IsNullOrEmpty(username))
-                {
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, socialId));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, socialId));
-                }
-                else
-                {
-                    claims.Add(new Claim(ClaimTypes.Name, username));
-                    claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
-                }
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                
+                //else
+                //{
+                //    claims.Add(new Claim(ClaimTypes.Name, username));
+                //    claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
+                //    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
+                //}
 
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();

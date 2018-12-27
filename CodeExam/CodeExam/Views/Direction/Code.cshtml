@@ -130,8 +130,7 @@
             <div class="col-md-9">
                 <div class="row" style="background: #212b37; border-bottom: 1px solid;">
                     <div class="col-md-offset-10">
-                        <select id="select-language" style="border: 1px solid #8291a3" ng-model="language" ng-change="changeLanguage(language.Value)" ng-options="language.Name for language in languages">
-                        </select>
+                        <select id="select-language" style="border: 1px solid #8291a3" ng-model="language" ng-change="changeLanguage(language.Value)" ng-options="language.Name for language in languages"></select>
                     </div>
                 </div>
 
@@ -156,9 +155,9 @@
                                         </ul>
                                     </div>
                                 </div>
-                                @*<div class="ouput-testcase">
-                                        <span style="color: #3498db; font-weight: normal;">Output:</span>
-                                    </div>*@
+                                <div class="ouput-testcase">
+                                    <span style="color: #3498db; font-weight: normal;">Output: <span style="color: white; font-weight: bold;">{{testcase.OutputResult}}</span></span>
+                                </div>
                                 <div class="expected-ouput-testcase">
                                     <p style="color: #3498db; font-weight: normal;">Expected ouput: <span style="color: white; font-weight: bold;">{{testcase.Output}}</span></p>
                                 </div>
