@@ -320,6 +320,7 @@ namespace CodeExam.Controllers
             int totalTestCase = isSubmit ? listTestCase.Count : listTestCase.Count / 2;
             RunResult runResult = new RunResult();
             runResult.totalTestCase = totalTestCase;
+            runResult.totalPoint = (int)db.Tasks.FirstOrDefault(f=>f.TaskId == taskId).Point;
             int success = 0;
             for (int i = 0; i < totalTestCase; i++)
             {
@@ -407,6 +408,49 @@ namespace CodeExam.Controllers
                             break;
                     }
                     runResult.successPoint = point;
+                    var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
+                    if (language == "csharp")
+                    {
+                        var leaderBoard = db.LeaderBoards.FirstOrDefault(f => f.LanguageId == db.LanguagePrograms.FirstOrDefault(g => g.LanguageName == "Csharp").LanguageId && f.TaskId == taskId && f.UserId == userId);
+                        if (leaderBoard != null)
+                        {
+                            leaderBoard.SourceCode = source;
+                            leaderBoard.Point = point;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            LeaderBoard item = new LeaderBoard();
+                            item.LanguageId = db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Csharp").LanguageId;
+                            item.Point = point;
+                            item.SourceCode = source;
+                            item.UserId = userId;
+                            item.TaskId = taskId;
+                            db.LeaderBoards.Add(item);
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        var leaderBoard = db.LeaderBoards.FirstOrDefault(f => f.LanguageId == db.LanguagePrograms.FirstOrDefault(g => g.LanguageName == "Javascript").LanguageId && f.TaskId == taskId && f.UserId == userId);
+                        if (leaderBoard != null)
+                        {
+                            leaderBoard.SourceCode = source;
+                            leaderBoard.Point = point;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            LeaderBoard item = new LeaderBoard();
+                            item.LanguageId = db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Javascript").LanguageId;
+                            item.Point = point;
+                            item.SourceCode = source;
+                            item.UserId = userId;
+                            item.TaskId = taskId;
+                            db.LeaderBoards.Add(item);
+                            db.SaveChanges();
+                        }
+                    }
                 }
                 runResult.successTestCase = success;
             }
