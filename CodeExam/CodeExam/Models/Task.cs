@@ -18,7 +18,7 @@ namespace CodeExam
         [StringLength(20)]
         public string TaskLevel { get; set; }
 
-        public int? Point { get; set; }
+        public int Point { get; set; }
 
         public string Input { get; set; }
 

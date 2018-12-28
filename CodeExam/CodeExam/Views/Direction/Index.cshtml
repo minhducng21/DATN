@@ -15,12 +15,22 @@
         transition: .5s ease;
         background-color: rgba(51,72,95,.95);
         padding: 0 40px;
-        color: white;
+        color: white !important;
+        cursor: pointer;
     }
     .thumbnail-exam:hover .overlay {
         opacity: 0.9;
+        margin-top: -10px;
+        margin-bottom: 50px;
+        transition: 0.5s ease;
     }
-    .thumbnail-exam:hover{
+    .thumbnail-exam:hover .hover-exam {
+        opacity: 0.9;
+        margin-top: -10px;
+        margin-bottom: 50px;
+        transition: 0.5s ease;
+    }
+    .thumbnail-exam:hover {
         width: 80%;
     }
 </style>
@@ -56,10 +66,10 @@
                             </div>
                         </div>
                     </a>
-                    <div class="overlay">
+                    <a class="overlay" href="/Direction/Code?id={{task.TaskId}}">
                         <span style="font-size: 20px;">{{task.TaskName}}</span>
-                        <p style="font-size: 14px;" ng-bind-html="task.TaskDescription"></p>
-                    </div>
+                        <p style="font-size: 14px; line-height: 1.2;" ng-bind-html="task.TaskDescription"></p>
+                    </a>
                 </div>
             </div>
 

@@ -22,8 +22,10 @@
 
     <script src="~/Scripts/jquery.min.js"></script>
     @Scripts.Render("~/Bundles/js")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.5/angular-sanitize.min.js"></script>
+    <script src="~/Scripts/user/app/UserAppController.js"></script>
 </head>
-<body>
+<body  ng-app="userApp">
     @RenderBody()
     <script src="@Url.Content("~/Scripts/jquery-migrate-3.0.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Login/popper.min.js")"></script>
