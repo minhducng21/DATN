@@ -11,14 +11,14 @@ namespace CodeExam
     {
         public int LeaderBoardId { get; set; }
 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
-        public int? TaskId { get; set; }
+        public int TaskId { get; set; }
 
-        public int? Point { get; set; }
+        public int Point { get; set; }
 
         public string SourceCode { get; set; }
 
-        public int? LanguageId { get; set; }
+        public int LanguageId { get; set; }
     }
 }

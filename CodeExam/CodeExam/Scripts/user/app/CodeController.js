@@ -41,7 +41,7 @@
             // handle test case
             for (var i = 0; i < $scope.testCases.length; i++) {
                 var arrTestCase = $scope.testCases[i].Input.split(';');
-                $scope.testCases[i].Input = []
+                $scope.testCases[i].Input = [];
 
                 for (var j = 0; j < arrTestCase.length; j++) {
                     if (arrTestCase[j] != "") {
@@ -49,6 +49,7 @@
                     }
                 }
             }
+            $scope.lengthTestCaseShow = Math.floor($scope.testCases.length / 2);
 
             $('.description').html($scope.task.TaskDescription);
             templateCode($scope.task.TaskId, 'js');
@@ -68,11 +69,13 @@
     }
 
     $scope.collapseTestCase = function (index) {
-        if (typeof $scope.collapseIndex === "number" && $scope.collapseIndex != index + 1) {
-            $(`#collapse${$scope.collapseIndex} div`).first().removeClass('in');
+        if (index + 1 <= $scope.lengthTestCaseShow) {
+            if (typeof $scope.collapseIndex === "number" && $scope.collapseIndex != index + 1) {
+                $(`#collapse${$scope.collapseIndex} div`).first().removeClass('in');
+            }
+            $scope.collapseIndex = index + 1;
+            $(`#collapse${index + 1}`).attr("href", `#testcase${index + 1}`)
         }
-        $scope.collapseIndex = index + 1;
-        $(`#collapse${index + 1}`).attr("href", `#testcase${index + 1}`)
     }
 
     $scope.clickRun = function () {
@@ -87,18 +90,17 @@
             if (res.data.isSuccess) {
                 for (var i = 0; i < res.data.detail.length; i++) {
                     if (res.data.detail[i].CompareExpection) {
-                        $(`#collapse${i + 1} i`).first().removeAttr('hidden');
-                        $(`#collapse${i + 1} i`).last().attr('hidden', 'true');
+                        $(`#collapse${i + 1} #isSuccess`).removeAttr('hidden');
+                        $(`#collapse${i + 1} #isFailed`).attr('hidden', 'true');
                     }
                     else {
-                        $(`#collapse${i + 1} i`).last().removeAttr('hidden');
-                        $(`#collapse${i + 1} i`).first().attr('hidden', 'true');
+                        $(`#collapse${i + 1} #isFailed`).removeAttr('hidden');
+                        $(`#collapse${i + 1} #isSuccess`).attr('hidden', 'true');
                     }
 
                     $scope.testCases[i].OutputResult = res.data.detail[i].Result;
                 }
                 $('.lds-ring').hide();
-
                 $('#menu2 p').hide();
                 $('#menu2 ul').hide();
                 $('.ts').addClass('active');
@@ -120,15 +122,14 @@
 
                 $('#submit').attr('hidden', 'true');
             }
-        })
-    }
+        });
+    };
 
     $scope.changeLanguage = function (language) {
         templateCode($scope.task.TaskId, language);
-    }
+    };
 
     $scope.submit = function () {
-        //$scope.currentPoint = $scope.task.Point;
 
         $('#menu2 p').hide();
         $('#testcase').removeClass('active');

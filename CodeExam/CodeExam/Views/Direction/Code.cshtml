@@ -144,8 +144,9 @@
                         <div class="lds-ring col-md-offset-5"><div></div><div></div><div></div><div></div></div>
                         <div ng-repeat="testcase in testCases track by $index" id="collapse{{$index + 1}}" style="background: #212b37; padding: 5px; margin-bottom: 3px;" class="tab-pane active collapse ts" data-toggle="collapse" href="#collapseExample" role="button" ng-click="collapseTestCase($index)">
                             <span style="font-weight: normal;">TestCase {{$index + 1}}</span>
-                            <i hidden id="isSuccess" class="text-success glyphicon glyphicon-ok pull-right"></i>
-                            <i hidden class="text-danger glyphicon glyphicon-remove pull-right"></i>
+                            <i hidden id="isSuccess" class="text-info fas fa-check-circle pull-right" style="font-size: 22px;"></i>
+                            <i hidden id="isFailed" class="text-danger fas fa-exclamation-triangle pull-right" style="font-size: 22px;"></i>
+                            <i id="isLocked" ng-show="$index + 1 > lengthTestCaseShow " class="fas fa-lock pull-right" style="font-size: 22px;"></i>
                             <div class="collapse" id="testcase{{$index + 1}}">
                                 <div class="input-testcase">
                                     <span style="color: #3498db; font-weight: normal;">Input:</span>

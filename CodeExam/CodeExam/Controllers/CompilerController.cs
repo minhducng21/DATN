@@ -318,8 +318,10 @@ namespace CodeExam.Controllers
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
             int totalTestCase = isSubmit ? listTestCase.Count : listTestCase.Count / 2;
+            int totalPoint = db.Tasks.FirstOrDefault(t => t.TaskId.Equals(taskId)).Point;
             RunResult runResult = new RunResult();
             runResult.totalTestCase = totalTestCase;
+            runResult.totalPoint = totalPoint;
             int success = 0;
             for (int i = 0; i < totalTestCase; i++)
             {
