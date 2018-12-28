@@ -367,11 +367,12 @@ namespace CodeExam.Controllers
                 }
                 if (!proc.StandardOutput.EndOfStream)
                 {
+                    var output = proc.StandardOutput.ReadLine();
                     if ((!isSubmit && i < totalTestCase) || (isSubmit && i < totalTestCase / 2))
                     {
-                        item.Result = proc.StandardOutput.ReadLine();
+                        item.Result = output;
                     }
-                    item.CompareExpection = proc.StandardOutput.ReadLine() == listTestCase[i].Output;
+                    item.CompareExpection = output == listTestCase[i].Output;
                     if (item.CompareExpection)
                     {
                         success++;
