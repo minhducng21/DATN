@@ -322,7 +322,11 @@ namespace CodeExam.Controllers
             RunResult runResult = new RunResult();
             runResult.totalTestCase = totalTestCase;
             runResult.totalPoint = totalPoint;
+            runResult.totalShowTestCase = listTestCase.Count / 2;
+            runResult.totalHiddenTestCase = listTestCase.Count - (int)listTestCase.Count / 2;
             int success = 0;
+            int successHiddenTestCase = 0;
+            int successShowTestCase = 0;
             for (int i = 0; i < totalTestCase; i++)
             {
                 TestCaseResult item = new TestCaseResult();
@@ -371,6 +375,11 @@ namespace CodeExam.Controllers
                     if ((!isSubmit && i < totalTestCase) || (isSubmit && i < totalTestCase / 2))
                     {
                         item.Result = output;
+                        successShowTestCase++;
+                    }
+                    if (isSubmit && i >= (int)totalTestCase / 2)
+                    {
+                        successHiddenTestCase++;
                     }
                     item.CompareExpection = output == listTestCase[i].Output;
                     if (item.CompareExpection)
@@ -455,6 +464,8 @@ namespace CodeExam.Controllers
                     }
                 }
                 runResult.successTestCase = success;
+                runResult.successShowTestCase = successShowTestCase;
+                runResult.successHiddenTestCase = successHiddenTestCase;
             }
             return Json(runResult, JsonRequestBehavior.AllowGet);
         }

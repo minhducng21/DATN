@@ -31,6 +31,14 @@ namespace CodeExam.ViewModels
 
         public int totalPoint { get; set; }
 
+        public int totalHiddenTestCase { get; set; }
+
+        public int successHiddenTestCase { get; set; }
+
+        public int totalShowTestCase { get; set; }
+
+        public int successShowTestCase { get; set; }
+
         public List<TestCaseResult> detail { get; set; }
     }
 }
