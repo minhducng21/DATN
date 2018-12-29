@@ -80,6 +80,7 @@
 
     $scope.clickRun = function () {
         $('.lds-ring').show();
+        $('#submit').hide();
         $http({
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
@@ -107,7 +108,7 @@
                 $('#testcase').addClass('active');
                 $('#console').removeClass('active');
                 $('#console').hide();
-                $('#submit').attr('hidden', 'true');
+                $('#submit').hide();
             }
             else {
                 $('#console').show();
@@ -120,7 +121,7 @@
                 $('#menu2').addClass('active');
                 $('.lds-ring').hide();
 
-                $('#submit').attr('hidden', 'true');
+                $('#submit').hide();
             }
         });
     };
@@ -129,13 +130,34 @@
         templateCode($scope.task.TaskId, language);
     };
 
+
+    $scope.testcase = {};
+    $scope.point = {};
     $scope.submit = function () {
+        $('.lds-ring').show();
+
+        $http({
+            method: 'POST',
+            url: '/Compiler/GenFileAndRun',
+            data: {
+                source: editor.getValue(), taskId: $scope.task.TaskId, language: $scope.language.Value, isSubmit: true
+            }
+        }).then(function success(res) {
+            if (res.data.isSuccess) {
+                $scope.point.realPoint = res.data.successPoint;
+                $scope.point.totalPoint = res.data.totalPoint;
+                $scope.testcase.realTestCase = res.data.successTestCase;
+                $scope.testcase.totalTestCase = res.data.totalTestCase;
+            }
+        });
 
         $('#menu2 p').hide();
         $('#testcase').removeClass('active');
         $('#console').show();
         $('#console').addClass('active');
         $('#menu2').addClass('active');
-        $('#submit').removeAttr('hidden');
+        $('#submit').show();
+        $('.ts').removeClass('active');
+        $('.lds-ring').hide();
     }
 }])
