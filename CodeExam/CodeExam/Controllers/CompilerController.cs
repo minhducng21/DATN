@@ -20,7 +20,8 @@ namespace CodeExam.Controllers
         {
             string source = "";
             var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
-            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == userId);
+            var languageId = language == "csharp" ? db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Csharp").LanguageId : db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Javascript").LanguageId;
+            var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == userId && f.LanguageId == languageId);
             if (leaderBoardItem != null)
             {
                 source = leaderBoardItem.SourceCode;
