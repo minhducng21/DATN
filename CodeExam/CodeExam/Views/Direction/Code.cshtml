@@ -142,6 +142,7 @@
                     </ul>
                     <div class="tab-content" style="color:white;font-weight:bold; height: 264px; overflow: auto;">
                         <div class="lds-ring col-md-offset-5"><div></div><div></div><div></div><div></div></div>
+                        <span style="font-weight: normal;" class="notifySuccess">{{testcase.successShowTestCase}}/{{testcase.totalShowTestCase}} sample tests passed. Click Submit to run the full test suite and save your solution.</span>
                         <div ng-repeat="testcase in testCases track by $index" id="collapse{{$index + 1}}" style="background: #212b37; padding: 5px; margin-bottom: 3px;" class="tab-pane active collapse ts" data-toggle="collapse" href="#collapseExample" role="button" ng-click="collapseTestCase($index)">
                             <span style="font-weight: normal;">TestCase {{$index + 1}}</span>
                             <i hidden id="isSuccess" class="text-info fas fa-check-circle pull-right" style="font-size: 22px;"></i>

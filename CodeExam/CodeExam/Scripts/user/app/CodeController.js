@@ -17,6 +17,7 @@
 
     $('.lds-ring').hide();
     $('#console').hide();
+    $('.notifySuccess').hide();
 
     var Input = [];
     getTaskById(id);
@@ -81,6 +82,8 @@
     $scope.clickRun = function () {
         $('.lds-ring').show();
         $('#submit').hide();
+        $('.ts').hide();
+        $('.notifySuccess').hide();
         $http({
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
@@ -89,6 +92,11 @@
             }
         }).then(function success(res) {
             if (res.data.isSuccess) {
+
+                $scope.testcase.successShowTestCase = res.data.successShowTestCase;
+                $scope.testcase.totalShowTestCase = res.data.totalShowTestCase;
+                $('.notifySuccess').show();
+
                 for (var i = 0; i < res.data.detail.length; i++) {
                     if (res.data.detail[i].CompareExpection) {
                         $(`#collapse${i + 1} #isSuccess`).removeAttr('hidden');
@@ -105,12 +113,14 @@
                 $('#menu2 p').hide();
                 $('#menu2 ul').hide();
                 $('.ts').addClass('active');
+                $('.ts').show();
                 $('#testcase').addClass('active');
                 $('#console').removeClass('active');
                 $('#console').hide();
                 $('#submit').hide();
             }
             else {
+                $('.notifySuccess').hide();
                 $('#console').show();
                 $('#menu2 p').html(res.data.errMsg);
                 $('#menu2 p').show();
@@ -135,7 +145,9 @@
     $scope.point = {};
     $scope.submit = function () {
         $('.lds-ring').show();
-
+        $('.ts').removeClass('active');
+        $('#submit').hide();
+        $('.notifySuccess').hide();
         $http({
             method: 'POST',
             url: '/Compiler/GenFileAndRun',
@@ -152,16 +164,30 @@
                 $scope.testcase.totalShowTestCase = res.data.totalShowTestCase;
                 $scope.testcase.successHiddenTestCase = res.data.successHiddenTestCase;
                 $scope.testcase.totalHiddenTestCase = res.data.totalHiddenTestCase;
-            }
 
-            $('#menu2 p').hide();
-            $('#testcase').removeClass('active');
-            $('#console').show();
-            $('#console').addClass('active');
-            $('#menu2').addClass('active');
-            $('#submit').show();
-            $('.ts').removeClass('active');
-            $('.lds-ring').hide();
+                $('#menu2 p').hide();
+                $('#testcase').removeClass('active');
+                $('#console').show();
+                $('#console').addClass('active');
+                $('#menu2').addClass('active');
+                $('#submit').show();
+                $('.ts').removeClass('active');
+                $('.lds-ring').hide();
+            }
+            else {
+                $('.notifySuccess').hide();
+                $('#console').show();
+                $('#menu2 p').html(res.data.errMsg);
+                $('#menu2 p').show();
+                $('.ts').removeClass('active');
+
+                $('#testcase').removeClass('active');
+                $('#console').addClass('active');
+                $('#menu2').addClass('active');
+                $('.lds-ring').hide();
+
+                $('#submit').hide();
+            }
         });
     }
 }])
