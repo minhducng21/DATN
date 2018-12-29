@@ -167,9 +167,9 @@
                         <div id="menu2" class="tab-pane" style="overflow: auto">
                             <p></p>
                             <ul id="submit" style="font-family: Work Sans, Arial, sans-serif; font-weight: normal; list-style-type: none;">
-                                <li style="color: #44bfa3;"><i class="glyphicon glyphicon-ok-sign" style="color: #44bfa3; font-size: 26px; vertical-align: middle;"></i> 12/{{testcase.totalTestCase}} tests passed</li>
-                                <li>Sample tests: <span style="color: #44bfa3;">6/6</span></li>
-                                <li>Hidden tests: <span style="color: #44bfa3;">6/6</span></li>
+                                <li style="color: #44bfa3;"><i class="glyphicon glyphicon-ok-sign" style="color: #44bfa3; font-size: 26px; vertical-align: middle;"></i> {{testcase.realTestCase}}/{{testcase.totalTestCase}} tests passed</li>
+                                <li>Sample tests: <span style="color: #44bfa3;">{{testcase.successShowTestCase}}/{{testcase.totalShowTestCase}}</span></li>
+                                <li>Hidden tests: <span style="color: #44bfa3;">{{testcase.successHiddenTestCase}}/{{testcase.totalHiddenTestCase}}</span></li>
                                 <li>Score: <span style="color: #44bfa3;">{{point.realPoint}}/{{point.totalPoint}}</span></li>
                             </ul>
                         </div>

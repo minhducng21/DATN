@@ -148,16 +148,20 @@
                 $scope.point.totalPoint = res.data.totalPoint;
                 $scope.testcase.realTestCase = res.data.successTestCase;
                 $scope.testcase.totalTestCase = res.data.totalTestCase;
+                $scope.testcase.successShowTestCase = res.data.successShowTestCase;
+                $scope.testcase.totalShowTestCase = res.data.totalShowTestCase;
+                $scope.testcase.successHiddenTestCase = res.data.successHiddenTestCase;
+                $scope.testcase.totalHiddenTestCase = res.data.totalHiddenTestCase;
             }
-        });
 
-        $('#menu2 p').hide();
-        $('#testcase').removeClass('active');
-        $('#console').show();
-        $('#console').addClass('active');
-        $('#menu2').addClass('active');
-        $('#submit').show();
-        $('.ts').removeClass('active');
-        $('.lds-ring').hide();
+            $('#menu2 p').hide();
+            $('#testcase').removeClass('active');
+            $('#console').show();
+            $('#console').addClass('active');
+            $('#menu2').addClass('active');
+            $('#submit').show();
+            $('.ts').removeClass('active');
+            $('.lds-ring').hide();
+        });
     }
 }])
