@@ -373,16 +373,24 @@ namespace CodeExam.Controllers
                 if (!proc.StandardOutput.EndOfStream)
                 {
                     var output = proc.StandardOutput.ReadLine();
+                    item.CompareExpection = output == listTestCase[i].Output;
                     if ((!isSubmit && i < totalTestCase) || (isSubmit && i < totalTestCase / 2))
                     {
                         item.Result = output;
-                        successShowTestCase++;
+                        if (item.CompareExpection)
+                        {
+                            successShowTestCase++;
+                        }
                     }
                     if (isSubmit && i >= (int)totalTestCase / 2)
                     {
-                        successHiddenTestCase++;
+                        if (item.CompareExpection)
+                        {
+                            successHiddenTestCase++;
+
+                        }
                     }
-                    item.CompareExpection = output == listTestCase[i].Output;
+
                     if (item.CompareExpection)
                     {
                         success++;
@@ -407,12 +415,9 @@ namespace CodeExam.Controllers
                             point = runResult.totalPoint;
                             break;
                         case 1:
-                            point = runResult.totalPoint * 3 / 4;
-                            break;
-                        case 2:
                             point = runResult.totalPoint / 2;
                             break;
-                        case 3:
+                        case 2:
                             point = runResult.totalPoint / 4;
                             break;
                         default:
