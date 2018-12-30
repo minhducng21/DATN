@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ASPSnippets.FaceBookAPI">
-      <HintPath>..\..\..\..\ASPSnippets.FaceBookAPI.dll</HintPath>
+      <HintPath>.\ASPSnippets.FaceBookAPI.dll</HintPath>
     </Reference>
     <Reference Include="ASPSnippets.GoogleAPI, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,7 +99,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>SourceCode\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.10\lib\net45\NLog.dll</HintPath>
@@ -779,10 +779,6 @@
     <Content Include="Scripts\user\app\IntroController.js" />
     <Content Include="Scripts\user\app\UserAppController.js" />
     <Content Include="Scripts\user\app\UserHeaderController.js" />
-    <Content Include="SourceCode\ASPSnippets.GoogleAPI.dll" />
-    <Content Include="SourceCode\js_23_15.js" />
-    <Content Include="SourceCode\js_23_25.js" />
-    <Content Include="SourceCode\Newtonsoft.Json.dll" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
