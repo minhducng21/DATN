@@ -279,6 +279,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\FacebookAccViewModel.cs" />
+    <Compile Include="ViewModels\LeaderBoardViewModel.cs" />
     <Compile Include="ViewModels\TestCaseResult.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
@@ -777,6 +778,7 @@
     <Content Include="Scripts\user\app\CodeController.js" />
     <Content Include="Scripts\user\app\DirectionController.js" />
     <Content Include="Scripts\user\app\IntroController.js" />
+    <Content Include="Scripts\user\app\LeaderBoardController.js" />
     <Content Include="Scripts\user\app\UserAppController.js" />
     <Content Include="Scripts\user\app\UserHeaderController.js" />
     <Content Include="Web.config">

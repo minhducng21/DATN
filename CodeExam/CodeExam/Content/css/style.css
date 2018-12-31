@@ -7882,9 +7882,9 @@ h1, h2, h3, h4, h5,
     color: #000;
     border: 1px solid transparent !important;
     border-bottom: 1px solid #f0f0f0 !important; }
-    @media (min-width: 768px) {
+    /*@media (min-width: 768px) {
       .table tbody tr td:nth-child(odd) {
-        background: #fcfcfc; } }
+        background: #fcfcfc; } }*/
 
 #accordion .card {
   margin-bottom: 5px;

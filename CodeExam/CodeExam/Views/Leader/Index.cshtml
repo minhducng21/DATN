@@ -1,34 +1,42 @@
 ﻿@{
     ViewBag.Title = "Leader";
 }
-
-<div class="container">
-   
-    <table class="table table-striped">
+<script src="~/Scripts/user/app/LeaderBoardController.js"></script>
+<div class="container" ng-controller="LeaderBoardController" ng-init="getLeaderBoard(2);">
+    <div class="pull-right">
+        <select ng-model="language" ng-change="getLeaderBoard(language.LanguageId)" ng-options="language.LanguageName for language in languages"></select>
+    </div>
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
-                <th>Username</th>
-                <th>Xp</th>
+                <th scope="col">#</th>
+                <th scope="col">UserName</th>
+                <th scope="col">XP</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>15728</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Mary</td>
-                <td>14033</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>July</td>
-                <td>11200</td>
+            <tr ng-repeat="leader in leaderBoards">
+                <td>{{$index + 1 + (ItemPaging.currentPage - 1) * ItemPaging.numPerPage}}</td>
+                <td>{{leader.User.UserName}}</td>
+                <td>{{leader.TotalPoint}}</td>
             </tr>
         </tbody>
     </table>
+
+    @*Paging*@
+    <div class="col-sm-12 col-xs-12 none-padding page-footer">
+        <div class="col-sm-12 col-xs-12 none-padding page-footer">
+            <div class="col-sm-12 col-xs-12 none-padding text-right ">
+                <ul uib-pagination boundary-links="true"
+                    total-items="ItemPaging.total"
+                    ng-change="getLeaderBoard(language.LanguageId)"
+                    max-size="ItemPaging.maxSize"
+                    items-per-page="ItemPaging.numPerPage"
+                    ng-model="ItemPaging.currentPage"
+                    boundary-link-numbers="true"
+                    class="tbl-pagination pagination" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+            </div>
+        </div>
+    </div>
 </div>
 
