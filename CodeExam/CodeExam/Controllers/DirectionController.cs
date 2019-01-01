@@ -1,4 +1,5 @@
 ﻿using CodeExam.Models;
+using CodeExam.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,49 @@ namespace CodeExam.Controllers
         {
             var listTestCases = db.TestCases.Where(t => t.TaskId.Equals(id)).ToList();
             return listTestCases;
+        }
+
+        public JsonResult GetLeaderByTaskId(int taskId)
+        {
+            var results = db.LeaderBoards.Where(d => d.TaskId.Equals(taskId)).ToList();
+            List<LeaderBoardViewModel> leaders = new List<LeaderBoardViewModel>();
+            foreach (var item in results)
+            {
+                LeaderBoardViewModel leader = new LeaderBoardViewModel();
+                leader.User = db.Users.FirstOrDefault(u => u.UserId.Equals(item.UserId));
+                leader.Point = item.Point;
+                leader.Language = db.LanguagePrograms.FirstOrDefault(d => d.LanguageId.Equals(item.LanguageId));
+                leader.SourceCode = item.SourceCode;
+
+                leaders.Add(leader);
+            }
+            return Json(leaders.OrderByDescending(p => p.Point), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAllLanguage()
+        {
+            return Json(db.LanguagePrograms.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLeaderByLanguageId(int languageId, int taskId)
+        {
+            var results = db.LeaderBoards.Where(d => d.TaskId.Equals(taskId) && d.LanguageId.Equals(languageId)).ToList();
+            if (languageId == 3)
+            {
+                results = db.LeaderBoards.Where(d => d.TaskId.Equals(taskId)).ToList();
+            }
+            List<LeaderBoardViewModel> leaders = new List<LeaderBoardViewModel>();
+            foreach (var item in results)
+            {
+                LeaderBoardViewModel leader = new LeaderBoardViewModel();
+                leader.User = db.Users.FirstOrDefault(u => u.UserId.Equals(item.UserId));
+                leader.Point = item.Point;
+                leader.Language = db.LanguagePrograms.FirstOrDefault(d => d.LanguageId.Equals(item.LanguageId));
+                leader.SourceCode = item.SourceCode;
+
+                leaders.Add(leader);
+            }
+            return Json(leaders.OrderByDescending(p => p.Point), JsonRequestBehavior.AllowGet);
         }
     }
 }

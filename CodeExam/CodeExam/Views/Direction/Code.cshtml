@@ -97,7 +97,7 @@
     }
 </style>
 
-<div class="container" ng-controller="CodeController">
+<div class="container" ng-controller="CodeController" ng-init="getLanguage()">
     <!--Header-->
     <div class="row" style="background: #33485f; color: white;">
         <div>
@@ -108,24 +108,46 @@
 
     <div class="row">
         <div class="content-code-detail" style="position: relative;">
-            <div class="content-exam col-md-3" id="content-exam">
-                <div id="info-exam" style="font-size: 16px;">
-                    <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span>
-                    <span><img width="16" height="16" src="~/Content/images/icon/coin.svg" /> {{task.Point}}</span>
-                </div>
-                <div id="detail-exam">
-                    <div id="content-detail-exam">
-                        <h4 class="text-info">Summary</h4>
-                        <p class="description" style="color: black;"></p>
+            <div class="content-exam col-md-3 tab-content" id="content-exam">
+                <div class="summary tab-pane active">
+                    <div id="info-exam" style="font-size: 16px;">
+                        <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span>
+                        <span><img width="16" height="16" src="~/Content/images/icon/coin.svg" /> {{task.Point}}</span>
                     </div>
-                    <h4 class="text-info">INPUT/OUTPUT</h4>
-                    <div id="input-output">
-                        <ul style="color: black; font-weight: bold;">
-                            <li ng-repeat="input in task.Input track by $index">[Input] {{input.InputName}} : {{input.InputType}}</li>
-                            <li>[Output] {{task.OutputType}}</li>
-                        </ul>
+                    <div id="detail-exam">
+                        <div id="content-detail-exam">
+                            <h4 class="text-info">Summary</h4>
+                            <p class="description" style="color: black;"></p>
+                        </div>
+                        <h4 class="text-info">INPUT/OUTPUT</h4>
+                        <div id="input-output">
+                            <ul style="color: black; font-weight: bold;">
+                                <li ng-repeat="input in task.Input track by $index">[Input] {{input.InputName}} : {{input.InputType}}</li>
+                                <li>[Output] {{task.OutputType}}</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <div class="drawf tab-pane">
+                    <select ng-options="programLanguage.LanguageName for programLanguage in programLanguages" ng-model="programLanguage" ng-change="getLeaderByLanguageId(programLanguage.LanguageId, task.TaskId)"></select>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Language</th>
+                                <th>XP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="leader in leaders" ng-click="showSourceCode(leader.SourceCode)">
+                                <td>{{leader.User.UserName}}</td>
+                                <td>{{leader.Language.LanguageName}}</td>
+                                <td>{{leader.Point}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
             <div class="col-md-9">
                 <div class="row" style="background: #212b37; border-bottom: 1px solid;">
@@ -172,6 +194,7 @@
                                 <li>Sample tests: <span style="color: #44bfa3;">{{testcase.successShowTestCase}}/{{testcase.totalShowTestCase}}</span></li>
                                 <li>Hidden tests: <span style="color: #44bfa3;">{{testcase.successHiddenTestCase}}/{{testcase.totalHiddenTestCase}}</span></li>
                                 <li>Score: <span style="color: #44bfa3;">{{point.realPoint}}/{{point.totalPoint}}</span></li>
+                                <li><a class="btn btn-success" href="/Direction">Continue</a></li>
                             </ul>
                         </div>
                     </div>
@@ -179,25 +202,10 @@
                         <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                         <input class="btn" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px; background: #44bfa3; color: #fff" ng-click="submit()" />
                     </div>
-
-                    <!-- Modal -->
-                    <div class="modal" id="modalSubmit" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Some text in the modal.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ul class="nav nav-tabs" style="position: absolute; left: -320px; bottom: 0px; color: white;">
+                        <li style="background: #212b37;" id="summary" class="active"><a data-toggle="tab" href=".summary">Summary</a></li>
+                        <li style="background: #212b37;" id="drawf"><a data-toggle="tab" href=".drawf" ng-click="getLeaderByTaskId(task.TaskId)">Drawf</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

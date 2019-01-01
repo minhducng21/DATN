@@ -190,4 +190,40 @@
             }
         });
     }
+
+    $scope.getLanguage = function () {
+        $http({
+            method: 'GET',
+            url: '/Direction/GetAllLanguage'
+        }).then(function success(res) {
+            $scope.programLanguages = res.data;
+
+            var option = { LanguageId: 3, LanguageName: 'All' };
+            $scope.programLanguages.unshift(option);
+            $scope.programLanguage = $scope.programLanguages[0];
+        })
+    }
+
+    $scope.getLeaderByTaskId = function (id) {
+        $http({
+            method: 'GET',
+            url: '/Direction/GetLeaderByTaskId?taskId=' + id
+        }).then(function success(res) {
+            $scope.leaders = res.data;
+        });
+    };
+
+    $scope.getLeaderByLanguageId = function (languageId, taskId) {
+        $http({
+            method: 'GET',
+            url: '/Direction/GetLeaderByLanguageId',
+            params: { languageId, taskId }
+        }).then(function success(res) {
+            $scope.leaders = res.data;
+        })
+    }
+
+    $scope.showSourceCode = function (sourceCode) {
+        editor.setValue(sourceCode);
+    }
 }])

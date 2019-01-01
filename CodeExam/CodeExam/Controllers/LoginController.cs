@@ -202,9 +202,19 @@ namespace CodeExam.Areas.Controllers
             var claims = new List<Claim>();
             try
             {
+                if (String.IsNullOrEmpty(socialId))
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, username));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                }
+                else
+                {
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, socialId));
                     claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
+                }
+                    
                 
                 //else
                 //{
