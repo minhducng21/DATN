@@ -108,7 +108,13 @@
 
     <div class="row">
         <div class="content-code-detail" style="position: relative;">
-            <div class="content-exam col-md-3 tab-content" id="content-exam">
+            <div class="col-md-3"  style="position: absolute; background: #212b37; padding: 0px; border-right: 1px solid">
+                <ul class="nav nav-tabs">
+                    <li style="background: #212b37; border: 1px solid; border-radius: 5px;" id="summary" class="active"><a data-toggle="tab" href=".summary">Summary</a></li>
+                    <li style="background: #212b37; border: 1px solid; border-radius: 5px;" id="drawf"><a data-toggle="tab" href=".drawf" ng-click="getLeaderByTaskId(task.TaskId)">Draft</a></li>
+                </ul>
+            </div>
+            <div class="content-exam col-md-3 tab-content" id="content-exam" style="top: 40px;">
                 <div class="summary tab-pane active">
                     <div id="info-exam" style="font-size: 16px;">
                         <span><i class="text-success glyphicon glyphicon-menu-up"></i> {{task.TaskLevel}}</span>
@@ -147,7 +153,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
             <div class="col-md-9">
                 <div class="row" style="background: #212b37; border-bottom: 1px solid;">
@@ -202,10 +208,7 @@
                         <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
                         <input class="btn" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px; background: #44bfa3; color: #fff" ng-click="submit()" />
                     </div>
-                    <ul class="nav nav-tabs" style="position: absolute; left: -320px; bottom: 0px; color: white;">
-                        <li style="background: #212b37;" id="summary" class="active"><a data-toggle="tab" href=".summary">Summary</a></li>
-                        <li style="background: #212b37;" id="drawf"><a data-toggle="tab" href=".drawf" ng-click="getLeaderByTaskId(task.TaskId)">Drawf</a></li>
-                    </ul>
+
                 </div>
             </div>
         </div>
