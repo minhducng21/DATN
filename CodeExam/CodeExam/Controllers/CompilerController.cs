@@ -17,7 +17,7 @@ namespace CodeExam.Controllers
         private CodeWarDbContext db = new CodeWarDbContext();
         static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json" };
         public ActionResult GenerateTemplateCode(int taskId, string language)
-        {
+            {
             string source = "";
             var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
             var languageId = language == "csharp" ? db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Csharp").LanguageId : db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Javascript").LanguageId;
@@ -74,6 +74,7 @@ namespace CodeExam.Controllers
                             source += "char[][]";
                             break;
                         default:
+                            source += itemTask.OutputType;
                             break;
                     }
                     source += " " + itemTask.TaskName + "(";
@@ -121,6 +122,7 @@ namespace CodeExam.Controllers
                                 source += "char[][]";
                                 break;
                             default:
+                                source += itemTask.OutputType;
                                 break;
                         }
                         source += " " + item.Split(':')[0] + ",";
@@ -185,22 +187,22 @@ namespace CodeExam.Controllers
                         switch (listDataType[i])
                         {
                             case "arrayofint":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new int[] {").Replace("]", "}"));
+                                contentFile += "new int[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "arrayoflong":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new long[] {").Replace("]", "}"));
+                                contentFile += "new long[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "arrayofbool":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new bool[] {").Replace("]", "}"));
+                                contentFile += "new bool[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "arrayoffloat":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new float[] {").Replace("]", "}"));
+                                contentFile += "new float[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "arrayofstring":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new string[] {").Replace("]", "}"));
+                                contentFile += "new string[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "arrayofchar":
-                                contentFile += HttpUtility.UrlDecode(listTestCase[i].Trim().Replace("[", "new char[] {").Replace("]", "}"));
+                                contentFile += "new char[]{ " + HttpUtility.UrlDecode(listTestCase[i].Trim()).Substring(1, HttpUtility.UrlDecode(listTestCase[i]).Length - 2) + "}";
                                 break;
                             case "matrixofint":
                                 contentFile += "new int[][] " + HttpUtility.UrlDecode(listTestCase[i].Trim().Substring(1).Replace("[", "new int[] {").Replace("]", "}"));
