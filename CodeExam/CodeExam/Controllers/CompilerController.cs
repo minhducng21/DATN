@@ -14,8 +14,9 @@ namespace CodeExam.Controllers
 {
     public class CompilerController : Controller
     {
+        
         private CodeWarDbContext db = new CodeWarDbContext();
-        static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json" };
+        static string[] listRef = { "System", "System.Collections.Generic", "Newtonsoft.Json","System.Linq" };
         public ActionResult GenerateTemplateCode(int taskId, string language)
             {
             string source = "";
@@ -287,7 +288,7 @@ namespace CodeExam.Controllers
             CodeDomProvider provider = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
             // Configure a CompilerParameters that links System.dll
             // and produces the specified executable file.
-            String[] referenceAssemblies = { "System.dll" };
+            String[] referenceAssemblies = { "System.dll", "System.Core.dll" };
             CompilerParameters cp = new CompilerParameters(referenceAssemblies,
                                                            exeFile, false);
             cp.ReferencedAssemblies.Add("Newtonsoft.Json.dll");
