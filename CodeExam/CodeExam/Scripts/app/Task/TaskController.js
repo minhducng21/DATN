@@ -35,6 +35,16 @@
 
     // Test case
     $scope.openModalTestCase = () => {
+
+        //var input = { InputID: $scope.dataInput.length, InputName: '', InputType: '' };
+        //$scope.dataInput.push(input);
+
+        $scope.testCases = [];
+        for (var i = 0; i < $scope.dataInput.length; i++) {
+            var testCase = { TestCaseID: i + 1, Input: '' };
+            $scope.testCases.push(testCase);
+        }
+
         for (var i = 0; i < $scope.testCases.length; i++) {
             for (var j = 0; j < $scope.dataTypes.length; j++) {
                 if ($scope.dataInput[i].InputType == $scope.dataTypes[j].DataTypeName) {
