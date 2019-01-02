@@ -100,6 +100,7 @@ namespace CodeExam.Areas.Admin.Controllers
             var taskId = tests.FirstOrDefault().TaskId;
             var lastTests = db.TestCases.Where(t => t.TaskId == taskId).ToList();
             lastTests.ForEach(t => db.TestCases.Remove(t));
+            tests.ForEach(t => t.TaskId = taskId);
             tests.ForEach(t => db.TestCases.Add(t));
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);

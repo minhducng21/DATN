@@ -46,7 +46,7 @@
 
                 for (var j = 0; j < arrTestCase.length; j++) {
                     if (arrTestCase[j] != "") {
-                        $scope.testCases[i].Input.push(encodeURIComponent(arrTestCase[j]));
+                        $scope.testCases[i].Input.push(decodeURIComponent(arrTestCase[j]));
                     }
                 }
             }
