@@ -261,7 +261,7 @@
                 for (var i = 0; i < tests.length; i++) {
                     inputTest = '';
                     for (var j = 0; j < tests[i].Input.length; j++) {
-                        inputTest += tests[i].Input[j] + ";";
+                        inputTest += encodeURIComponent(tests[i].Input[j]) + ";";
                     }
                     tests[i].Input = inputTest;
                 }
