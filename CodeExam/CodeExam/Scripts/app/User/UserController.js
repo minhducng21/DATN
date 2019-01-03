@@ -112,6 +112,7 @@
             }).then(function success(res) {
                 if (res.data == 0) {
                     $scope.message = "Thành công";
+                    getListUser();
                     $('#addUser').modal('toggle');
                     $('#notify').modal();
                 }

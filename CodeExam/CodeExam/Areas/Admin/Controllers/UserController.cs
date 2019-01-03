@@ -81,9 +81,9 @@ namespace CodeExam.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult EditUser(AccountViewModel acc)
         {
-            var user = db.Users.Find(acc.ID);
+            var user = db.Users.Where(u => u.UserName.Equals(acc.UserName) && u.UserStatus == (int)Constant.Status.Active).FirstOrDefault();
             user.UserName = acc.UserName;
-            user.Password = acc.Password;
+            user.Password = Encryption.Encrypt(acc.Password);
             user.DisplayName = acc.DisplayName;
             user.Email = acc.Email;
             user.RoleId = acc.RoleId;

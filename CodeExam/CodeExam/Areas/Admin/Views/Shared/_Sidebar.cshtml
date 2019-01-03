@@ -2,13 +2,20 @@
 <script src="@Url.Content("~/Scripts/app/Sidebar/SidebarController.js")"></script>
 
 <div ng-controller="SidebarController" class="sidebar" data-color="purple" data-background-color="white" data-image="../../Content/images/sidebar-1.jpg">
-    <div class="logo">
-        <img src="~/Content/images/logo.png" width="220px" height="150px"/>
+    <div class="logo" style="text-align: center;">
+        <img src="~/Content/images/logo.png" width="150px" height="100px"/>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav" id="nav" >
             <li class="nav-item" ng-class="getClass('{{ctrl.Ctrl}}')" ng-repeat="ctrl in ctrls">
-                <a class="nav-link" href="/{{ctrl.Area}}/{{ctrl.Ctrl}}">
+
+                <a ng-show="ctrl.Area == null" class="nav-link" href="/{{ctrl.Ctrl}}">
+
+                    @*<i class="material-icons">dashboard</i>*@
+                    <p>{{ctrl.Description}}</p>
+                </a>
+                <a ng-show="ctrl.Area == 'Admin'" class="nav-link" href="/{{ctrl.Area}}/{{ctrl.Ctrl}}">
+
                     @*<i class="material-icons">dashboard</i>*@
                     <p>{{ctrl.Description}}</p>
                 </a>

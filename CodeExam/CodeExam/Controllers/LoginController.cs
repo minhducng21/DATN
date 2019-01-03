@@ -288,7 +288,7 @@ namespace CodeExam.Areas.Controllers
         public void SendEmail(string email, string activeCode, Uri uri)
         {
             var verifyUrl = "/Login/Resetpassword?activeCode=" + activeCode;
-            var link = uri.Authority + uri.AbsolutePath.Replace(uri.AbsolutePath, verifyUrl);
+            var link = "https://" + uri.Authority + uri.AbsolutePath.Replace(uri.AbsolutePath, verifyUrl);
             string Email = ConfigurationManager.AppSettings["Email"];
             var fromEmail = new MailAddress(Email, "CodeWar");
             string fromEmailPw = ConfigurationManager.AppSettings["Password"];

@@ -44,7 +44,7 @@ namespace CodeExam.Areas.Admin.Controllers
                 var lsCtrlRole = db.RoleControllers.Where(c => c.RoleId == id).ToList();
                 List<ControllerViewModel> lsCtrlViewModel = new List<ControllerViewModel>();
                 lsCtrl.ForEach(o =>
-                    lsCtrlViewModel.Add(new ControllerViewModel() { CtrlId = o.CtrlId, Ctrl = o.Ctrl, Area = o.Area, IsChecked = lsCtrlRole.Where(c => c.CtrlId == o.CtrlId).Count() > 0 ? true : false})
+                    lsCtrlViewModel.Add(new ControllerViewModel() { CtrlId = o.CtrlId, Ctrl = o.Ctrl, Area = o.Area, Description = o.Description, IsChecked = lsCtrlRole.Where(c => c.CtrlId == o.CtrlId).Count() > 0 ? true : false})
                 );
                 return Json(new { ctrls = lsCtrlViewModel, role = db.RoleUsers.Find(id) }, JsonRequestBehavior.AllowGet);
             }

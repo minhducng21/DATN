@@ -17,6 +17,7 @@
         padding: 0 40px;
         color: white !important;
         cursor: pointer;
+        overflow: hidden;
     }
     .thumbnail-exam:hover .overlay {
         opacity: 0.9;
@@ -41,7 +42,7 @@
             <div class="row">
                 <div class="col-md-4 d-flex align-self-stretch thumbnail-exam" ng-repeat="task in TaskList track by $index" style="position: relative;">
                     <a href="/Direction/Code?id={{task.TaskId}}" class="media block-6 services d-block text-center hover-exam">
-                        <div class="media-body p-2 mt-3">
+                        <div class="media-body" style="display: block;">
                             <img width="50" height="50" src="~/Content/images/icon/challenge.svg" />
                             <h3 class="heading">{{task.TaskName}}</h3>
                             <p style="height: 50px; overflow: hidden; color: black;" ng-bind-html="task.TaskDescription"></p>

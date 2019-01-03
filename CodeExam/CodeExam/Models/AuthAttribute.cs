@@ -20,7 +20,8 @@ namespace CodeExam.Models
             }
             using (CodeWarDbContext db = new CodeWarDbContext())
             {
-                if (!string.IsNullOrEmpty(user.Identity.Name))
+
+               if (!string.IsNullOrEmpty(user.Identity.Name))
                 {
                     var currentUser = db.Users.FirstOrDefault(u => u.UserName.Equals(user.Identity.Name));
                     if (currentUser != null)
@@ -39,6 +40,13 @@ namespace CodeExam.Models
                                 filterContext.Result = new RedirectResult("/Error/Permission");
                             }
                         }
+                        else
+                        {
+                                if (lsRoleName.Where(r => r.Controller == filterContext.ActionDescriptor.ControllerDescriptor.ControllerName).Count() == 0)
+                                {
+                                    filterContext.Result = new RedirectResult("/Error/Permission");
+                                }
+                        }
                     }
                     else
                     {
@@ -49,6 +57,11 @@ namespace CodeExam.Models
                        {
                            lsRoleName.Add(new RoleNameViewModel() { Controller = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Ctrl, Area = db.ControllerActions.FirstOrDefault(c => c.CtrlId.Equals(r.CtrlId)).Area });
                        });
+
+                        if (filterContext.RouteData.DataTokens.Keys.Contains("area"))
+                        {
+                            filterContext.Result = new RedirectResult("/Error/Permission");
+                        }
                         if (lsRoleName.Where(r => r.Controller == filterContext.ActionDescriptor.ControllerDescriptor.ControllerName).ToList().Count() == 0)
                         {
                             filterContext.Result = new RedirectResult("/Error/Permission");
