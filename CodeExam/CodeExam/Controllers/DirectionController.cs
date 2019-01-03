@@ -49,6 +49,13 @@ namespace CodeExam.Controllers
         public List<TestCase> GetTestCaseByTaskId(int id)
         {
             var listTestCases = db.TestCases.Where(t => t.TaskId.Equals(id)).ToList();
+            for (int i = listTestCases.Count / 2; i < listTestCases.Count; i++)
+            {
+                listTestCases[i].Input = string.Empty;
+                listTestCases[i].Output = string.Empty;
+                listTestCases[i].TestCaseId = 0;
+                listTestCases[i].TaskId = 0;
+            }
             return listTestCases;
         }
 

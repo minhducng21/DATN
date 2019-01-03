@@ -19,7 +19,7 @@ namespace CodeExam.Areas.Admin.Controllers
         }
         public JsonResult GetAll(int page, int pageSize)
         {
-            var tasks = db.Tasks.Where(t => t.TaskStatus == Constant.Status.Active);
+            var tasks = db.Tasks;
             var count = tasks.Count();
             var results = tasks.OrderByDescending(d => d.TaskId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Json(new { results, count }, JsonRequestBehavior.AllowGet);
