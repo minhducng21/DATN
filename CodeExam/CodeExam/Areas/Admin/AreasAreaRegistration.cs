@@ -17,7 +17,7 @@ namespace CodeExam.Areas.Areas
             context.MapRoute(
                  "Admin",
                  "Admin/{controller}/{action}/{id}",
-                 new { action = "Index", id = UrlParameter.Optional },
+                 new { controller = "Home",action = "Index", id = UrlParameter.Optional },
                  new { controller = "Home|Role|User|Task|TestCase" },
                  namespaces: new[] { "CodeExam.Areas.Admin.Controllers" }
              );

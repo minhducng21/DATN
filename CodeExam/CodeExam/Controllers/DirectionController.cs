@@ -29,7 +29,7 @@ namespace CodeExam.Controllers
 
         public JsonResult GetAllTask(int page, int pageSize)
         {
-            var listTasks = db.Tasks.OrderByDescending(p => p.TaskId).
+            var listTasks = db.Tasks.Where(w=>w.TaskStatus == Constant.Status.Active).OrderByDescending(p => p.TaskId).
                 Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
