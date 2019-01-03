@@ -66,6 +66,7 @@
     $scope.addTestCase = (testCases) => {
         if (testCases != null) {
             var testCase = {
+                TestCaseId: $scope.tests.length,
                 Input: [],
                 Output: testCases.Output
             };
