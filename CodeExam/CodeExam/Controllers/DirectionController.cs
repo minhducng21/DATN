@@ -33,7 +33,7 @@ namespace CodeExam.Controllers
                 Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
-            var count = db.Tasks.Count();
+            var count = db.Tasks.Where(t => t.TaskStatus == Constant.Status.Active).Count();
             return Json(new { listTasks, count}, JsonRequestBehavior.AllowGet);
         }
 

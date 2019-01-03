@@ -107,7 +107,7 @@
     </div>
 
     <div class="row">
-        <div class="content-code-detail" style="position: relative;">
+        <div class="content-code-detail">
             <div class="col-md-3"  style="position: absolute; background: #212b37; padding: 0px; border-right: 1px solid">
                 <ul class="nav nav-tabs">
                     <li style="background: #212b37; border: 1px solid; border-radius: 5px;" id="summary" class="active"><a data-toggle="tab" href=".summary">Summary</a></li>
@@ -163,11 +163,15 @@
                 </div>
 
                 <div id="codeeditor"></div>
-                <div class="bottom-code-detail">
+                <div class="bottom-code-detail" style="position: relative;">
                     <ul class="nav nav-tabs">
                         <li style="background: #212b37;" id="testcase" class="active"><a data-toggle="tab" href=".ts">Test Case</a></li>
                         <li style="background: #212b37;" id="console"><a data-toggle="tab" href="#menu2">Console</a></li>
                     </ul>
+                    <div class="row" style="position: absolute; top: 15px; right: 15px;">
+                        <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
+                        <input class="btn" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px; background: #44bfa3; color: #fff" ng-click="submit()" />
+                    </div>
                     <div class="tab-content" style="color:white;font-weight:bold; height: 264px; overflow: auto;">
                         <div class="lds-ring col-md-offset-5"><div></div><div></div><div></div><div></div></div>
                         <span style="font-weight: normal;" class="notifySuccess">{{testcase.successShowTestCase}}/{{testcase.totalShowTestCase}} sample tests passed. Click Submit to run the full test suite and save your solution.</span>
@@ -204,11 +208,6 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="row" style="position: absolute; bottom: 0; right: 25px;">
-                        <input class="btn btn-info" type="button" value="Run" id="run-button" ng-click="clickRun()" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px;" />
-                        <input class="btn" type="button" value="Submit" style="border-radius: 5px; padding: 0 10px; height: 24px; font-size: 14px; background: #44bfa3; color: #fff" ng-click="submit()" />
-                    </div>
-
                 </div>
             </div>
         </div>
