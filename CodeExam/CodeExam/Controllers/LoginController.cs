@@ -125,6 +125,7 @@ namespace CodeExam.Areas.Controllers
                 user.Email = profile.Emails.Find(e => e.Type == "account").Value;
                 user.SocialId = profile.Id;
                 user.RoleId = (int)RoleCommon.User;
+                user.UserStatus = 1;
                 db.Users.Add(user);
                 db.SaveChanges();
                 var currentUser = db.Users.Where(u => u.SocialId == profile.Id).FirstOrDefault();
@@ -170,6 +171,7 @@ namespace CodeExam.Areas.Controllers
                 user.Email = fbAcc.Email;
                 user.SocialId = fbAcc.Id;
                 user.RoleId = (int)RoleCommon.User;
+                user.UserStatus = 1;
                 db.Users.Add(user);
                 db.SaveChanges();
                 SignInUser(user.Email, user.UserName, user.Password, user.SocialId, user.RoleId, true);
