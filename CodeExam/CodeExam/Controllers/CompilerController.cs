@@ -20,12 +20,17 @@ namespace CodeExam.Controllers
         public ActionResult GenerateTemplateCode(int taskId, string language)
             {
             string source = "";
+            bool allowSeenOtherCode = false;
             var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);
             var languageId = language == "csharp" ? db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Csharp").LanguageId : db.LanguagePrograms.FirstOrDefault(f => f.LanguageName == "Javascript").LanguageId;
             var leaderBoardItem = db.LeaderBoards.FirstOrDefault(f => f.TaskId == taskId && f.UserId == userId && f.LanguageId == languageId);
             if (leaderBoardItem != null)
             {
                 source = leaderBoardItem.SourceCode;
+                if(leaderBoardItem.Point > 0)
+                {
+                    allowSeenOtherCode = true;
+                }
             }
             else
             {
@@ -143,7 +148,7 @@ namespace CodeExam.Controllers
                     source += "{\n\n}";
                 }
             }
-            return Json(source, JsonRequestBehavior.AllowGet);
+            return Json( new { source, allowSeenOtherCode }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GenFileAndRun(string source, int taskId, string language, bool isSubmit = false)
         {
@@ -321,12 +326,13 @@ namespace CodeExam.Controllers
         private ActionResult Run(int taskId, string language, string source, bool isSubmit)
         {
             var listTestCase = db.TestCases.Where(w => w.TaskId == taskId).ToList();
-            int totalTestCase = isSubmit ? listTestCase.Count : listTestCase.Count / 2;
+            //int totalTestCase = isSubmit ? listTestCase.Count : listTestCase.Count / 2;
+            int totalTestCase = listTestCase.Count ;
             int totalPoint = db.Tasks.FirstOrDefault(t => t.TaskId.Equals(taskId)).Point;
             RunResult runResult = new RunResult();
             runResult.totalTestCase = totalTestCase;
             runResult.totalPoint = totalPoint;
-            runResult.totalShowTestCase = listTestCase.Count / 2;
+            runResult.totalShowTestCase = listTestCase.Count;
             runResult.totalHiddenTestCase = listTestCase.Count - (int)listTestCase.Count / 2;
             int success = 0;
             int successHiddenTestCase = 0;
@@ -426,6 +432,10 @@ namespace CodeExam.Controllers
                         default:
                             point = 0;
                             break;
+                    }
+                    if(point > 0)
+                    {
+                        runResult.allowSeenOtherCode = true;
                     }
                     runResult.successPoint = point;
                     var userId = Constant.Constant.GetUserIdByIdentity(User.Identity.Name);

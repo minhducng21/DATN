@@ -39,6 +39,8 @@ namespace CodeExam.ViewModels
 
         public int successShowTestCase { get; set; }
 
+        public bool allowSeenOtherCode { get; set; }
+
         public List<TestCaseResult> detail { get; set; }
     }
 }
