@@ -19,7 +19,7 @@ namespace CodeExam.Areas.Admin.Controllers
         }
         public JsonResult GetAll(int page, int pageSize)
         {
-            var tasks = db.Tasks;
+            var tasks = db.Tasks.Where(t => t.TaskStatus == Constant.Status.Active);
             var count = tasks.Count();
             var results = tasks.OrderByDescending(d => d.TaskId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Json(new { results, count }, JsonRequestBehavior.AllowGet);
@@ -101,8 +101,13 @@ namespace CodeExam.Areas.Admin.Controllers
             var lastTests = db.TestCases.Where(t => t.TaskId == taskId).ToList();
             lastTests.ForEach(t => db.TestCases.Remove(t));
             tests.ForEach(t => t.TaskId = taskId);
-            tests.ForEach(t => db.TestCases.Add(t));
-            db.SaveChanges();
+            foreach (var item in tests)
+            {
+                db.TestCases.Add(item);
+                db.SaveChanges();
+            }
+            //tests.ForEach(t => db.TestCases.Add(t));
+            //db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
