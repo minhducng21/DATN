@@ -307,7 +307,7 @@
     function getDataType() {
         $http({
             method: 'GET',
-            url: '/Task/GetDataType'
+            url: '/Admin/Task/GetDataType'
         }).then(function success(res) {
             $scope.dataTypes = res.data;
         });

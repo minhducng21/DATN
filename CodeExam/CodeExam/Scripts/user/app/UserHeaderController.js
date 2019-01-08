@@ -35,7 +35,7 @@
     $scope.logOut = function() {
         $http({
             method: 'GET',
-            url: 'https://localhost:44371/Login/LogOut'
+            url: 'http://localhost:12595/Login/LogOut'
         }).then(function success(res) {
             if (res.data == 1) {
                 $window.location.href = '/Login';
