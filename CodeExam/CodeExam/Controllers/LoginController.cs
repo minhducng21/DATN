@@ -188,7 +188,7 @@ namespace CodeExam.Areas.Controllers
                     return Redirect(url);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -204,27 +204,18 @@ namespace CodeExam.Areas.Controllers
             var claims = new List<Claim>();
             try
             {
-                if (String.IsNullOrEmpty(socialId))
-                {
+                
                     claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
                     claims.Add(new Claim(ClaimTypes.Name, username));
                     claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
-                }
-                else
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-                    claims.Add(new Claim(ClaimTypes.Name, socialId));
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
-                }
-                    
-                
+               
                 //else
                 //{
-                //    claims.Add(new Claim(ClaimTypes.Name, username));
                 //    claims.Add(new Claim(ClaimTypes.Role, roleId.ToString()));
-                //    claims.Add(new Claim(ClaimTypes.NameIdentifier, email));   
+                //    claims.Add(new Claim(ClaimTypes.Name, socialId));
+                //    claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
                 //}
-
+                    
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
@@ -290,7 +281,7 @@ namespace CodeExam.Areas.Controllers
         public void SendEmail(string email, string activeCode, Uri uri)
         {
             var verifyUrl = "/Login/Resetpassword?activeCode=" + activeCode;
-            var link = "https://" + uri.Authority + uri.AbsolutePath.Replace(uri.AbsolutePath, verifyUrl);
+            var link = "http://" + uri.Authority + uri.AbsolutePath.Replace(uri.AbsolutePath, verifyUrl);
             string Email = ConfigurationManager.AppSettings["Email"];
             var fromEmail = new MailAddress(Email, "CodeWar");
             string fromEmailPw = ConfigurationManager.AppSettings["Password"];
