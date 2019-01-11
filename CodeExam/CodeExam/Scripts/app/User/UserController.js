@@ -68,7 +68,7 @@
                     }
                 }
                 $scope.message = "Thay đổi thành công";
-                $('#notify').modal();
+                //$('#notify').modal();
                 $('#addUser').modal('toggle');
             }
         });
@@ -99,7 +99,7 @@
             }
         });
         if (isExist) {
-            $scope.message = "Tài khoản đã tồn tại";
+            $scope.message = "Account is already exist";
             //$('#addUser').modal('toggle');
 
             $('#notify').modal();
@@ -114,7 +114,7 @@
                     $scope.message = "Thành công";
                     getListUser();
                     $('#addUser').modal('toggle');
-                    $('#notify').modal();
+                    //$('#notify').modal();
                 }
             });
         }

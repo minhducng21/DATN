@@ -61,6 +61,9 @@ namespace CodeExam.Areas.Admin.Controllers
             if (itemToDel != null)
             {
                 itemToDel.TaskStatus = Constant.Status.Deactive;
+                var lstLeaders = db.LeaderBoards.Where(t => t.TaskId == id).ToList();
+                lstLeaders.ForEach(d => db.LeaderBoards.Remove(d));
+                db.SaveChanges();
                 if (db.SaveChanges() == 1)
                 {
                     return Json(0, JsonRequestBehavior.AllowGet);

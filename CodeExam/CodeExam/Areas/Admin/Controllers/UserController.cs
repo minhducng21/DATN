@@ -95,7 +95,9 @@ namespace CodeExam.Areas.Admin.Controllers
         public JsonResult DeleteUser(int id)
         {
             var user = db.Users.Find(id);
-            user.UserStatus = 0;
+            db.Users.Remove(user);
+            var lstLeaders = db.LeaderBoards.Where(l => l.UserId == id).ToList();
+            lstLeaders.ForEach(t => db.LeaderBoards.Remove(t));
             db.SaveChanges();
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
